@@ -27,11 +27,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: NavigatorDrawer(),
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          iconTheme: IconThemeData(color: CustomColors.primaryColor),
-        ),
+        appBar: AppBar(),
         body: BlocProvider(
           create: (context) => AddServiceBloc(),
           child: Padding(

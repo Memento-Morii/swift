@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:swift/models/signup_request_model.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/custom_textfield.dart';
-
 import 'register_bloc/register_bloc.dart';
 
 class HouseInfo extends StatefulWidget {
-  HouseInfo({this.firstName, this.lastName, this.password, this.phone});
-  final String firstName;
-  final String lastName;
-  final String phone;
-  final String password;
+  HouseInfo({this.signupRequest, this.role});
+  final String role;
+  final SignupRequest signupRequest;
 
   @override
   _HouseInfoState createState() => _HouseInfoState();
@@ -59,16 +57,7 @@ class _HouseInfoState extends State<HouseInfo> {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
-                  }
-                  // else if (state is RegisterLoaded) {
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => Home(),
-                  //     ),
-                  //   );
-                  // }
-                  else {
+                  } else {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -102,17 +91,20 @@ class _HouseInfoState extends State<HouseInfo> {
                         CustomButton(
                           color: CustomColors.primaryColor,
                           onPressed: () {
-                            _registerBloc.add(Signup(
-                              firstName: widget.firstName,
-                              lastName: widget.lastName,
-                              email: emailController.text.trim(),
-                              blockNumber: blockController.text.trim(),
-                              houseNumber: houseController.text.trim(),
-                              password: widget.password,
-                              phoneNumber: widget.phone,
-                              siteName: siteController.text.trim(),
-                              context: context,
-                            ));
+                            widget.signupRequest.blockNumber =
+                                blockController.text.trim();
+                            widget.signupRequest.houseNumber =
+                                houseController.text.trim();
+                            widget.signupRequest.siteNumber =
+                                siteController.text.trim();
+                            widget.signupRequest.email =
+                                emailController.text.trim();
+                            _registerBloc.add(
+                              Signup(
+                                signupRequest: widget.signupRequest,
+                                context: context,
+                              ),
+                            );
                           },
                           child: Icon(
                             Icons.arrow_forward_ios_rounded,

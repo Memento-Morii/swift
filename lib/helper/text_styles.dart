@@ -36,4 +36,12 @@ class CustomTextStyles {
     fontSize: 14,
     color: CustomColors.primaryColor,
   );
+  static TextStyle normalText = GoogleFonts.poppins(
+    fontWeight: FontWeight.normal,
+    fontSize: 12,
+  );
+  static TextStyle boldText = GoogleFonts.poppins(
+    fontWeight: FontWeight.bold,
+    fontSize: 13,
+  );
 }

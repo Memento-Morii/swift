@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:swift/models/service_model.dart';
+import 'package:swift/models/signup_request_model.dart';
 
 class Repositories {
   Dio _dio = Dio();
@@ -12,24 +13,25 @@ class Repositories {
   );
 
   Future<Response> signUp({
-    String firstName,
-    String lastName,
-    String email,
-    String siteName,
-    String houseNumber,
-    String blockNumber,
-    String phoneNumber,
-    String password,
+    SignupRequest signupRequest,
+    // String firstName,
+    // String lastName,
+    // String email,
+    // String siteName,
+    // String houseNumber,
+    // String blockNumber,
+    // String phoneNumber,
+    // String password,
   }) async {
     Map<String, String> data = {
-      "first_name": firstName,
-      "last_name": lastName,
-      "email": email,
-      "site_name": siteName,
-      "house_number": houseNumber,
-      "block_number": blockNumber,
-      "phone_number": phoneNumber,
-      "password": password,
+      "first_name": signupRequest.firstName,
+      "last_name": signupRequest.lastName,
+      "email": signupRequest.email,
+      "site_name": signupRequest.siteNumber,
+      "house_number": signupRequest.houseNumber,
+      "block_number": signupRequest.blockNumber,
+      "phone_number": signupRequest.phone,
+      "password": signupRequest.password,
     };
     try {
       Response response = await _dio.post(
@@ -59,7 +61,7 @@ class Repositories {
         data: data,
         options: options,
       );
-      print(response);
+      // print(response);
       return response;
     } catch (e) {
       print(e);
@@ -67,7 +69,7 @@ class Repositories {
     }
   }
 
-  Future getUser(String token) async {
+  Future<Response> getUser(String token) async {
     try {
       var response = await _dio.get(
         "$baseUrl/user/profile",
@@ -79,9 +81,11 @@ class Repositories {
           headers: {"Authorization": "Bearer $token"},
         ),
       );
-      print(response);
+      // print(response);
+      return response;
     } catch (e) {
       print(e);
+      return null;
     }
   }
 

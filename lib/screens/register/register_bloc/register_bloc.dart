@@ -6,9 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:swift/models/signup_request_model.dart';
 import 'package:swift/screens/home/home_view.dart';
+import 'package:swift/screens/register/add_services/add_services_view.dart';
 import 'package:swift/services/repositories.dart';
-
 part 'register_event.dart';
 part 'register_state.dart';
 
@@ -23,26 +24,21 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       yield RegisterLoading();
       try {
         var response = await _repo.signUp(
-          firstName: event.firstName,
-          lastName: event.lastName,
-          password: event.password,
-          blockNumber: event.blockNumber,
-          email: event.email,
-          houseNumber: event.houseNumber,
-          phoneNumber: event.phoneNumber,
-          siteName: event.siteName,
+          signupRequest: event.signupRequest,
         );
         if (response.statusCode == 200) {
-          // SharedPreferences sharedPreferences =
-          //     await SharedPreferences.getInstance();
+          SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
           var token = jsonDecode(response.data)['token'];
-          print(token);
-          // sharedPreferences.setString("token", token);
+          // print(token);
+          sharedPreferences.setString("token", token);
           // print("Id:" + sharedPreferences.get("token"));
           Navigator.push(
             event.context,
             MaterialPageRoute(
-              builder: (context) => Home(response: "Homepage"),
+              builder: (context) => event.role == "User"
+                  ? Home(response: "Homepage")
+                  : AddService(),
             ),
           );
         } else {
@@ -64,10 +60,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         if (response.statusCode == 200) {
           SharedPreferences sharedPreferences =
               await SharedPreferences.getInstance();
-          print("response.data");
+          // print("response.data");
           var token = jsonDecode(response.data)['token'];
           sharedPreferences.setString("token", token);
-          print("Id:" + sharedPreferences.get("token"));
+          // print("Id:" + sharedPreferences.get("token"));
           Navigator.push(
             event.context,
             MaterialPageRoute(

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:swift/models/signup_request_model.dart';
 import 'package:swift/screens/register/add_services/add_services_view.dart';
 import 'package:swift/screens/register/house_info.dart';
 import 'package:swift/services/repositories.dart';
@@ -32,7 +33,9 @@ class _RegisterState extends State<Register> {
   TextEditingController lnameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  String role;
   TextEditingController emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,7 +130,8 @@ class _RegisterState extends State<Register> {
                                     ],
                                     spacing: 0,
                                     radioButtonValue: (value) {
-                                      print(value);
+                                      role = value;
+                                      print(role);
                                     },
                                     horizontal: false,
                                     enableButtonWrap: false,
@@ -172,34 +176,21 @@ class _RegisterState extends State<Register> {
                                       phone: phoneController.text.trim(),
                                       password: passwordController.text.trim(),
                                     ));
-                                    // var response = await _repo.signIn(
-                                    //   email: emailController.text.trim(),
-                                    //   password: passwordController.text.trim(),
-                                    // );
-                                    // if (response != null) {
-                                    //   print(response);
-                                    //   Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //       builder: (context) => Home(),
-                                    //     ),
-                                    //   );
-                                    // }
-                                    // else {
-                                    //   print(response);
-                                    // }
                                   }
                                 : () {
+                                    SignupRequest _signupRequest =
+                                        SignupRequest(
+                                      firstName: fnameController.text.trim(),
+                                      lastName: lnameController.text.trim(),
+                                      phone: phoneController.text.trim(),
+                                      password: passwordController.text.trim(),
+                                    );
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => HouseInfo(
-                                          firstName:
-                                              fnameController.text.trim(),
-                                          lastName: lnameController.text.trim(),
-                                          phone: phoneController.text.trim(),
-                                          password:
-                                              passwordController.text.trim(),
+                                          signupRequest: _signupRequest,
+                                          role: role,
                                         ),
                                       ),
                                     );
