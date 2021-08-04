@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/service_model.dart';
 import 'package:swift/screens/register/add_services/bloc/add_service_bloc.dart';
+import 'package:swift/screens/service_category/service_category.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
 import 'package:swift/widgets/service_card.dart';
 
@@ -51,10 +51,22 @@ class _HomeState extends State<Home> {
                         child: ListView.builder(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
-                          itemCount: state.service.results.length,
+                          itemCount: state.service.length,
                           itemBuilder: (context, index) {
-                            Result _result = state.service.results[index];
-                            return ServiceCard(_result);
+                            ServiceModel _result = state.service[index];
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ServiceCategory(
+                                      service: _result,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: ServiceCard(_result),
+                            );
                           },
                         ),
                       )

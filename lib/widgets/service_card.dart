@@ -4,7 +4,7 @@ import 'package:swift/models/service_model.dart';
 
 class ServiceCard extends StatelessWidget {
   ServiceCard(this.result);
-  final Result result;
+  final ServiceModel result;
   @override
   Widget build(BuildContext context) {
     return Material(

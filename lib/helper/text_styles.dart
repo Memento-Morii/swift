@@ -12,14 +12,19 @@ class CustomTextStyles {
     fontWeight: FontWeight.normal,
     fontSize: 23,
   );
+  static TextStyle normalWhiteText = GoogleFonts.poppins(
+    fontSize: 18,
+    color: Colors.white,
+  );
   static TextStyle bigWhiteText = GoogleFonts.poppins(
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w700,
     fontSize: 18,
     color: Colors.white,
   );
   static TextStyle mediumText = GoogleFonts.poppins(
     fontWeight: FontWeight.normal,
     fontSize: 16,
+    color: Colors.black,
   );
   static TextStyle mediumWhiteText = GoogleFonts.poppins(
     fontWeight: FontWeight.w500,
@@ -43,5 +48,20 @@ class CustomTextStyles {
   static TextStyle boldText = GoogleFonts.poppins(
     fontWeight: FontWeight.bold,
     fontSize: 13,
+  );
+  static TextStyle boldMediumText = GoogleFonts.poppins(
+    fontWeight: FontWeight.bold,
+    fontSize: 15,
+    color: Colors.black,
+  );
+  static TextStyle boldTitleText = GoogleFonts.poppins(
+    fontWeight: FontWeight.bold,
+    fontSize: 17,
+    color: Colors.black,
+  );
+  static TextStyle errorText = GoogleFonts.poppins(
+    fontWeight: FontWeight.bold,
+    fontSize: 15,
+    color: Colors.red,
   );
 }

@@ -7,7 +7,7 @@ class AddServiceInitial extends AddServiceState {}
 
 class AddServiceLoaded extends AddServiceState {
   AddServiceLoaded(this.service);
-  final ServiceModel service;
+  final List<ServiceModel> service;
 }
 
 class AddServiceFailed extends AddServiceState {}

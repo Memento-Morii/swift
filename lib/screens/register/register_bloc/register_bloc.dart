@@ -27,22 +27,21 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           signupRequest: event.signupRequest,
         );
         if (response.statusCode == 200) {
-          SharedPreferences sharedPreferences =
-              await SharedPreferences.getInstance();
+          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
           var token = jsonDecode(response.data)['token'];
-          // print(token);
+          print(token);
           sharedPreferences.setString("token", token);
-          // print("Id:" + sharedPreferences.get("token"));
-          Navigator.push(
+          print("Id:" + sharedPreferences.get("token"));
+          Navigator.pushReplacement(
             event.context,
             MaterialPageRoute(
-              builder: (context) => event.role == "User"
-                  ? Home(response: "Homepage")
-                  : AddService(),
+              builder: (context) =>
+                  event.role == "User" ? Home(response: "Homepage") : AddService(),
             ),
           );
         } else {
           var some = jsonDecode(response.data);
+          print(some);
           yield RegisterInitial();
           yield RegisterFailed(message: some['message']);
         }
@@ -57,22 +56,23 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           password: event.password,
           phone: event.phone,
         );
+        // print(response.data);
         if (response.statusCode == 200) {
-          SharedPreferences sharedPreferences =
-              await SharedPreferences.getInstance();
+          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
           // print("response.data");
           var token = jsonDecode(response.data)['token'];
           sharedPreferences.setString("token", token);
           // print("Id:" + sharedPreferences.get("token"));
-          Navigator.push(
+          Navigator.pushReplacement(
             event.context,
             MaterialPageRoute(
               builder: (context) => Home(response: "response.data.toString()"),
             ),
           );
-          yield RegisterInitial();
+          // yield RegisterInitial();
         } else {
           var some = jsonDecode(response.data);
+          print(some);
           yield RegisterInitial();
           yield RegisterFailed(message: some['message']);
         }

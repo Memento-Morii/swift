@@ -7,7 +7,7 @@ class Login extends RegisterEvent {
   Login({this.phone, this.password, this.context});
   final String phone;
   final String password;
-  BuildContext context;
+  final BuildContext context;
 }
 
 class Signup extends RegisterEvent {
@@ -18,5 +18,5 @@ class Signup extends RegisterEvent {
   });
   final SignupRequest signupRequest;
   final String role;
-  BuildContext context;
+  final BuildContext context;
 }

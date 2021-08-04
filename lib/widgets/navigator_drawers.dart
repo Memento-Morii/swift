@@ -64,7 +64,7 @@ class _NavigatorDrawerState extends State<NavigatorDrawer> {
             ),
             drawerListWidget(
               index: 2,
-              iconUrl: "assets/services.png",
+              iconUrl: "assets/profile.png",
               name: "Profile",
               page: Profile(),
             ),

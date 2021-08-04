@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/user_model.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
-import 'package:swift/widgets/profile_textfield.dart';
 
 import 'bloc/profile_bloc.dart';
 
@@ -30,77 +28,117 @@ class _ProfileState extends State<Profile> {
       body: BlocProvider(
         create: (context) => ProfileBloc(),
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: BlocBuilder<ProfileBloc, ProfileState>(
-              bloc: _profileBloc,
-              builder: (context, state) {
-                if (state is ProfileInitial) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (state is ProfileLoaded) {
-                  UserModel user = state.userModel;
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Center(
-                        child: Container(
-                          height: 120,
-                          width: 120,
-                          decoration: BoxDecoration(
-                            color: CustomColors.customGreen,
-                            borderRadius: BorderRadius.circular(10),
+          child: BlocBuilder<ProfileBloc, ProfileState>(
+            bloc: _profileBloc,
+            builder: (context, state) {
+              if (state is ProfileInitial) {
+                return Center(child: CircularProgressIndicator());
+              } else if (state is ProfileLoaded) {
+                UserModel user = state.userModel;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      color: Colors.black,
+                      height: MediaQuery.of(context).size.height * 0.45,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 20,
+                            right: 20,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {},
+                            ),
                           ),
-                        ),
+                          Center(
+                            child: Container(
+                              height: 140,
+                              width: 140,
+                              decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 135,
+                            bottom: 40,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text(
+                                  user.firstName,
+                                  style: CustomTextStyles.bigWhiteText,
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  user.lastName,
+                                  style: CustomTextStyles.normalWhiteText,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Positioned(
+                            left: 125,
+                            bottom: 15,
+                            child: Text(
+                              user.email,
+                              style: CustomTextStyles.textField,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        'First Name',
-                        style: CustomTextStyles.boldText,
+                    ),
+                    SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'House Information',
+                            style: CustomTextStyles.coloredBold,
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            'Block Number',
+                            style: CustomTextStyles.boldMediumText,
+                          ),
+                          Text(
+                            user.blockNumber,
+                            style: CustomTextStyles.coloredBold,
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            'House Number',
+                            style: CustomTextStyles.boldMediumText,
+                          ),
+                          Text(
+                            user.houseNumber,
+                            style: CustomTextStyles.coloredBold,
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            'Site Number',
+                            style: CustomTextStyles.boldMediumText,
+                          ),
+                          Text(
+                            user.siteName,
+                            style: CustomTextStyles.coloredBold,
+                          ),
+                        ],
                       ),
-                      ProfileTextField(
-                        initalName: user.firstName,
-                      ),
-                      Text(
-                        'Last Name',
-                        style: CustomTextStyles.boldText,
-                      ),
-                      ProfileTextField(
-                        initalName: user.lastName,
-                      ),
-                      Text(
-                        'Email',
-                        style: CustomTextStyles.boldText,
-                      ),
-                      ProfileTextField(
-                        initalName: user.email,
-                      ),
-                      Text(
-                        'Your Phone',
-                        style: CustomTextStyles.boldText,
-                      ),
-                      ProfileTextField(
-                        initalName: user.phoneNumber,
-                      ),
-                      Text(
-                        'Site Number',
-                        style: CustomTextStyles.boldText,
-                      ),
-                      ProfileTextField(
-                        initalName: user.siteName,
-                      ),
-                      Text(
-                        'Block Number',
-                        style: CustomTextStyles.boldText,
-                      ),
-                      ProfileTextField(
-                        initalName: user.blockNumber,
-                      ),
-                    ],
-                  );
-                } else {
-                  return Center(child: Text("Failed"));
-                }
-              },
-            ),
+                    ),
+                  ],
+                );
+              } else {
+                return Center(child: Text("Failed"));
+              }
+            },
           ),
         ),
       ),

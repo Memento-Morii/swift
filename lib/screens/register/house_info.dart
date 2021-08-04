@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/colors.dart';
@@ -91,18 +93,17 @@ class _HouseInfoState extends State<HouseInfo> {
                         CustomButton(
                           color: CustomColors.primaryColor,
                           onPressed: () {
-                            widget.signupRequest.blockNumber =
-                                blockController.text.trim();
-                            widget.signupRequest.houseNumber =
-                                houseController.text.trim();
-                            widget.signupRequest.siteNumber =
-                                siteController.text.trim();
-                            widget.signupRequest.email =
-                                emailController.text.trim();
+                            widget.signupRequest.blockNumber = blockController.text.trim();
+                            widget.signupRequest.houseNumber = houseController.text.trim();
+                            widget.signupRequest.siteNumber = siteController.text.trim();
+                            widget.signupRequest.email = emailController.text.trim();
+                            inspect(widget.signupRequest);
+                            print(widget.role);
                             _registerBloc.add(
                               Signup(
                                 signupRequest: widget.signupRequest,
                                 context: context,
+                                role: widget.role,
                               ),
                             );
                           },
@@ -115,7 +116,12 @@ class _HouseInfoState extends State<HouseInfo> {
                           bloc: _registerBloc,
                           builder: (context, state) {
                             if (state is RegisterFailed) {
-                              return Text(state.getMessage);
+                              return Center(
+                                child: Text(
+                                  state.getMessage,
+                                  style: CustomTextStyles.errorText,
+                                ),
+                              );
                             } else {
                               return SizedBox();
                             }

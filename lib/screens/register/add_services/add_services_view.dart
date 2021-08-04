@@ -1,11 +1,15 @@
+import 'dart:developer';
+
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/service_model.dart';
+import 'package:swift/models/service_provider_request_model.dart';
 import 'package:swift/screens/register/add_services/bloc/add_service_bloc.dart';
-import 'package:swift/services/repositories.dart';
+import 'package:swift/screens/register/add_services/bloc/create_service_provider_bloc.dart';
 import 'package:swift/widgets/category_card.dart';
 
 class AddService extends StatefulWidget {
@@ -17,32 +21,46 @@ class _AddServiceState extends State<AddService> {
   RangeValues selectedPriceRanges = RangeValues(100, 800);
   RangeValues selectedTimeRanges = RangeValues(100, 900);
   AddServiceBloc _serviceBloc;
-  List<String> categoryNames = [];
+  CreateServiceProviderBloc _serviceProviderBloc;
+  ServiceProviderRequest _requestModel = ServiceProviderRequest(
+    description: "This is my description",
+    address: "some address",
+    document: "test",
+    lat: 4.54,
+    lng: 32.34,
+    timeRangeFrom: DateTime.now(),
+    timeRangeTo: DateTime.now(),
+  );
+  List<ServiceModel> categories = [];
+  int serviceId;
+  int serviceCategoryId;
   @override
   void initState() {
     _serviceBloc = AddServiceBloc();
+    _serviceProviderBloc = CreateServiceProviderBloc();
     _serviceBloc.add(FetchServices());
     super.initState();
   }
 
-  getServiceName(ServiceModel _service) {
+  getServiceName(List<ServiceModel> _service) {
     List<String> names = [];
-    _service.results.forEach((element) {
+    _service.forEach((element) {
       names.add(element.name);
     });
     return names;
   }
 
-  getCategories({ServiceModel service, String name}) {
-    categoryNames.clear();
-    service.results.forEach((element) {
+  getCategories({List<ServiceModel> services, String name}) {
+    categories.clear();
+    services.forEach((element) {
       if (element.name == name) {
         element.serviceCategories.forEach((element) {
-          categoryNames.add(element.name);
+          categories.add(element);
         });
+        _requestModel.serviceId = element.id;
       }
     });
-    return categoryNames;
+    return categories;
   }
 
   @override
@@ -81,7 +99,9 @@ class _AddServiceState extends State<AddService> {
                           radioButtonValue: (value) {
                             setState(() {
                               getCategories(
-                                  service: state.service, name: value);
+                                services: state.service,
+                                name: value,
+                              );
                             });
                           },
                           horizontal: false,
@@ -92,7 +112,7 @@ class _AddServiceState extends State<AddService> {
                           padding: 10,
                         ),
                         SizedBox(height: 30),
-                        categoryNames.length == 0
+                        categories.length == 0
                             ? SizedBox()
                             : GridView.builder(
                                 shrinkWrap: true,
@@ -103,9 +123,18 @@ class _AddServiceState extends State<AddService> {
                                   crossAxisSpacing: 20,
                                   mainAxisSpacing: 20,
                                 ),
-                                itemCount: categoryNames.length,
+                                itemCount: categories.length,
                                 itemBuilder: (context, index) {
-                                  return CategoryCard(categoryNames[index]);
+                                  return InkWell(
+                                    onTap: () {
+                                      _requestModel.serviceCategoryId =
+                                          categories[index].id;
+                                      print(categories[index].id);
+                                    },
+                                    child: CategoryCard(
+                                      categories[index],
+                                    ),
+                                  );
                                 },
                               ),
                         Text(
@@ -132,6 +161,10 @@ class _AddServiceState extends State<AddService> {
                                 setState(() {
                                   selectedPriceRanges = newRanges;
                                 });
+                                _requestModel.priceRangeFrom =
+                                    newRanges.start.round().ceilToDouble();
+                                _requestModel.priceRangeTo =
+                                    newRanges.end.round().ceilToDouble();
                               }),
                         ),
                         SizedBox(height: 30),
@@ -187,10 +220,34 @@ class _AddServiceState extends State<AddService> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: CustomColors.primaryColor,
-        onPressed: () {},
-        child: Icon(Icons.add),
+      floatingActionButton: BlocProvider(
+        create: (context) => CreateServiceProviderBloc(),
+        child: FloatingActionButton(
+          backgroundColor: CustomColors.primaryColor,
+          onPressed: () async {
+            inspect(_requestModel);
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            var token = prefs.get("token");
+            _serviceProviderBloc.add(CreateServiceProvider(
+              token: token,
+              request: _requestModel,
+              context: context,
+            ));
+          },
+          child: BlocBuilder<CreateServiceProviderBloc,
+              CreateServiceProviderState>(
+            bloc: _serviceProviderBloc,
+            builder: (context, state) {
+              if (state is CreateServiceProviderInitial) {
+                return Icon(Icons.add);
+              } else if (state is CreateServiceProviderLoading) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return Text('Failed');
+              }
+            },
+          ),
+        ),
       ),
     );
   }
