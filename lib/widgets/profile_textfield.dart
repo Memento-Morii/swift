@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:swift/helper/text_styles.dart';
 
 class ProfileTextField extends StatefulWidget {
-  ProfileTextField({this.initalName});
+  ProfileTextField({this.initalName, this.onChanged});
   final String initalName;
+  final Function onChanged;
   @override
   _ProfileTextFieldState createState() => _ProfileTextFieldState();
 }
@@ -12,7 +13,7 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
   bool isDisabled;
   @override
   void initState() {
-    isDisabled = false;
+    isDisabled = true;
     super.initState();
   }
 
@@ -30,12 +31,12 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
           Container(
             width: MediaQuery.of(context).size.width * 0.7,
             child: TextFormField(
+              onChanged: widget.onChanged,
               style: CustomTextStyles.mediumText,
               initialValue: widget.initalName,
               enabled: isDisabled ? false : true,
               decoration: InputDecoration(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+                contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 18),
                 border: InputBorder.none,
               ),
             ),

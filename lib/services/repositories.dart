@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:swift/models/order_request_model.dart';
 import 'package:swift/models/service_provider_request_model.dart';
 import 'package:swift/models/signup_request_model.dart';
+import 'package:swift/models/user_model.dart';
 
 class Repositories {
   Dio _dio = Dio();
@@ -13,7 +14,7 @@ class Repositories {
     },
   );
 
-  //AUTHETICATION
+  //USER
 
   Future<Response> signUp({
     SignupRequest signupRequest,
@@ -79,6 +80,33 @@ class Repositories {
       return response;
     } catch (e) {
       print(e);
+      return null;
+    }
+  }
+
+  Future<Response> updateUser({UserModel user, String token}) async {
+    Map data = {
+      "first_name": user.firstName,
+      "last_name": user.lastName,
+      "site_name": user.siteName,
+      "house_number": user.houseNumber,
+      "block_number": user.blockNumber,
+    };
+    try {
+      var response = await _dio.put(
+        "$baseUrl/user/update-profile",
+        data: data,
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status < 500;
+          },
+          headers: {"Authorization": "Bearer $token"},
+        ),
+      );
+      return response;
+    } catch (_) {
+      print(_);
       return null;
     }
   }

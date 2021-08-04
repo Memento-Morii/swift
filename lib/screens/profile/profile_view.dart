@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/user_model.dart';
+import 'package:swift/screens/edit_profile/edit_profile_view.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
 
 import 'bloc/profile_bloc.dart';
@@ -41,32 +42,36 @@ class _ProfileState extends State<Profile> {
                     Container(
                       color: Colors.black,
                       height: MediaQuery.of(context).size.height * 0.45,
+                      padding: EdgeInsets.all(10),
                       child: Stack(
                         children: [
                           Positioned(
-                            top: 20,
-                            right: 20,
+                            top: 10,
+                            right: 10,
                             child: IconButton(
                               icon: Icon(
                                 Icons.edit,
                                 color: Colors.white,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditProfile(user),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                           Center(
-                            child: Container(
-                              height: 140,
-                              width: 140,
-                              decoration: BoxDecoration(
-                                color: Colors.grey,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.grey,
+                              radius: 80,
                             ),
                           ),
                           Positioned(
-                            left: 135,
-                            bottom: 40,
+                            left: MediaQuery.of(context).size.width * 0.35,
+                            bottom: 30,
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
@@ -82,9 +87,8 @@ class _ProfileState extends State<Profile> {
                               ],
                             ),
                           ),
-                          Positioned(
-                            left: 125,
-                            bottom: 15,
+                          Align(
+                            alignment: Alignment.bottomCenter,
                             child: Text(
                               user.email,
                               style: CustomTextStyles.textField,
@@ -123,7 +127,7 @@ class _ProfileState extends State<Profile> {
                           ),
                           SizedBox(height: 20),
                           Text(
-                            'Site Number',
+                            'Site Name',
                             style: CustomTextStyles.boldMediumText,
                           ),
                           Text(
