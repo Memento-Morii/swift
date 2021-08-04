@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/order_model.dart';
-import 'package:swift/widgets/custom_network_image.dart';
 import 'package:intl/intl.dart';
 
 class OrderHistoryWidget extends StatelessWidget {

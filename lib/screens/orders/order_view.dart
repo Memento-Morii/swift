@@ -36,9 +36,11 @@ class _OrderState extends State<Order> {
                 child: Text('Failed'),
               );
             } else if (state is OrderEmpty) {
-              return Text(
-                "Your Order List is Empty",
-                style: CustomTextStyles.errorText,
+              return Center(
+                child: Text(
+                  "Your Order List is Empty",
+                  style: CustomTextStyles.errorText,
+                ),
               );
             } else if (state is OrderLoaded) {
               List<OrderModel> orders = state.orderHistories.reversed.toList();
