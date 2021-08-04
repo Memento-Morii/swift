@@ -30,6 +30,8 @@ class _HouseInfoState extends State<HouseInfo> {
   TextEditingController houseController = TextEditingController();
   TextEditingController siteController = TextEditingController();
   TextEditingController blockController = TextEditingController();
+  GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,74 +62,80 @@ class _HouseInfoState extends State<HouseInfo> {
                       child: CircularProgressIndicator(),
                     );
                   } else {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(height: 20),
-                        Text(
-                          'House Information',
-                          style: CustomTextStyles.headlineText,
-                        ),
-                        SizedBox(height: 50),
-                        CustomField(
-                          hintText: "Email",
-                          iconUrl: 'assets/mail.png',
-                          controller: emailController,
-                        ),
-                        CustomField(
-                          hintText: "House Number",
-                          iconUrl: 'assets/home-filled.png',
-                          controller: houseController,
-                        ),
-                        CustomField(
-                          hintText: "Site Number",
-                          iconUrl: 'assets/home-broken.png',
-                          controller: siteController,
-                        ),
-                        CustomField(
-                          hintText: "Block Number",
-                          iconUrl: 'assets/home-broken.png',
-                          controller: blockController,
-                        ),
-                        SizedBox(height: 40),
-                        CustomButton(
-                          color: CustomColors.primaryColor,
-                          onPressed: () {
-                            widget.signupRequest.blockNumber = blockController.text.trim();
-                            widget.signupRequest.houseNumber = houseController.text.trim();
-                            widget.signupRequest.siteNumber = siteController.text.trim();
-                            widget.signupRequest.email = emailController.text.trim();
-                            inspect(widget.signupRequest);
-                            print(widget.role);
-                            _registerBloc.add(
-                              Signup(
-                                signupRequest: widget.signupRequest,
-                                context: context,
-                                role: widget.role,
-                              ),
-                            );
-                          },
-                          child: Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            color: Colors.white,
+                    return Form(
+                      key: _formkey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(height: 20),
+                          Text(
+                            'House Information',
+                            style: CustomTextStyles.headlineText,
                           ),
-                        ),
-                        BlocBuilder(
-                          bloc: _registerBloc,
-                          builder: (context, state) {
-                            if (state is RegisterFailed) {
-                              return Center(
-                                child: Text(
-                                  state.getMessage,
-                                  style: CustomTextStyles.errorText,
-                                ),
-                              );
-                            } else {
-                              return SizedBox();
-                            }
-                          },
-                        ),
-                      ],
+                          SizedBox(height: 50),
+                          CustomField(
+                            hintText: "Email",
+                            iconUrl: 'assets/mail.png',
+                            controller: emailController,
+                            textInputType: TextInputType.emailAddress,
+                          ),
+                          CustomField(
+                            hintText: "House Number",
+                            iconUrl: 'assets/home-filled.png',
+                            controller: houseController,
+                          ),
+                          CustomField(
+                            hintText: "Site Name",
+                            iconUrl: 'assets/home-broken.png',
+                            controller: siteController,
+                          ),
+                          CustomField(
+                            hintText: "Block Number",
+                            iconUrl: 'assets/home-broken.png',
+                            controller: blockController,
+                          ),
+                          SizedBox(height: 40),
+                          CustomButton(
+                            color: CustomColors.primaryColor,
+                            onPressed: () {
+                              if (_formkey.currentState.validate()) {
+                                widget.signupRequest.blockNumber = blockController.text.trim();
+                                widget.signupRequest.houseNumber = houseController.text.trim();
+                                widget.signupRequest.siteNumber = siteController.text.trim();
+                                widget.signupRequest.email = emailController.text.trim();
+                                inspect(widget.signupRequest);
+                                print(widget.role);
+                                _registerBloc.add(
+                                  Signup(
+                                    signupRequest: widget.signupRequest,
+                                    context: context,
+                                    role: widget.role,
+                                  ),
+                                );
+                              }
+                            },
+                            child: Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: Colors.white,
+                            ),
+                          ),
+                          BlocBuilder(
+                            bloc: _registerBloc,
+                            builder: (context, state) {
+                              if (state is RegisterFailed) {
+                                return Center(
+                                  child: Text(
+                                    state.getMessage,
+                                    style: CustomTextStyles.errorText,
+                                  ),
+                                );
+                              } else {
+                                return SizedBox();
+                              }
+                            },
+                          ),
+                        ],
+                      ),
                     );
                   }
                 },

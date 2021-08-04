@@ -60,8 +60,7 @@ class CustomTextStyles {
     color: Colors.black,
   );
   static TextStyle errorText = GoogleFonts.poppins(
-    fontWeight: FontWeight.bold,
-    fontSize: 15,
+    fontSize: 12,
     color: Colors.red,
   );
 }
