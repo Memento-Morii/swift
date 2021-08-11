@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  CustomButton(
-      {this.child,
-      this.onPressed,
-      this.height = 50,
-      this.width = 100,
-      this.color});
+  CustomButton({
+    this.child,
+    this.onPressed,
+    this.height = 50,
+    this.width = 100,
+    this.color,
+  });
   final Widget child;
   final Function onPressed;
   final double height;
@@ -24,7 +25,7 @@ class CustomButton extends StatelessWidget {
         ),
         child: TextButton(
           style: ButtonStyle(
-            elevation: MaterialStateProperty.all(12),
+            elevation: MaterialStateProperty.all(5),
             shadowColor: MaterialStateProperty.all(color),
           ),
           onPressed: onPressed,

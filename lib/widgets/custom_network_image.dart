@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 class CustomNetworkImage extends StatelessWidget {
@@ -7,8 +9,9 @@ class CustomNetworkImage extends StatelessWidget {
   final double width;
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      "data:image/jpeg;charset=utf-8;base64,$imgUrl",
+    var decoded = Base64Decoder().convert(imgUrl);
+    return Image.memory(
+      decoded,
       height: height,
       width: width,
     );

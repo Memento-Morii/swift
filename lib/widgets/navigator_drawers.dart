@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:swift/screens/about_us_view.dart';
+import 'package:swift/screens/help/help_view.dart';
 import 'package:swift/screens/home/home_view.dart';
 import 'package:swift/screens/my_services/my_services_view.dart';
 import 'package:swift/screens/orders/order_view.dart';
@@ -79,12 +81,24 @@ class _NavigatorDrawerState extends State<NavigatorDrawer> {
               height: 30,
               thickness: 1,
             ),
-            SizedBox(height: 20),
+            // SizedBox(height: 20),
             drawerListWidget(
               index: 4,
               iconUrl: "assets/setting.png",
               name: "Settings",
               page: Settings(),
+            ),
+            drawerListWidget(
+              index: 5,
+              iconUrl: "assets/about.png",
+              name: "About Us",
+              page: AboutUs(),
+            ),
+            drawerListWidget(
+              index: 6,
+              iconUrl: "assets/question.png",
+              name: "Help",
+              page: Help(),
             ),
             drawerListWidget(
               iconUrl: "assets/logout.png",
@@ -97,8 +111,7 @@ class _NavigatorDrawerState extends State<NavigatorDrawer> {
     );
   }
 
-  Widget drawerListWidget(
-      {String iconUrl, String name, Function onTap, int index, Widget page}) {
+  Widget drawerListWidget({String iconUrl, String name, Function onTap, int index, Widget page}) {
     return InkWell(
       onTap: onTap != null
           ? () async {
@@ -129,8 +142,7 @@ class _NavigatorDrawerState extends State<NavigatorDrawer> {
         margin: EdgeInsets.symmetric(vertical: 10),
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
-          color:
-              selectedIndex == index ? Color(0xff174ca5) : Colors.transparent,
+          color: selectedIndex == index ? Color(0xff174ca5) : Colors.transparent,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(

@@ -3,9 +3,11 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:swift/helper/utils.dart';
 import 'package:swift/models/order_request_model.dart';
+import 'package:swift/screens/success_page.dart';
 import 'package:swift/services/repositories.dart';
 
 part 'create_order_event.dart';
@@ -27,8 +29,14 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
           event.token,
         );
         if (response.statusCode == 200) {
-          var decoded = jsonDecode(response.data);
-          Utils.showToast(event.context, false, decoded['message'], 2);
+          // var decoded = jsonDecode(response.data);
+          Navigator.push(
+            event.context,
+            MaterialPageRoute(
+              builder: (context) => SuccessPage(),
+            ),
+          );
+          // Utils.showToast(event.context, false, decoded['message'], 2);
         } else {
           var decoded = jsonDecode(response.data);
           Utils.showToast(event.context, true, decoded["message"], 2);

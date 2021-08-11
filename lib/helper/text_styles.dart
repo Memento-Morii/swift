@@ -8,9 +8,19 @@ class CustomTextStyles {
     fontSize: 38,
     color: CustomColors.primaryColor,
   );
+
   static TextStyle headlineText2 = GoogleFonts.poppins(
     fontWeight: FontWeight.normal,
     fontSize: 23,
+  );
+  static TextStyle headlineText3 = GoogleFonts.poppins(
+    fontWeight: FontWeight.w700,
+    fontSize: 25,
+    color: CustomColors.primaryColor,
+  );
+  static TextStyle bigBoldText = GoogleFonts.poppins(
+    fontWeight: FontWeight.bold,
+    fontSize: 25,
   );
   static TextStyle normalWhiteText = GoogleFonts.poppins(
     fontSize: 18,
@@ -44,6 +54,11 @@ class CustomTextStyles {
   static TextStyle normalText = GoogleFonts.poppins(
     fontWeight: FontWeight.normal,
     fontSize: 12,
+  );
+  static TextStyle normalColoredText = GoogleFonts.poppins(
+    fontWeight: FontWeight.normal,
+    fontSize: 12,
+    color: CustomColors.primaryColor,
   );
   static TextStyle boldText = GoogleFonts.poppins(
     fontWeight: FontWeight.bold,

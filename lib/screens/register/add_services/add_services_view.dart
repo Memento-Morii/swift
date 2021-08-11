@@ -50,18 +50,18 @@ class _AddServiceState extends State<AddService> {
     return names;
   }
 
-  getCategories({List<ServiceModel> services, String name}) {
-    categories.clear();
-    services.forEach((element) {
-      if (element.name == name) {
-        element.serviceCategories.forEach((element) {
-          categories.add(element);
-        });
-        _requestModel.serviceId = element.id;
-      }
-    });
-    return categories;
-  }
+  // getCategories({List<ServiceModel> services, String name}) {
+  //   categories.clear();
+  //   services.forEach((element) {
+  //     if (element.name == name) {
+  //       element.serviceCategories.forEach((element) {
+  //         categories.add(element);
+  //       });
+  //       _requestModel.serviceId = element.id;
+  //     }
+  //   });
+  //   return categories;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -98,10 +98,10 @@ class _AddServiceState extends State<AddService> {
                           spacing: 0,
                           radioButtonValue: (value) {
                             setState(() {
-                              getCategories(
-                                services: state.service,
-                                name: value,
-                              );
+                              // getCategories(
+                              //   services: state.service,
+                              //   name: value,
+                              // );
                             });
                           },
                           horizontal: false,

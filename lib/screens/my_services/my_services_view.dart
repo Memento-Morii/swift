@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swift/helper/text_styles.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
 
 class MyServices extends StatefulWidget {
@@ -11,7 +12,12 @@ class _MyServicesState extends State<MyServices> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: NavigatorDrawer(),
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          'MY SERVICES',
+          style: CustomTextStyles.bigWhiteText,
+        ),
+      ),
       body: Center(
         child: Text('My Services'),
       ),

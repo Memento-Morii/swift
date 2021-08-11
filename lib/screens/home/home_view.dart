@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/service_model.dart';
+import 'package:swift/screens/all_services/all_service_view.dart';
 import 'package:swift/screens/register/add_services/bloc/add_service_bloc.dart';
 import 'package:swift/screens/service_category/service_category.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
@@ -27,50 +31,189 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: NavigatorDrawer(),
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text(
+            'HOME',
+            style: CustomTextStyles.bigWhiteText,
+          ),
+        ),
         body: BlocProvider(
           create: (context) => AddServiceBloc(),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
             child: BlocBuilder<AddServiceBloc, AddServiceState>(
               bloc: _serviceBloc,
               builder: (context, state) {
                 if (state is AddServiceInitial) {
                   return Center(child: CircularProgressIndicator());
                 } else if (state is AddServiceLoaded) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Services",
-                        style: CustomTextStyles.headlineText2,
-                      ),
-                      SizedBox(height: 20),
-                      Container(
-                        height: 100,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: state.service.length,
-                          itemBuilder: (context, index) {
-                            ServiceModel _result = state.service[index];
-                            return InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ServiceCategory(
-                                      service: _result,
-                                    ),
-                                  ),
+                  return SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          TextFormField(
+                            style: CustomTextStyles.textField,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Colors.red,
+                                size: 30,
+                              ),
+                              contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 20.0),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(),
+                              ),
+                              hintText: "Search for Services",
+                              hintStyle: CustomTextStyles.textField,
+                              fillColor: Colors.transparent,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Container(
+                            height: 290,
+                            child: GridView.builder(
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 5,
+                                mainAxisSpacing: 5,
+                                childAspectRatio: 0.8,
+                              ),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: state.service.length,
+                              itemBuilder: (context, index) {
+                                ServiceModel _result = state.service[index];
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ServiceCategory(
+                                          serviceId: _result.id,
+                                          name: _result.name,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: ServiceCard(_result),
                                 );
                               },
-                              child: ServiceCard(_result),
-                            );
-                          },
-                        ),
-                      )
-                    ],
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Center(
+                            child: Container(
+                              height: 40,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                color: CustomColors.primaryColor,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AllService(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  "View All Services",
+                                  style: CustomTextStyles.normalWhiteText,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            "Frequent Service",
+                            style: CustomTextStyles.mediumText,
+                          ),
+                          SizedBox(height: 20),
+                          Container(
+                            height: 100,
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              itemCount: 5,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return ServiceCard(
+                                  state.service[index],
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return SizedBox(width: 20);
+                              },
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Center(
+                            child: Text(
+                              "ORDER USING",
+                              style: CustomTextStyles.coloredBold,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Center(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Image.asset(
+                                  "assets/phone_green.png",
+                                  height: 60,
+                                ),
+                                SizedBox(width: 20),
+                                Image.asset(
+                                  "assets/telegram.png",
+                                  height: 60,
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Center(
+                            child: Text(
+                              "FOLLOW US",
+                              style: CustomTextStyles.coloredBold,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            // mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Image.asset(
+                                "assets/telegram.png",
+                                height: 40,
+                              ),
+                              Image.asset(
+                                "assets/instagram.png",
+                                height: 40,
+                              ),
+                              Image.asset(
+                                "assets/facebook.png",
+                                height: 40,
+                              ),
+                              Image.asset(
+                                "assets/whatsapp.png",
+                                height: 40,
+                              ),
+                              Image.asset(
+                                "assets/twitter.png",
+                                height: 40,
+                              ),
+                              Image.asset(
+                                "assets/tiktok.png",
+                                height: 40,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   );
                 } else {
                   return Text("Loaded");

@@ -115,7 +115,17 @@ class Repositories {
   // SERVICES
   Future<Response> getServices() async {
     try {
-      var response = await _dio.get("$baseUrl/service/all/", options: options);
+      var response = await _dio.get("$baseUrl/service", options: options);
+      return response;
+    } catch (_) {
+      print(_);
+      return null;
+    }
+  }
+
+  Future<Response> getServicesCategories(int serviceId) async {
+    try {
+      var response = await _dio.get("$baseUrl/service-categories/$serviceId", options: options);
       return response;
     } catch (_) {
       print(_);

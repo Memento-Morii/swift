@@ -3,12 +3,15 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:swift/helper/text_styles.dart';
 
 class Utils {
-  static showToast(
-      BuildContext context, bool isError, String message, int duration) {
+  static showToast(BuildContext context, bool isError, String message, int duration) {
     return showToastWidget(
       Material(
         elevation: 10,
-        color: isError ? Colors.red : Colors.green,
+        color: isError == null
+            ? Colors.grey[400]
+            : isError
+                ? Colors.red
+                : Colors.green,
         borderRadius: BorderRadius.circular(50),
         child: Container(
           height: 70,

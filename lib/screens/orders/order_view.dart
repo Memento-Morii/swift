@@ -25,7 +25,12 @@ class _OrderState extends State<Order> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: NavigatorDrawer(),
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          'ORDER',
+          style: CustomTextStyles.bigWhiteText,
+        ),
+      ),
       body: BlocProvider(
         create: (context) => OrderBloc(),
         child: BlocBuilder<OrderBloc, OrderState>(
