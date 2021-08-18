@@ -14,7 +14,7 @@ class Utils {
                 : Colors.green,
         borderRadius: BorderRadius.circular(50),
         child: Container(
-          height: 70,
+          height: 80,
           padding: EdgeInsets.fromLTRB(20, 20, 10, 10),
           width: MediaQuery.of(context).size.width * 0.8,
           child: Text(

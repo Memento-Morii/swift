@@ -1,19 +1,20 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:location/location.dart';
+import 'package:provider/provider.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:swift/l10n/l10n.dart';
 import 'package:swift/models/service_model.dart';
+import 'package:swift/provider/local_provider.dart';
 import 'package:swift/screens/all_services/all_service_view.dart';
 import 'package:swift/screens/register/add_services/bloc/add_service_bloc.dart';
 import 'package:swift/screens/service_category/service_category.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
 import 'package:swift/widgets/service_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Home extends StatefulWidget {
-  Home({this.response});
-  final response;
   @override
   _HomeState createState() => _HomeState();
 }
@@ -29,6 +30,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    // var location = Location();
+    // location.getLocation().then((value) => print(value.latitude));
     return Scaffold(
         drawer: NavigatorDrawer(),
         appBar: AppBar(
@@ -71,36 +74,32 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           SizedBox(height: 20),
-                          Container(
-                            height: 290,
-                            child: GridView.builder(
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 5,
-                                childAspectRatio: 0.8,
-                              ),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: state.service.length,
-                              itemBuilder: (context, index) {
-                                ServiceModel _result = state.service[index];
-                                return InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ServiceCategory(
-                                          serviceId: _result.id,
-                                          name: _result.name,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: ServiceCard(_result),
-                                );
-                              },
+                          GridView.builder(
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                              crossAxisSpacing: 5,
+                              mainAxisSpacing: 5,
                             ),
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: 8,
+                            itemBuilder: (context, index) {
+                              ServiceModel _result = state.service[index];
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ServiceCategory(
+                                        serviceId: _result.id,
+                                        name: _result.name,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: ServiceCard(result: _result),
+                              );
+                            },
                           ),
                           SizedBox(height: 20),
                           Center(
@@ -113,6 +112,10 @@ class _HomeState extends State<Home> {
                               ),
                               child: TextButton(
                                 onPressed: () {
+                                  // Locale locale = L10n.all[0];
+                                  // final provider =
+                                  //     Provider.of<LocalProvider>(context, listen: false);
+                                  // provider.setLocale(locale);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -129,7 +132,7 @@ class _HomeState extends State<Home> {
                           ),
                           SizedBox(height: 20),
                           Text(
-                            "Frequent Service",
+                            "Frequent Services",
                             style: CustomTextStyles.mediumText,
                           ),
                           SizedBox(height: 20),
@@ -141,7 +144,8 @@ class _HomeState extends State<Home> {
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
                                 return ServiceCard(
-                                  state.service[index],
+                                  result: state.service[index],
+                                  width: 80,
                                 );
                               },
                               separatorBuilder: (context, index) {

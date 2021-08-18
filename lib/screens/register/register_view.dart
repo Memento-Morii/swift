@@ -1,10 +1,12 @@
 import 'package:custom_radio_grouped_button/CustomButtons/ButtonTextStyle.dart';
 import 'package:custom_radio_grouped_button/CustomButtons/CustomRadioButton.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/signup_request_model.dart';
+import 'package:swift/screens/otp/otp_view.dart';
 import 'package:swift/screens/register/house_info.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/custom_textfield.dart';
@@ -17,6 +19,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  FirebaseAuth _auth = FirebaseAuth.instance;
   RegisterBloc _registerBloc;
   bool isLogin;
   @override
@@ -29,7 +32,6 @@ class _RegisterState extends State<Register> {
   TextEditingController fnameController = TextEditingController();
   TextEditingController lnameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
   String role;
   TextEditingController emailController = TextEditingController();
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -58,9 +60,19 @@ class _RegisterState extends State<Register> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             SizedBox(height: 20),
-                            Text(
-                              isLogin ? 'Welcome' : 'Create',
-                              style: CustomTextStyles.headlineText,
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => OTPView(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                isLogin ? 'Welcome' : 'Create',
+                                style: CustomTextStyles.headlineText,
+                              ),
                             ),
                             Text(
                               isLogin ? 'Back.' : 'Account.',
@@ -90,11 +102,6 @@ class _RegisterState extends State<Register> {
                               iconUrl: 'assets/phone.png',
                               controller: phoneController,
                               textInputType: TextInputType.phone,
-                            ),
-                            CustomField(
-                              hintText: "Password",
-                              iconUrl: 'assets/lock.png',
-                              controller: passwordController,
                             ),
                             SizedBox(height: 20),
                             isLogin
@@ -157,13 +164,31 @@ class _RegisterState extends State<Register> {
                               color: CustomColors.primaryColor,
                               onPressed: isLogin
                                   ? () async {
-                                      if (_formkey.currentState.validate()) {
-                                        _registerBloc.add(Login(
-                                          context: context,
-                                          phone: phoneController.text.trim(),
-                                          password: passwordController.text.trim(),
-                                        ));
-                                      }
+                                      await _auth.verifyPhoneNumber(
+                                        phoneNumber: phoneController.text,
+                                        verificationCompleted: (phoneCred) async {},
+                                        verificationFailed: (verificationFailed) async {
+                                          print(verificationFailed.message);
+                                        },
+                                        codeSent: (verifcationId, resendingToken) {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => OTPView(
+                                                phone: phoneController.text,
+                                                verificationId: verifcationId,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        codeAutoRetrievalTimeout: (verifcationId) {},
+                                      );
+                                      // if (_formkey.currentState.validate()) {
+                                      //   _registerBloc.add(Login(
+                                      //     context: context,
+                                      //     phone: phoneController.text.trim(),
+                                      //   ));
+                                      // }
                                     }
                                   : () {
                                       if (_formkey.currentState.validate()) {
@@ -171,7 +196,6 @@ class _RegisterState extends State<Register> {
                                           firstName: fnameController.text.trim(),
                                           lastName: lnameController.text.trim(),
                                           phone: phoneController.text.trim(),
-                                          password: passwordController.text.trim(),
                                         );
                                         Navigator.push(
                                           context,

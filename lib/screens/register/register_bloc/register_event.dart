@@ -4,9 +4,8 @@ part of 'register_bloc.dart';
 abstract class RegisterEvent {}
 
 class Login extends RegisterEvent {
-  Login({this.phone, this.password, this.context});
+  Login({this.phone, this.context});
   final String phone;
-  final String password;
   final BuildContext context;
 }
 

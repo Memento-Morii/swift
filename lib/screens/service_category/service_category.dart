@@ -5,6 +5,7 @@ import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/service_category_model.dart';
 import 'package:swift/screens/create_order/create_order_view.dart';
 import 'package:swift/screens/service_category/bloc/service_categories_bloc.dart';
+import 'package:swift/widgets/custom_network_image.dart';
 
 class ServiceCategory extends StatefulWidget {
   ServiceCategory({this.serviceId, this.name});
@@ -62,9 +63,8 @@ class _ServiceCategoryState extends State<ServiceCategory> {
                         children: <Widget>[
                           Row(
                             children: [
-                              Image.asset(
-                                "assets/mechanic.png",
-                                height: 50,
+                              CustomNetworkImage(
+                                imgUrl: _category.image,
                               ),
                               SizedBox(width: 10),
                               Container(

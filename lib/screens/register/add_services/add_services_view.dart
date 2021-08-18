@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
@@ -26,8 +27,6 @@ class _AddServiceState extends State<AddService> {
     description: "This is my description",
     address: "some address",
     document: "test",
-    lat: 4.54,
-    lng: 32.34,
     timeRangeFrom: DateTime.now(),
     timeRangeTo: DateTime.now(),
   );
@@ -50,18 +49,18 @@ class _AddServiceState extends State<AddService> {
     return names;
   }
 
-  // getCategories({List<ServiceModel> services, String name}) {
-  //   categories.clear();
-  //   services.forEach((element) {
-  //     if (element.name == name) {
-  //       element.serviceCategories.forEach((element) {
-  //         categories.add(element);
-  //       });
-  //       _requestModel.serviceId = element.id;
-  //     }
-  //   });
-  //   return categories;
-  // }
+  getCategories({List<ServiceModel> services, String name}) {
+    categories.clear();
+    services.forEach((element) {
+      if (element.name == name) {
+        element.serviceCategories.forEach((element) {
+          categories.add(element);
+        });
+        _requestModel.serviceId = element.id;
+      }
+    });
+    return categories;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,10 +97,10 @@ class _AddServiceState extends State<AddService> {
                           spacing: 0,
                           radioButtonValue: (value) {
                             setState(() {
-                              // getCategories(
-                              //   services: state.service,
-                              //   name: value,
-                              // );
+                              getCategories(
+                                services: state.service,
+                                name: value,
+                              );
                             });
                           },
                           horizontal: false,
@@ -116,8 +115,7 @@ class _AddServiceState extends State<AddService> {
                             ? SizedBox()
                             : GridView.builder(
                                 shrinkWrap: true,
-                                gridDelegate:
-                                    SliverGridDelegateWithMaxCrossAxisExtent(
+                                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                                   maxCrossAxisExtent: 150,
                                   childAspectRatio: 3 / 2,
                                   crossAxisSpacing: 20,
@@ -127,8 +125,7 @@ class _AddServiceState extends State<AddService> {
                                 itemBuilder: (context, index) {
                                   return InkWell(
                                     onTap: () {
-                                      _requestModel.serviceCategoryId =
-                                          categories[index].id;
+                                      _requestModel.serviceCategoryId = categories[index].id;
                                       print(categories[index].id);
                                     },
                                     child: CategoryCard(
@@ -145,8 +142,7 @@ class _AddServiceState extends State<AddService> {
                           data: SliderThemeData(
                             showValueIndicator: ShowValueIndicator.always,
                             valueIndicatorColor: CustomColors.primaryColor,
-                            valueIndicatorTextStyle:
-                                CustomTextStyles.mediumText,
+                            valueIndicatorTextStyle: CustomTextStyles.mediumText,
                           ),
                           child: RangeSlider(
                               labels: RangeLabels(
@@ -163,8 +159,7 @@ class _AddServiceState extends State<AddService> {
                                 });
                                 _requestModel.priceRangeFrom =
                                     newRanges.start.round().ceilToDouble();
-                                _requestModel.priceRangeTo =
-                                    newRanges.end.round().ceilToDouble();
+                                _requestModel.priceRangeTo = newRanges.end.round().ceilToDouble();
                               }),
                         ),
                         SizedBox(height: 30),
@@ -176,8 +171,7 @@ class _AddServiceState extends State<AddService> {
                           data: SliderThemeData(
                             showValueIndicator: ShowValueIndicator.always,
                             valueIndicatorColor: CustomColors.primaryColor,
-                            valueIndicatorTextStyle:
-                                CustomTextStyles.mediumText,
+                            valueIndicatorTextStyle: CustomTextStyles.mediumText,
                           ),
                           child: RangeSlider(
                             activeColor: CustomColors.primaryColor,
@@ -225,6 +219,11 @@ class _AddServiceState extends State<AddService> {
         child: FloatingActionButton(
           backgroundColor: CustomColors.primaryColor,
           onPressed: () async {
+            var location = Location();
+            location.getLocation().then((value) {
+              _requestModel.lat = value.latitude;
+              _requestModel.lng = value.longitude;
+            });
             inspect(_requestModel);
             SharedPreferences prefs = await SharedPreferences.getInstance();
             var token = prefs.get("token");
@@ -234,12 +233,14 @@ class _AddServiceState extends State<AddService> {
               context: context,
             ));
           },
-          child: BlocBuilder<CreateServiceProviderBloc,
-              CreateServiceProviderState>(
+          child: BlocBuilder<CreateServiceProviderBloc, CreateServiceProviderState>(
             bloc: _serviceProviderBloc,
             builder: (context, state) {
               if (state is CreateServiceProviderInitial) {
-                return Icon(Icons.add);
+                return Icon(
+                  Icons.add,
+                  color: Colors.white,
+                );
               } else if (state is CreateServiceProviderLoading) {
                 return Center(child: CircularProgressIndicator());
               } else {

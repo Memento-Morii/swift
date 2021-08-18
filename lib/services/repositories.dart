@@ -27,7 +27,6 @@ class Repositories {
       "house_number": signupRequest.houseNumber,
       "block_number": signupRequest.blockNumber,
       "phone_number": signupRequest.phone,
-      "password": signupRequest.password,
     };
     try {
       Response response = await _dio.post(
@@ -45,11 +44,9 @@ class Repositories {
 
   Future<Response> signIn({
     String phone,
-    String password,
   }) async {
     Map<String, String> data = {
       "phone_number": phone,
-      "password": password,
     };
     try {
       Response response = await _dio.post(

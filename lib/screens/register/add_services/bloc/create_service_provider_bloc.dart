@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/models/service_provider_request_model.dart';
 import 'package:swift/screens/home/home_view.dart';
 import 'package:swift/services/repositories.dart';
@@ -24,6 +25,8 @@ class CreateServiceProviderBloc
           request: event.request,
           token: event.token,
         );
+        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+        sharedPreferences.setInt("serviceProvider", 2);
         if (response.statusCode == 200) {
           Navigator.pushReplacement(
             event.context,

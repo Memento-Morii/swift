@@ -4,6 +4,7 @@ import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/service_model.dart';
 import 'package:swift/screens/register/add_services/bloc/add_service_bloc.dart';
+import 'package:swift/widgets/custom_network_image.dart';
 
 class AllService extends StatefulWidget {
   @override
@@ -62,6 +63,7 @@ class _AllServiceState extends State<AllService> {
                           SizedBox(height: 10),
                           ListView.separated(
                             shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
                             itemCount: _service.serviceCategories.length,
                             itemBuilder: (context, smallIndex) {
                               ServiceModel _categories = _service.serviceCategories[smallIndex];
@@ -80,10 +82,9 @@ class _AllServiceState extends State<AllService> {
                                       _categories.name,
                                       style: CustomTextStyles.boldMediumText,
                                     ),
-                                    Image.asset(
-                                      "assets/mechanic.png",
-                                      height: 50,
-                                    ),
+                                    CustomNetworkImage(
+                                      imgUrl: _categories.image,
+                                    )
                                   ],
                                 ),
                               );

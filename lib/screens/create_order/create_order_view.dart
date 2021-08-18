@@ -7,6 +7,7 @@ import 'package:swift/models/order_request_model.dart';
 import 'package:swift/models/service_category_model.dart';
 import 'package:swift/screens/create_order/bloc/create_order_bloc.dart';
 import 'package:swift/widgets/custom_button.dart';
+import 'package:swift/widgets/custom_network_image.dart';
 import 'package:swift/widgets/myTextField.dart';
 
 class CreateOrderView extends StatefulWidget {
@@ -37,7 +38,7 @@ class _CreateOrderViewState extends State<CreateOrderView> {
         create: (context) => CreateOrderBloc(),
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(50, 0, 20, 0),
+            padding: const EdgeInsets.fromLTRB(50, 10, 20, 0),
             child: BlocBuilder<CreateOrderBloc, CreateOrderState>(
               bloc: _orderBloc,
               builder: (context, state) {
@@ -55,19 +56,10 @@ class _CreateOrderViewState extends State<CreateOrderView> {
                           ),
                         ),
                         SizedBox(width: 20),
-                        Container(
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: CustomColors.primaryColor,
-                              width: 3,
-                            ),
-                          ),
-                          child: Image.asset(
-                            "assets/mechanic.png",
-                            height: 80,
-                            fit: BoxFit.cover,
-                          ),
+                        CustomNetworkImage(
+                          height: 110,
+                          width: 110,
+                          imgUrl: widget.serviceCategory.image,
                         )
                       ],
                     ),
@@ -167,131 +159,3 @@ class _CreateOrderViewState extends State<CreateOrderView> {
     );
   }
 }
-
-// showDialog(
-                              //   context: context,
-                              //   builder: (context) => AlertDialog(
-                              //     title: Text(widget.service.name),
-                              //     titleTextStyle: CustomTextStyles.boldTitleText,
-                              //     content: StatefulBuilder(
-                              //       builder: (BuildContext context, StateSetter setState) {
-                              //         return Container(
-                              //           height: MediaQuery.of(context).size.height * 0.5,
-                              //           child: SingleChildScrollView(
-                              //             child: Column(
-                              //               crossAxisAlignment: CrossAxisAlignment.start,
-                              //               children: <Widget>[
-                              //                 Text(
-                              //                   _category.name,
-                              //                   style: CustomTextStyles.boldText,
-                              //                 ),
-                              //                 SizedBox(height: 20),
-                              //                 Text(
-                              //                   "Do you want a new address?",
-                              //                   style: CustomTextStyles.textField,
-                              //                 ),
-                              //                 Row(
-                              //                   children: [
-                              //                     Text(
-                              //                       "Yes",
-                              //                       style: CustomTextStyles.boldMediumText,
-                              //                     ),
-                              //                     Radio(
-                              //                       value: true,
-                              //                       groupValue: isAddress,
-                              //                       onChanged: (value) {
-                              //                         print(value);
-                              //                         setState(() {
-                              //                           isAddress = value;
-                              //                         });
-                              //                       },
-                              //                     ),
-                              //                     Text(
-                              //                       "No",
-                              //                       style: CustomTextStyles.boldMediumText,
-                              //                     ),
-                              //                     Radio(
-                              //                       value: false,
-                              //                       groupValue: isAddress,
-                              //                       onChanged: (value) {
-                              //                         print(value);
-                              //                         setState(() {
-                              //                           isAddress = value;
-                              //                         });
-                              //                       },
-                              //                     ),
-                              //                   ],
-                              //                 ),
-                              //                 Text(
-                              //                   "House Number",
-                              //                   style: CustomTextStyles.textField,
-                              //                 ),
-                              //                 TextFormField(
-                              //                   controller: houseController,
-                              //                   enabled: isAddress ? true : false,
-                              //                 ),
-                              //                 SizedBox(height: 10),
-                              //                 Text(
-                              //                   "Block Number",
-                              //                   style: CustomTextStyles.textField,
-                              //                 ),
-                              //                 TextFormField(
-                              //                   controller: blockController,
-                              //                   enabled: isAddress ? true : false,
-                              //                 ),
-                              //                 SizedBox(height: 10),
-                              //                 Text(
-                              //                   "Site Name",
-                              //                   style: CustomTextStyles.textField,
-                              //                 ),
-                              //                 TextFormField(
-                              //                   controller: siteController,
-                              //                   enabled: isAddress ? true : false,
-                              //                 ),
-                              //               ],
-                              //             ),
-                              //           ),
-                              //         );
-                              //       },
-                              //     ),
-                              //     actions: [
-                              //       TextButton(
-                              //         onPressed: () {
-                              //           Navigator.pop(context);
-                              //         },
-                              //         child: Text(
-                              //           'Cancel',
-                              //           style: CustomTextStyles.boldMediumText,
-                              //         ),
-                              //       ),
-                              //       TextButton(
-                              //         onPressed: () async {
-                              //           // print(_category.id);
-                              //           //
-                              //           SharedPreferences prefs =
-                              //               await SharedPreferences.getInstance();
-                              //           var token = prefs.get("token");
-                              //           OrderRequest orderRequest = OrderRequest(
-                              //             lat: "0.01",
-                              //             lng: "0.22",
-                              //             blockNumber: blockController.text.trim(),
-                              //             houseNumber: houseController.text.trim(),
-                              //             siteName: siteController.text.trim(),
-                              //             serviceId: widget.service.id,
-                              //             serviceCategoryId: _category.id,
-                              //           );
-                              //           _orderBloc.add(OrderEvent(
-                              //             orderRequest: orderRequest,
-                              //             isAddress: isAddress,
-                              //             context: context,
-                              //             token: token,
-                              //           ));
-                              //         },
-                              //         child: Text(
-                              //           'Submit',
-                              //           style: CustomTextStyles.coloredBold,
-                              //         ),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // );
