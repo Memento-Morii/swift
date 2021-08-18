@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "50887593327",
+    "project_id": "swift-68dd2",
+    "storage_bucket": "swift-68dd2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50887593327:android:fac2caccf95bedb5fd2c9a",
+        "android_client_info": {
+          "package_name": "com.example.swift"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50887593327-l4l278lvr2ppbtl40qsps79rpvq1ut83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMYb5NodNhcJxM0kBjlpv0LV02aaa4xnY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50887593327-l4l278lvr2ppbtl40qsps79rpvq1ut83.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

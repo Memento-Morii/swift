@@ -3,7 +3,6 @@ class SignupRequest {
     this.firstName,
     this.lastName,
     this.phone,
-    this.password,
     this.houseNumber,
     this.siteNumber,
     this.blockNumber,
@@ -12,7 +11,6 @@ class SignupRequest {
   String firstName;
   String lastName;
   String phone;
-  String password;
   String houseNumber;
   String siteNumber;
   String blockNumber;
