@@ -21,19 +21,18 @@ class CreateServiceProviderBloc
     if (event is CreateServiceProvider) {
       yield CreateServiceProviderLoading();
       try {
+        print("Im here");
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        var token = prefs.get("token");
         var response = await _repos.createServiceProvider(
           request: event.request,
-          token: event.token,
+          token: token,
         );
         SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
         sharedPreferences.setInt("serviceProvider", 2);
         if (response.statusCode == 200) {
-          Navigator.pushReplacement(
-            event.context,
-            MaterialPageRoute(
-              builder: (context) => Home(),
-            ),
-          );
+          print("success");
+          yield CreateServiceProviderSuccess();
         } else {
           yield CreateServiceProviderFailed(message: response.data.toString());
         }

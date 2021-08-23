@@ -1,6 +1,5 @@
 import 'package:custom_radio_grouped_button/CustomButtons/ButtonTextStyle.dart';
 import 'package:custom_radio_grouped_button/CustomButtons/CustomRadioButton.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/colors.dart';
@@ -20,7 +19,6 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
-  FirebaseAuth _auth = FirebaseAuth.instance;
   RegisterBloc _registerBloc;
   void initState() {
     _registerBloc = RegisterBloc();
@@ -129,25 +127,25 @@ class _SignUpViewState extends State<SignUpView> {
                                 // enableShape: true,
                               ),
                             ),
-                            SizedBox(height: 20),
-                            Center(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  CircleAvatar(
-                                    radius: 25,
-                                    backgroundColor: Color(0xff3b5999),
-                                    backgroundImage: AssetImage('assets/facebook-logo.png'),
-                                  ),
-                                  SizedBox(width: 30),
-                                  CircleAvatar(
-                                    radius: 25,
-                                    backgroundColor: Colors.transparent,
-                                    backgroundImage: AssetImage('assets/gmail.png'),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // SizedBox(height: 20),
+                            // Center(
+                            //   child: Row(
+                            //     mainAxisSize: MainAxisSize.min,
+                            //     children: <Widget>[
+                            //       CircleAvatar(
+                            //         radius: 25,
+                            //         backgroundColor: Color(0xff3b5999),
+                            //         backgroundImage: AssetImage('assets/facebook-logo.png'),
+                            //       ),
+                            //       SizedBox(width: 30),
+                            //       CircleAvatar(
+                            //         radius: 25,
+                            //         backgroundColor: Colors.transparent,
+                            //         backgroundImage: AssetImage('assets/gmail.png'),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                             SizedBox(height: 30),
                             CustomButton(
                               color: CustomColors.primaryColor,

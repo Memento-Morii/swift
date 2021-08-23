@@ -22,6 +22,11 @@ class CustomTextStyles {
     fontWeight: FontWeight.bold,
     fontSize: 25,
   );
+  static TextStyle bigBoldColoredText = GoogleFonts.poppins(
+    fontWeight: FontWeight.bold,
+    fontSize: 25,
+    color: CustomColors.primaryColor,
+  );
   static TextStyle normalWhiteText = GoogleFonts.poppins(
     fontSize: 18,
     color: Colors.white,

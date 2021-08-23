@@ -6,11 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/models/signup_request_model.dart';
-import 'package:swift/screens/home/home_view.dart';
 import 'package:swift/screens/otp/otp_view.dart';
-import 'package:swift/screens/register/add_services/add_services_view.dart';
 import 'package:swift/services/repositories.dart';
 part 'register_event.dart';
 part 'register_state.dart';
@@ -30,17 +27,34 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           signupRequest: event.signupRequest,
         );
         if (response.statusCode == 200) {
-          // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-          // var token = jsonDecode(response.data)['token'];
-          // sharedPreferences.setInt("serviceProvider", 1);
-          // print(token);
-          // sharedPreferences.setString("token", token);
-          Navigator.pushReplacement(
-            event.context,
-            MaterialPageRoute(
-              builder: (context) => event.role == "User" ? Home() : AddService(),
-            ),
+          await _auth.verifyPhoneNumber(
+            phoneNumber: event.signupRequest.phone,
+            verificationCompleted: (phoneCred) async {},
+            verificationFailed: (verificationFailed) async {
+              print(verificationFailed.message);
+            },
+            codeSent: (verifcationId, resendingToken) {
+              Navigator.push(
+                event.context,
+                MaterialPageRoute(
+                  builder: (context) => OTPView(
+                    phone: event.signupRequest.phone,
+                    verificationId: verifcationId,
+                    response: response.data,
+                    role: event.role,
+                  ),
+                ),
+              );
+            },
+            codeAutoRetrievalTimeout: (verifcationId) {},
           );
+
+          // Navigator.pushReplacement(
+          //   event.context,
+          //   MaterialPageRoute(
+          //     builder: (context) => event.role == "User" ? Home() : AddService(),
+          //   ),
+          // );
         } else {
           var some = jsonDecode(response.data);
           print(some);
@@ -59,7 +73,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         );
         if (response.statusCode == 200) {
           await _auth.verifyPhoneNumber(
-            phoneNumber: event.phone,
+            phoneNumber: "+251${event.phone}",
             verificationCompleted: (phoneCred) async {},
             verificationFailed: (verificationFailed) async {
               print(verificationFailed.message);
@@ -78,13 +92,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
             },
             codeAutoRetrievalTimeout: (verifcationId) {},
           );
-          // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-          // var token = jsonDecode(response.data)['token'];
-          // var serviceProvider = jsonDecode(response.data)['results']['is_service_provider'];
-          // sharedPreferences.setString("token", token);
-          // sharedPreferences.setInt("serviceProvider", serviceProvider);
-
-          // yield RegisterInitial();
         } else {
           var some = jsonDecode(response.data);
           print(some);
@@ -98,3 +105,13 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     }
   }
 }
+
+
+
+          // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+          // var token = jsonDecode(response.data)['token'];
+          // var serviceProvider = jsonDecode(response.data)['results']['is_service_provider'];
+          // sharedPreferences.setString("token", token);
+          // sharedPreferences.setInt("serviceProvider", serviceProvider);
+
+          // yield RegisterInitial();

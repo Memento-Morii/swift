@@ -1,9 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
-import 'package:swift/screens/otp/otp_view.dart';
 import 'package:swift/screens/register/register_bloc/register_bloc.dart';
 import 'package:swift/screens/register/signup_view.dart';
 import 'package:swift/widgets/custom_button.dart';
@@ -15,7 +13,6 @@ class SignInView extends StatefulWidget {
 }
 
 class _SignInViewState extends State<SignInView> {
-  FirebaseAuth _auth = FirebaseAuth.instance;
   RegisterBloc _registerBloc;
   @override
   void initState() {
@@ -44,19 +41,9 @@ class _SignInViewState extends State<SignInView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           SizedBox(height: 20),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => OTPView(),
-                                ),
-                              );
-                            },
-                            child: Text(
-                              'Welcome',
-                              style: CustomTextStyles.headlineText,
-                            ),
+                          Text(
+                            'Welcome',
+                            style: CustomTextStyles.headlineText,
                           ),
                           Text(
                             'Back.',
@@ -77,29 +64,10 @@ class _SignInViewState extends State<SignInView> {
                           CustomButton(
                             color: CustomColors.primaryColor,
                             onPressed: () async {
-                              // await _auth.verifyPhoneNumber(
-                              //   phoneNumber: phoneController.text,
-                              //   verificationCompleted: (phoneCred) async {},
-                              //   verificationFailed: (verificationFailed) async {
-                              //     print(verificationFailed.message);
-                              //   },
-                              //   codeSent: (verifcationId, resendingToken) {
-                              //     Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //         builder: (context) => OTPView(
-                              //           phone: phoneController.text,
-                              //           verificationId: verifcationId,
-                              //         ),
-                              //       ),
-                              //     );
-                              //   },
-                              //   codeAutoRetrievalTimeout: (verifcationId) {},
-                              // );
                               if (_formkey.currentState.validate()) {
                                 _registerBloc.add(Login(
                                   context: context,
-                                  phone: phoneController.text.trim(),
+                                  phone: phoneController.text, //replaceFirst(RegExp(r'0'), '');
                                 ));
                               }
                             },

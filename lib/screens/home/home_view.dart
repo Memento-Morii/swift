@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:location/location.dart';
-import 'package:provider/provider.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
-import 'package:swift/l10n/l10n.dart';
 import 'package:swift/models/service_model.dart';
-import 'package:swift/provider/local_provider.dart';
 import 'package:swift/screens/all_services/all_service_view.dart';
 import 'package:swift/screens/register/add_services/bloc/add_service_bloc.dart';
 import 'package:swift/screens/service_category/service_category.dart';
@@ -112,10 +108,6 @@ class _HomeState extends State<Home> {
                               ),
                               child: TextButton(
                                 onPressed: () {
-                                  // Locale locale = L10n.all[0];
-                                  // final provider =
-                                  //     Provider.of<LocalProvider>(context, listen: false);
-                                  // provider.setLocale(locale);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -220,7 +212,12 @@ class _HomeState extends State<Home> {
                     ),
                   );
                 } else {
-                  return Text("Loaded");
+                  return Center(
+                    child: Text(
+                      "Loaded",
+                      style: CustomTextStyles.errorText,
+                    ),
+                  );
                 }
               },
             ),

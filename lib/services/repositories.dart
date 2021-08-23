@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:swift/models/my_services_model.dart';
 import 'package:swift/models/order_request_model.dart';
 import 'package:swift/models/service_provider_request_model.dart';
 import 'package:swift/models/signup_request_model.dart';
@@ -165,9 +166,81 @@ class Repositories {
   }
 
   ///////////////////////////////////////////////////////////////////////
+  /// SERVICE PROVIDER
+  Future<Response> getServiceProvider(String token) async {
+    try {
+      var response = await _dio.get(
+        "$baseUrl/service-provider/user/services",
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status < 500;
+          },
+          headers: {"Authorization": "Bearer $token"},
+        ),
+      );
+      return response;
+    } catch (_) {
+      print(_);
+      return null;
+    }
+  }
+
+  Future<Response> updateMyService({String token, MyServicesModel myService}) async {
+    Map data = {
+      'uuid': myService.uuid,
+      'document': 'test',
+      'lat': myService.lat,
+      'lng': myService.lng,
+      'address': myService.address,
+      'price_range_from': myService.priceRangeFrom,
+      'price_range_to': myService.priceRangeTo,
+      'time_range_from': "2022-07-15 12:39:58",
+      'time_range_to': "2022-07-15 12:39:58",
+      'service_id': myService.service.id,
+      'service_category_id': myService.serviceCategory.id,
+    };
+    try {
+      var response = await _dio.put(
+        "$baseUrl/service-provider/update",
+        data: data,
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status < 500;
+          },
+          headers: {"Authorization": "Bearer $token"},
+        ),
+      );
+      return response;
+    } catch (_) {
+      print(_);
+      return null;
+    }
+  }
+  ///////////////////////////////////////////////////////////////////////
 
   /// ORDERS
   Future<Response> getOrderHistory(String token) async {
+    try {
+      var response = await _dio.get(
+        "$baseUrl/order/user",
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status < 500;
+          },
+          headers: {"Authorization": "Bearer $token"},
+        ),
+      );
+      return response;
+    } catch (_) {
+      print(_);
+      return null;
+    }
+  }
+
+  Future<Response> getServiceProviderOrder(String token) async {
     try {
       var response = await _dio.get(
         "$baseUrl/order/user",

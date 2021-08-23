@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/service_model.dart';
+import 'package:swift/widgets/custom_network_image.dart';
 
 class CategoryCard extends StatelessWidget {
   CategoryCard(this.service);
@@ -8,15 +9,13 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Image.asset(
-            "assets/lock.png",
-            height: 50,
-            fit: BoxFit.contain,
-            width: MediaQuery.of(context).size.width,
+          CustomNetworkImage(
+            imgUrl: service.image,
           ),
+          SizedBox(height: 10),
           Text(
             service.name,
             style: CustomTextStyles.textField,

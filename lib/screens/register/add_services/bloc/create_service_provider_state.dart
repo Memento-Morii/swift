@@ -11,3 +11,5 @@ class CreateServiceProviderFailed extends CreateServiceProviderState {
   CreateServiceProviderFailed({this.message});
   final String message;
 }
+
+class CreateServiceProviderSuccess extends CreateServiceProviderState {}

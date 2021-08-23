@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/l10n/l10n.dart';
 import 'package:swift/provider/local_provider.dart';
-import 'package:swift/screens/register/register_view.dart';
 import 'package:swift/screens/register/signIn_view.dart';
 import 'helper/colors.dart';
 import 'screens/home/home_view.dart';

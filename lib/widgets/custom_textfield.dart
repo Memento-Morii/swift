@@ -3,12 +3,13 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:swift/helper/text_styles.dart';
 
 class CustomField extends StatelessWidget {
-  CustomField(
-      {this.hintText,
-      this.iconUrl,
-      this.isEmail = false,
-      this.controller,
-      this.textInputType = TextInputType.text});
+  CustomField({
+    this.hintText,
+    this.iconUrl,
+    this.isEmail = false,
+    this.controller,
+    this.textInputType = TextInputType.text,
+  });
   final String hintText;
   final String iconUrl;
   final TextEditingController controller;
@@ -28,6 +29,7 @@ class CustomField extends StatelessWidget {
         validator: isEmail ? email : required,
         controller: controller,
         style: CustomTextStyles.textField,
+        maxLength: hintText == 'Phone' ? 10 : null,
         keyboardType: textInputType,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),

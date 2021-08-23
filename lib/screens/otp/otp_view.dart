@@ -8,10 +8,12 @@ import 'package:swift/widgets/custom_button.dart';
 
 import 'bloc/otp_bloc.dart';
 
+// ignore: must_be_immutable
 class OTPView extends StatefulWidget {
-  OTPView({this.verificationId, this.phone, this.response});
+  OTPView({this.verificationId, this.phone, this.response, this.role});
   final String verificationId;
   final String phone;
+  final String role;
   var response;
 
   @override
@@ -77,6 +79,9 @@ class _OTPViewState extends State<OTPView> {
                   ),
                   fieldStyle: FieldStyle.underline,
                   style: CustomTextStyles.boldTitleText,
+                  onChanged: (pin) {
+                    print(pin);
+                  },
                   onCompleted: (pin) {
                     smsCode = pin;
                   },
@@ -91,6 +96,7 @@ class _OTPViewState extends State<OTPView> {
                       response: widget.response,
                       smsCode: smsCode,
                       verificationId: widget.verificationId,
+                      role: widget.role,
                     ),
                   );
                 },
@@ -103,7 +109,7 @@ class _OTPViewState extends State<OTPView> {
                         Icons.arrow_forward_ios_rounded,
                         color: Colors.white,
                       );
-                    } else if (state is OtpInitial) {
+                    } else if (state is OtpLoading) {
                       return SizedBox(
                         height: 20,
                         width: 20,
