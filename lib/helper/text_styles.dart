@@ -60,6 +60,11 @@ class CustomTextStyles {
     fontWeight: FontWeight.normal,
     fontSize: 12,
   );
+  static TextStyle normalText2 = GoogleFonts.poppins(
+    fontWeight: FontWeight.normal,
+    fontSize: 12,
+    color: Colors.white,
+  );
   static TextStyle normalColoredText = GoogleFonts.poppins(
     fontWeight: FontWeight.normal,
     fontSize: 12,

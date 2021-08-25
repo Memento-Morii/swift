@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/models/my_services_model.dart';
 import 'package:swift/models/order_request_model.dart';
 import 'package:swift/models/service_provider_request_model.dart';
@@ -14,7 +17,21 @@ class Repositories {
       return status < 500;
     },
   );
+  Future<Options> optionsWithHeader() async {
+    return Options(
+      followRedirects: false,
+      validateStatus: (status) {
+        return status < 500;
+      },
+      headers: {"Authorization": "Bearer ${await getToken()}"},
+    );
+  }
 
+  Future<String> getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.get("token");
+    return token;
+  }
   //USER
 
   Future<Response> signUp({
@@ -66,13 +83,7 @@ class Repositories {
     try {
       var response = await _dio.get(
         "$baseUrl/user/profile",
-        options: Options(
-          followRedirects: false,
-          validateStatus: (status) {
-            return status < 500;
-          },
-          headers: {"Authorization": "Bearer $token"},
-        ),
+        options: await optionsWithHeader(),
       );
       // print(response);
       return response;
@@ -94,13 +105,7 @@ class Repositories {
       var response = await _dio.put(
         "$baseUrl/user/update-profile",
         data: data,
-        options: Options(
-          followRedirects: false,
-          validateStatus: (status) {
-            return status < 500;
-          },
-          headers: {"Authorization": "Bearer $token"},
-        ),
+        options: await optionsWithHeader(),
       );
       return response;
     } catch (_) {
@@ -121,6 +126,16 @@ class Repositories {
     }
   }
 
+  Future<Response> getFrequentServices() async {
+    try {
+      var response = await _dio.get("$baseUrl/service/frequent-services", options: options);
+      return response;
+    } catch (_) {
+      print(_);
+      return null;
+    }
+  }
+
   Future<Response> getServicesCategories(int serviceId) async {
     try {
       var response = await _dio.get("$baseUrl/service-categories/$serviceId", options: options);
@@ -131,9 +146,24 @@ class Repositories {
     }
   }
 
-  Future<Response> createServiceProvider({ServiceProviderRequest request, String token}) async {
-    Map data = {
-      "document": request.document,
+  Future<Response> searchCategories(String searchTerm) async {
+    try {
+      var response = await _dio.get(
+        "$baseUrl/service-categories/search-service-categories?service_category_name=$searchTerm",
+        options: options,
+      );
+      return response;
+    } catch (_) {
+      print(_);
+      return null;
+    }
+  }
+
+  Future<Response> createServiceProvider(
+      {ServiceProviderRequest request, String token, File file}) async {
+    var data = FormData.fromMap({
+      "document":
+          file == null ? null : await MultipartFile.fromFile(file.path, filename: file.path),
       "lat": request.lat,
       "lng": request.lng,
       "address": request.address,
@@ -144,18 +174,12 @@ class Repositories {
       "service_id": request.serviceId,
       "service_category_id": request.serviceCategoryId,
       "description": request.description,
-    };
+    });
     try {
       var response = await _dio.post(
         "$baseUrl/service-provider/create",
         data: data,
-        options: Options(
-          followRedirects: false,
-          validateStatus: (status) {
-            return status < 500;
-          },
-          headers: {"Authorization": "Bearer $token"},
-        ),
+        options: await optionsWithHeader(),
       );
       print(response);
       return response;
@@ -171,13 +195,7 @@ class Repositories {
     try {
       var response = await _dio.get(
         "$baseUrl/service-provider/user/services",
-        options: Options(
-          followRedirects: false,
-          validateStatus: (status) {
-            return status < 500;
-          },
-          headers: {"Authorization": "Bearer $token"},
-        ),
+        options: await optionsWithHeader(),
       );
       return response;
     } catch (_) {
@@ -195,8 +213,8 @@ class Repositories {
       'address': myService.address,
       'price_range_from': myService.priceRangeFrom,
       'price_range_to': myService.priceRangeTo,
-      'time_range_from': "2022-07-15 12:39:58",
-      'time_range_to': "2022-07-15 12:39:58",
+      'time_range_from': myService.timeRangeFrom,
+      'time_range_to': myService.timeRangeTo,
       'service_id': myService.service.id,
       'service_category_id': myService.serviceCategory.id,
     };
@@ -204,13 +222,7 @@ class Repositories {
       var response = await _dio.put(
         "$baseUrl/service-provider/update",
         data: data,
-        options: Options(
-          followRedirects: false,
-          validateStatus: (status) {
-            return status < 500;
-          },
-          headers: {"Authorization": "Bearer $token"},
-        ),
+        options: await optionsWithHeader(),
       );
       return response;
     } catch (_) {
@@ -225,13 +237,7 @@ class Repositories {
     try {
       var response = await _dio.get(
         "$baseUrl/order/user",
-        options: Options(
-          followRedirects: false,
-          validateStatus: (status) {
-            return status < 500;
-          },
-          headers: {"Authorization": "Bearer $token"},
-        ),
+        options: await optionsWithHeader(),
       );
       return response;
     } catch (_) {
@@ -240,17 +246,11 @@ class Repositories {
     }
   }
 
-  Future<Response> getServiceProviderOrder(String token) async {
+  Future<Response> getServiceProviderOrder() async {
     try {
       var response = await _dio.get(
-        "$baseUrl/order/user",
-        options: Options(
-          followRedirects: false,
-          validateStatus: (status) {
-            return status < 500;
-          },
-          headers: {"Authorization": "Bearer $token"},
-        ),
+        "$baseUrl/order/service-provider",
+        options: await optionsWithHeader(),
       );
       return response;
     } catch (_) {
@@ -259,7 +259,7 @@ class Repositories {
     }
   }
 
-  Future<Response> createOrder(OrderRequest orderRequest, bool isAddress, String token) async {
+  Future<Response> createOrder(OrderRequest orderRequest, bool isAddress) async {
     try {
       Map dataWithAddress = {
         "service_id": orderRequest.serviceId,
@@ -277,17 +277,56 @@ class Repositories {
       var response = await _dio.post(
         "$baseUrl/order/create",
         data: isAddress ? dataWithAddress : dataWithOutAddress,
-        options: Options(
-          followRedirects: false,
-          validateStatus: (status) {
-            return status < 500;
-          },
-          headers: {"Authorization": "Bearer $token"},
-        ),
+        options: await optionsWithHeader(),
       );
       return response;
     } catch (_) {
       print(_);
+      return null;
+    }
+  }
+
+  Future<Response> declineOrder({String orderId, String token}) async {
+    Map data = {"order_id": orderId};
+    try {
+      var response = await _dio.post(
+        "$baseUrl/order/decline",
+        data: data,
+        options: await optionsWithHeader(),
+      );
+      return response;
+    } catch (_) {
+      print(_);
+      return null;
+    }
+  }
+
+  Future<Response> acceptOrder(String orderId) async {
+    Map data = {"order_id": orderId};
+    try {
+      var response = await _dio.post(
+        "$baseUrl/order/accept",
+        data: data,
+        options: await optionsWithHeader(),
+      );
+      return response;
+    } catch (_) {
+      print(_);
+      return null;
+    }
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  ///LOCATION
+  Future<Response> getLocation() async {
+    try {
+      var response = await _dio.get(
+        "$baseUrl/location/all",
+        options: await optionsWithHeader(),
+      );
+      return response;
+    } catch (e) {
+      print(e);
       return null;
     }
   }

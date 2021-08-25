@@ -4,9 +4,8 @@ part of 'create_order_bloc.dart';
 abstract class CreateOrderEvent {}
 
 class OrderEvent extends CreateOrderEvent {
-  OrderEvent({this.orderRequest, this.context, this.isAddress, this.token});
+  OrderEvent({this.orderRequest, this.context, this.isAddress});
   final OrderRequest orderRequest;
   final bool isAddress;
-  final String token;
   final BuildContext context;
 }

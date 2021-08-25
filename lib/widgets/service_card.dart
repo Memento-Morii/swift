@@ -8,30 +8,9 @@ class ServiceCard extends StatelessWidget {
   final double width;
   @override
   Widget build(BuildContext context) {
-    // print(result.image);
-    return
-        // Container(
-        //   padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-        //   height: 80,
-        //   width: 100,
-        //   decoration: BoxDecoration(
-        //       border: Border.all(
-        //     color: CustomColors.primaryColor,
-        //   )),
-        //   child:
-        //  Column(
-        //   children: <Widget>[
-        CustomNetworkImage(
+    return CustomNetworkImage(
       imgUrl: result.image,
       width: width,
     );
-    // SizedBox(height: 10),
-    //     Text(
-    //       result.name,
-    //       style: CustomTextStyles.normalColoredText,
-    //     )
-    //   ],
-    // ),
-    // );
   }
 }

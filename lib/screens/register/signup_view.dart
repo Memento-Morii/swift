@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:swift/helper/utils.dart';
 import 'package:swift/models/signup_request_model.dart';
 import 'package:swift/screens/otp/otp_view.dart';
 import 'package:swift/screens/register/register_bloc/register_bloc.dart';
@@ -14,6 +15,8 @@ import 'package:swift/widgets/custom_textfield.dart';
 import 'house_info.dart';
 
 class SignUpView extends StatefulWidget {
+  SignUpView(this.phone);
+  final String phone;
   @override
   _SignUpViewState createState() => _SignUpViewState();
 }
@@ -27,7 +30,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   TextEditingController fnameController = TextEditingController();
   TextEditingController lnameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+  // TextEditingController phoneController = TextEditingController();
   String role;
   TextEditingController emailController = TextEditingController();
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -88,12 +91,6 @@ class _SignUpViewState extends State<SignUpView> {
                               iconUrl: 'assets/user.png',
                               controller: lnameController,
                             ),
-                            CustomField(
-                              hintText: "Phone",
-                              iconUrl: 'assets/phone.png',
-                              controller: phoneController,
-                              textInputType: TextInputType.phone,
-                            ),
                             SizedBox(height: 20),
                             Container(
                               margin: EdgeInsets.only(left: 90),
@@ -151,20 +148,24 @@ class _SignUpViewState extends State<SignUpView> {
                               color: CustomColors.primaryColor,
                               onPressed: () async {
                                 if (_formkey.currentState.validate()) {
-                                  SignupRequest _signupRequest = SignupRequest(
-                                    firstName: fnameController.text.trim(),
-                                    lastName: lnameController.text.trim(),
-                                    phone: phoneController.text.trim(),
-                                  );
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => HouseInfo(
-                                        signupRequest: _signupRequest,
-                                        role: role,
+                                  if (role != null) {
+                                    SignupRequest _signupRequest = SignupRequest(
+                                      firstName: fnameController.text.trim(),
+                                      lastName: lnameController.text.trim(),
+                                      phone: widget.phone,
+                                    );
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => HouseInfo(
+                                          signupRequest: _signupRequest,
+                                          role: role,
+                                        ),
                                       ),
-                                    ),
-                                  );
+                                    );
+                                  } else {
+                                    Utils.showToast(context, true, "Choose your Role", 2);
+                                  }
                                 }
                               },
                               child: Icon(
@@ -188,33 +189,33 @@ class _SignUpViewState extends State<SignUpView> {
                                 }
                               },
                             ),
-                            SizedBox(height: 20),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text(
-                                    'Already have an account?',
-                                    style: CustomTextStyles.mediumText,
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => SignInView(),
-                                        ),
-                                      );
-                                    },
-                                    child: Text(
-                                      'Login',
-                                      style: CustomTextStyles.coloredBold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // SizedBox(height: 20),
+                            // Padding(
+                            //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                            //   child: Row(
+                            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //     children: <Widget>[
+                            //       Text(
+                            //         'Already have an account?',
+                            //         style: CustomTextStyles.mediumText,
+                            //       ),
+                            //       TextButton(
+                            //         onPressed: () {
+                            //           Navigator.pushReplacement(
+                            //             context,
+                            //             MaterialPageRoute(
+                            //               builder: (context) => SignInView(),
+                            //             ),
+                            //           );
+                            //         },
+                            //         child: Text(
+                            //           'Login',
+                            //           style: CustomTextStyles.coloredBold,
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                           ],
                         ),
                       );

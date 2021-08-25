@@ -4,8 +4,9 @@ import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:swift/screens/home/home_view.dart';
 import 'package:swift/widgets/custom_button.dart';
-
+import 'package:swift/screens/register/signup_view.dart';
 import 'bloc/otp_bloc.dart';
 
 // ignore: must_be_immutable
@@ -92,40 +93,66 @@ class _OTPViewState extends State<OTPView> {
                 onPressed: () async {
                   _otpBloc.add(
                     CheckOtp(
-                      context: context,
-                      response: widget.response,
                       smsCode: smsCode,
                       verificationId: widget.verificationId,
-                      role: widget.role,
+                      phone: widget.phone,
                     ),
                   );
                 },
                 color: CustomColors.primaryColor,
-                child: BlocBuilder<OtpBloc, OtpState>(
+                child: BlocListener<OtpBloc, OtpState>(
                   bloc: _otpBloc,
-                  builder: (context, state) {
-                    if (state is OtpInitial) {
-                      return Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: Colors.white,
-                      );
-                    } else if (state is OtpLoading) {
-                      return SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                          ),
+                  listener: (context, state) async {
+                    if (state is OtpLoaded) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Home(),
                         ),
+                        (Route<dynamic> route) => false,
                       );
-                    } else {
-                      return Text(
-                        'Failed',
-                        style: CustomTextStyles.normalWhiteText,
+                    }
+                    if (state is GoToRegister) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SignUpView(state.phone),
+                        ),
+                        (Route<dynamic> route) => false,
                       );
                     }
                   },
+                  child: BlocBuilder<OtpBloc, OtpState>(
+                    bloc: _otpBloc,
+                    builder: (context, state) {
+                      if (state is OtpInitial) {
+                        return Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: Colors.white,
+                        );
+                      } else if (state is OtpLoading) {
+                        return SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            ),
+                          ),
+                        );
+                      } else if (state is OtpLoaded || state is GoToRegister) {
+                        return Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: Colors.white,
+                        );
+                      } else {
+                        return Text(
+                          'Failed',
+                          style: CustomTextStyles.normalWhiteText,
+                        );
+                      }
+                    },
+                  ),
                 ),
               ),
               Row(

@@ -5,8 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/signup_request_model.dart';
+import 'package:swift/screens/home/home_view.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/custom_textfield.dart';
+import 'add_services/add_services_view.dart';
 import 'register_bloc/register_bloc.dart';
 
 class HouseInfo extends StatefulWidget {
@@ -106,25 +108,40 @@ class _HouseInfoState extends State<HouseInfo> {
                           );
                         }
                       },
-                      child: BlocBuilder<RegisterBloc, RegisterState>(
+                      child: BlocListener<RegisterBloc, RegisterState>(
                         bloc: _registerBloc,
-                        builder: (context, state) {
-                          if (state is RegisterLoading) {
-                            return SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                                ),
+                        listener: (context, state) {
+                          if (state is RegisterSuccess) {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    state.role == "User" ? Home() : AddService(false),
                               ),
+                              (Route<dynamic> route) => false,
                             );
                           }
-                          return Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            color: Colors.white,
-                          );
                         },
+                        child: BlocBuilder<RegisterBloc, RegisterState>(
+                          bloc: _registerBloc,
+                          builder: (context, state) {
+                            if (state is RegisterLoading) {
+                              return SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                  ),
+                                ),
+                              );
+                            }
+                            return Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: Colors.white,
+                            );
+                          },
+                        ),
                       ),
                     ),
                     SizedBox(height: 20),

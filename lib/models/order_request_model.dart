@@ -8,8 +8,8 @@ class OrderRequest {
     this.serviceId,
     this.serviceCategoryId,
   });
-  String lat;
-  String lng;
+  double lat;
+  double lng;
   String houseNumber;
   String siteName;
   String blockNumber;

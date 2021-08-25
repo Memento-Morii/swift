@@ -26,7 +26,6 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
         var response = await _repo.createOrder(
           event.orderRequest,
           event.isAddress,
-          event.token,
         );
         if (response.statusCode == 200) {
           // var decoded = jsonDecode(response.data);

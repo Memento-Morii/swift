@@ -17,7 +17,7 @@ class MyServicesModel {
     this.lat,
     this.lng,
     this.description,
-    // this.document,
+    this.document,
     this.address,
     this.priceRangeFrom,
     this.priceRangeTo,
@@ -33,12 +33,12 @@ class MyServicesModel {
   double lat;
   double lng;
   String description;
-  // dynamic document;
+  dynamic document;
   String address;
   int priceRangeFrom;
   int priceRangeTo;
-  DateTime timeRangeFrom;
-  DateTime timeRangeTo;
+  String timeRangeFrom;
+  String timeRangeTo;
   int status;
   Service service;
   Service serviceCategory;
@@ -49,12 +49,12 @@ class MyServicesModel {
         lat: json["lat"].toDouble(),
         lng: json["lng"].toDouble(),
         description: json["description"],
-        // document: json["document"],
+        document: json["document"],
         address: json["address"],
         priceRangeFrom: json["price_range_from"],
         priceRangeTo: json["price_range_to"],
-        timeRangeFrom: DateTime.parse(json["time_range_from"]),
-        timeRangeTo: DateTime.parse(json["time_range_to"]),
+        timeRangeFrom: json["time_range_from"],
+        timeRangeTo: json["time_range_to"],
         status: json["status"],
         service: Service.fromJson(json["service"]),
         serviceCategory: Service.fromJson(json["service_category"]),
@@ -66,12 +66,12 @@ class MyServicesModel {
         "lat": lat,
         "lng": lng,
         "description": description,
-        // "document": document,
+        "document": document,
         "address": address,
         "price_range_from": priceRangeFrom,
         "price_range_to": priceRangeTo,
-        "time_range_from": timeRangeFrom.toIso8601String(),
-        "time_range_to": timeRangeTo.toIso8601String(),
+        "time_range_from": timeRangeFrom,
+        "time_range_to": timeRangeTo,
         "status": status,
         "service": service.toJson(),
         "service_category": serviceCategory.toJson(),

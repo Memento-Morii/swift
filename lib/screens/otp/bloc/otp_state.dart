@@ -9,4 +9,9 @@ class OtpLoading extends OtpState {}
 
 class OtpLoaded extends OtpState {}
 
+class GoToRegister extends OtpState {
+  GoToRegister(this.phone);
+  final String phone;
+}
+
 class OtpFailed extends OtpState {}

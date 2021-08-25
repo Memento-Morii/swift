@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:swift/models/location_model.dart';
 import 'package:swift/models/service_model.dart';
 import 'package:swift/services/repositories.dart';
 
@@ -20,16 +21,23 @@ class AddServiceBloc extends Bloc<AddServiceEvent, AddServiceState> {
   ) async* {
     if (event is FetchServices) {
       try {
-        var response = await _repos.getServices();
+        var serviceResponse = await _repos.getServices();
+        var locationResponse = await _repos.getLocation();
         // print(response);
-        if (response.statusCode == 200) {
+        if (serviceResponse.statusCode == 200 && locationResponse.statusCode == 200) {
           List<ServiceModel> _service;
-          var decoded = jsonDecode(response.data);
-          _service = serviceModelFromJson(jsonEncode(decoded['results']));
+          List<LocationModel> _locations;
+          var serviceDecoded = jsonDecode(serviceResponse.data);
+          _service = serviceModelFromJson(jsonEncode(serviceDecoded['results']));
+          var locationDecoded = jsonDecode(locationResponse.data);
+          _locations = locationModelFromJson(jsonEncode(locationDecoded['results']));
           // print(_service);
-          yield AddServiceLoaded(_service);
+          yield AddServiceLoaded(
+            service: _service,
+            locations: _locations,
+          );
         } else {
-          print(response);
+          print(serviceResponse);
           yield AddServiceFailed();
         }
       } catch (_) {

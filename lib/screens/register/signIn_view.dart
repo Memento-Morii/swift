@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/screens/register/register_bloc/register_bloc.dart';
-import 'package:swift/screens/register/signup_view.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/custom_textfield.dart';
 
@@ -109,33 +108,33 @@ class _SignInViewState extends State<SignInView> {
                               }
                             },
                           ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  'Don\'t have an account?',
-                                  style: CustomTextStyles.mediumText,
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => SignUpView(),
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    'Signup',
-                                    style: CustomTextStyles.coloredBold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          // SizedBox(height: 20),
+                          // Padding(
+                          //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //     children: <Widget>[
+                          //       Text(
+                          //         'Don\'t have an account?',
+                          //         style: CustomTextStyles.mediumText,
+                          //       ),
+                          //       TextButton(
+                          //         onPressed: () {
+                          //           Navigator.pushReplacement(
+                          //             context,
+                          //             MaterialPageRoute(
+                          //               builder: (context) => SignUpView(),
+                          //             ),
+                          //           );
+                          //         },
+                          //         child: Text(
+                          //           'Signup',
+                          //           style: CustomTextStyles.coloredBold,
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                         ],
                       ),
                     );

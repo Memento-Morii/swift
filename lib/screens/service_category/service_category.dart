@@ -86,7 +86,6 @@ class _ServiceCategoryState extends State<ServiceCategory> {
                                 MaterialPageRoute(
                                   builder: (context) => CreateOrderView(
                                     serviceCategory: _category,
-                                    serviceId: widget.serviceId,
                                   ),
                                 ),
                               );

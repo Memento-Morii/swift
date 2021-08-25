@@ -6,8 +6,9 @@ abstract class AddServiceState {}
 class AddServiceInitial extends AddServiceState {}
 
 class AddServiceLoaded extends AddServiceState {
-  AddServiceLoaded(this.service);
+  AddServiceLoaded({this.service, this.locations});
   final List<ServiceModel> service;
+  final List<LocationModel> locations;
 }
 
 class AddServiceFailed extends AddServiceState {}

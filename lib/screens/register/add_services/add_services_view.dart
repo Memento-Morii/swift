@@ -1,12 +1,13 @@
 import 'dart:developer';
-
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/helper/utils.dart';
+import 'package:swift/models/location_model.dart';
 import 'package:swift/models/service_model.dart';
 import 'package:swift/models/service_provider_request_model.dart';
 import 'package:swift/screens/home/home_view.dart';
@@ -38,6 +39,7 @@ class _AddServiceState extends State<AddService> {
   List<ServiceModel> categories = [];
   int serviceId;
   int serviceCategoryId;
+  LocationModel selectedLocation;
   @override
   void initState() {
     _serviceBloc = AddServiceBloc();
@@ -67,6 +69,7 @@ class _AddServiceState extends State<AddService> {
     return categories;
   }
 
+  TextEditingController addressController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -85,7 +88,7 @@ class _AddServiceState extends State<AddService> {
               listener: (context, state) {
                 if (state is CreateServiceProviderSuccess) {
                   widget.isAnother
-                      ? Utils.showToast(context, false, "Added Another", 2)
+                      ? Utils.showToast(context, false, "Added New Service", 2)
                       : Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -101,12 +104,51 @@ class _AddServiceState extends State<AddService> {
                     return Center(child: CircularProgressIndicator());
                   } else if (state is AddServiceLoaded) {
                     List<String> names = getServiceName(state.service);
+                    List<LocationModel> getSuggestions(String query) =>
+                        List.of(state.locations).where((element) {
+                          final nameLower = element.name.toLowerCase();
+                          final queryLower = query.toLowerCase();
+                          return nameLower.contains(queryLower);
+                        }).toList();
                     return Padding(
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
+                            TypeAheadField<LocationModel>(
+                              textFieldConfiguration: TextFieldConfiguration(
+                                controller: addressController,
+                                style: CustomTextStyles.textField,
+                                decoration: InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+                                  border: InputBorder.none,
+                                  hintText: "Search Connection",
+                                  hintStyle: CustomTextStyles.textField,
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                              suggestionsCallback: (pattern) {
+                                return getSuggestions(pattern);
+                              },
+                              itemBuilder: (context, itemData) {
+                                return ListTile(
+                                    title: Text(
+                                  itemData.name,
+                                  style: CustomTextStyles.boldMediumText,
+                                ));
+                              },
+                              onSuggestionSelected: (suggestion) {
+                                setState(() {
+                                  addressController.text = suggestion.name;
+                                  selectedLocation = suggestion;
+                                });
+                              },
+                            ),
                             SizedBox(height: 20),
                             CustomRadioButton(
                               buttonTextStyle: ButtonTextStyle(
@@ -220,20 +262,6 @@ class _AddServiceState extends State<AddService> {
                                 },
                               ),
                             ),
-                            Text(
-                              'Address',
-                              style: CustomTextStyles.mediumText,
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 10),
-                              child: TextField(
-                                style: CustomTextStyles.textField,
-                                decoration: InputDecoration(
-                                  hintText: "Add your address",
-                                  hintStyle: CustomTextStyles.textField,
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -249,11 +277,6 @@ class _AddServiceState extends State<AddService> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: CustomColors.primaryColor,
           onPressed: () async {
-            // var location = Location();
-            // location.getLocation().then((value) {
-            //   _requestModel.lat = value.latitude;
-            //   _requestModel.lng = value.longitude;
-            // });
             inspect(_requestModel);
             SharedPreferences prefs = await SharedPreferences.getInstance();
             var token = prefs.get("token");

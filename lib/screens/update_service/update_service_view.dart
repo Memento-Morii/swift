@@ -17,7 +17,7 @@ class UpdateServiceView extends StatefulWidget {
 
 class _UpdateServiceViewState extends State<UpdateServiceView> {
   RangeValues selectedPriceRanges = RangeValues(100, 900);
-  RangeValues selectedTimeRanges = RangeValues(100, 900);
+  RangeValues selectedTimeRanges = RangeValues(1, 10);
   TextEditingController addressController = TextEditingController();
   UpdateServiceBloc _updateServiceBloc;
   @override
@@ -102,11 +102,11 @@ class _UpdateServiceViewState extends State<UpdateServiceView> {
                 child: RangeSlider(
                   activeColor: CustomColors.primaryColor,
                   values: selectedTimeRanges,
-                  max: 1000,
-                  min: 100,
+                  max: 13,
+                  min: 1,
                   labels: RangeLabels(
-                    "${selectedTimeRanges.start.round()}",
-                    "${selectedTimeRanges.end.round()}",
+                    "${selectedTimeRanges.start.round()}:00",
+                    "${selectedTimeRanges.end.round()}:00",
                   ),
                   onChanged: (newRanges) {
                     setState(() {
@@ -126,6 +126,8 @@ class _UpdateServiceViewState extends State<UpdateServiceView> {
           onPressed: () {
             widget.myService.priceRangeFrom = selectedPriceRanges.start.round();
             widget.myService.priceRangeTo = selectedPriceRanges.end.round();
+            widget.myService.timeRangeFrom = "${selectedPriceRanges.start.round()}:00";
+            widget.myService.timeRangeTo = "${selectedPriceRanges.end.round()}:00";
             _updateServiceBloc.add(UpdateMyService(context: context, myService: widget.myService));
           },
           color: CustomColors.primaryColor,

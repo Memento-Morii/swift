@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:location/location.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/order_request_model.dart';
@@ -11,9 +11,8 @@ import 'package:swift/widgets/custom_network_image.dart';
 import 'package:swift/widgets/myTextField.dart';
 
 class CreateOrderView extends StatefulWidget {
-  CreateOrderView({this.serviceCategory, this.serviceId});
+  CreateOrderView({this.serviceCategory});
   final ServiceCategoryModel serviceCategory;
-  final int serviceId;
   @override
   _CreateOrderViewState createState() => _CreateOrderViewState();
 }
@@ -32,6 +31,7 @@ class _CreateOrderViewState extends State<CreateOrderView> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.serviceCategory.serviceId);
     return Scaffold(
       appBar: AppBar(),
       body: BlocProvider(
@@ -94,22 +94,27 @@ class _CreateOrderViewState extends State<CreateOrderView> {
                         style: CustomTextStyles.mediumWhiteText,
                       ),
                       onPressed: () async {
-                        SharedPreferences prefs = await SharedPreferences.getInstance();
-                        var token = prefs.get("token");
+                        Location location = Location();
+                        var serviceEnabled = await location.serviceEnabled();
+                        if (!serviceEnabled) {
+                          serviceEnabled = await location.requestService();
+                        }
+                        var mylocation = await location.getLocation();
+                        print(mylocation.latitude);
+                        print(mylocation.longitude);
                         OrderRequest orderRequest = OrderRequest(
-                          lat: "0.01",
-                          lng: "0.22",
+                          lat: mylocation.latitude,
+                          lng: mylocation.longitude,
                           blockNumber: blockController.text.trim(),
                           houseNumber: houseController.text.trim(),
                           siteName: siteController.text.trim(),
-                          serviceId: widget.serviceId,
+                          serviceId: widget.serviceCategory.serviceId,
                           serviceCategoryId: widget.serviceCategory.id,
                         );
                         _orderBloc.add(OrderEvent(
                           context: context,
                           isAddress: true,
                           orderRequest: orderRequest,
-                          token: token,
                         ));
                       },
                     ),
@@ -132,17 +137,14 @@ class _CreateOrderViewState extends State<CreateOrderView> {
                               style: CustomTextStyles.mediumWhiteText,
                             ),
                             onPressed: () async {
-                              SharedPreferences prefs = await SharedPreferences.getInstance();
-                              var token = prefs.get("token");
                               OrderRequest orderRequest = OrderRequest(
-                                serviceId: widget.serviceId,
+                                serviceId: widget.serviceCategory.serviceId,
                                 serviceCategoryId: widget.serviceCategory.id,
                               );
                               _orderBloc.add(OrderEvent(
                                 context: context,
                                 isAddress: false,
                                 orderRequest: orderRequest,
-                                token: token,
                               ));
                             },
                           ),

@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final orderHistoryModel = orderHistoryModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<OrderHistoryModel> orderHistoryModelFromJson(String str) =>
@@ -61,18 +57,21 @@ class OrderHistoryModel {
 class Service {
   Service({
     this.id,
+    this.status,
     this.name,
     this.image,
     this.serviceId,
   });
 
   int id;
+  int status;
   String name;
   String image;
   int serviceId;
 
   factory Service.fromJson(Map<String, dynamic> json) => Service(
         id: json["id"],
+        status: json["status"],
         name: json["name"],
         image: json["image"],
         serviceId: json["service_id"] == null ? null : json["service_id"],
@@ -80,6 +79,7 @@ class Service {
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "status": status,
         "name": name,
         "image": image,
         "service_id": serviceId == null ? null : serviceId,

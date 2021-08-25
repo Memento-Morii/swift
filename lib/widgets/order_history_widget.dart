@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/order_history_model.dart';
 import 'package:intl/intl.dart';
@@ -13,36 +14,67 @@ class OrderHistoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          // Container(
-          //   height: 80,
-          //   width: 80,
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(15),
-          //     color: CustomColors.primaryColor,
-          //   ),
-          // ),
-          CustomNetworkImage(
-            imgUrl: order.serviceCategory.image,
-            height: 80,
-            width: 80,
-          ),
-          SizedBox(width: 20),
-          Column(
+          Row(
             crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomNetworkImage(
+                imgUrl: order.serviceCategory.image,
+                height: 80,
+                width: 80,
+              ),
+              SizedBox(width: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    order.serviceCategory.name,
+                    style: CustomTextStyles.boldText,
+                  ),
+                  Text(
+                    order.service.name,
+                    style: CustomTextStyles.normalText,
+                  ),
+                  Text(
+                    dateFormat.format(order.serviceReceiveTime.toLocal()),
+                    style: CustomTextStyles.textField,
+                  ),
+                  SizedBox(height: 10),
+                  order.service.status == 2
+                      ? TextButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(CustomColors.primaryColor),
+                          ),
+                          child: Text(
+                            'View Order Detail',
+                            style: CustomTextStyles.normalText2,
+                          ),
+                        )
+                      : SizedBox(),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
+              order.service.status == 2
+                  ? CircleAvatar(
+                      radius: 5,
+                      backgroundColor: Colors.green,
+                    )
+                  : CircleAvatar(
+                      radius: 5,
+                      backgroundColor: Colors.orange,
+                    ),
+              SizedBox(width: 5),
               Text(
-                order.serviceCategory.name,
-                style: CustomTextStyles.boldText,
-              ),
-              Text(
-                order.service.name,
+                order.service.status == 2 ? 'Accepted' : "Pending",
                 style: CustomTextStyles.normalText,
-              ),
-              Text(
-                dateFormat.format(order.serviceReceiveTime.toLocal()),
-                style: CustomTextStyles.textField,
-              ),
+              )
             ],
           )
         ],

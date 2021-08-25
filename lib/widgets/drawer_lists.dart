@@ -7,7 +7,6 @@ import 'package:swift/screens/home/home_view.dart';
 import 'package:swift/screens/my_services/my_services_view.dart';
 import 'package:swift/screens/orders/order_view.dart';
 import 'package:swift/screens/profile/profile_view.dart';
-import 'package:swift/screens/register/register_view.dart';
 import 'package:swift/screens/register/signIn_view.dart';
 import 'package:swift/screens/settings/settings_view.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
@@ -114,6 +113,7 @@ class _DrawerListsState extends State<DrawerLists> {
           ? () async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs.clear();
+              selectedIndex = 0;
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
