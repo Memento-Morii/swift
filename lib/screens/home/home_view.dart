@@ -157,22 +157,21 @@ class _HomeState extends State<Home> {
                                           scrollDirection: Axis.horizontal,
                                           itemBuilder: (context, index) {
                                             return InkWell(
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) => ServiceCategory(
-                                                      serviceId: state.frequentServices[index].id,
-                                                      name: state.frequentServices[index].name,
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => CreateOrderView(
+                                                        serviceCategory:
+                                                            state.frequentServices[index],
+                                                      ),
                                                     ),
-                                                  ),
-                                                );
-                                              },
-                                              child: ServiceCard(
-                                                result: state.frequentServices[index],
-                                                width: 80,
-                                              ),
-                                            );
+                                                  );
+                                                },
+                                                child: CustomNetworkImage(
+                                                  imgUrl: state.frequentServices[index].image,
+                                                  width: 80,
+                                                ));
                                           },
                                           separatorBuilder: (context, index) {
                                             return SizedBox(width: 20);
@@ -248,7 +247,7 @@ class _HomeState extends State<Home> {
                             } else {
                               return Center(
                                 child: Text(
-                                  "Loaded",
+                                  "Failed",
                                   style: CustomTextStyles.errorText,
                                 ),
                               );
@@ -297,8 +296,16 @@ class _HomeState extends State<Home> {
                         );
                       } else if (state is Searching) {
                         return Center(child: CircularProgressIndicator());
+                      } else if (state is SearchNotFound) {
+                        return Text(
+                          'Search Not Found',
+                          style: CustomTextStyles.errorText,
+                        );
                       } else {
-                        return Text('error');
+                        return Text(
+                          'Error',
+                          style: CustomTextStyles.errorText,
+                        );
                       }
                     },
                   ),

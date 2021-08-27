@@ -10,6 +10,7 @@ import 'package:swift/screens/profile/profile_view.dart';
 import 'package:swift/screens/register/signIn_view.dart';
 import 'package:swift/screens/settings/settings_view.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DrawerLists extends StatefulWidget {
   DrawerLists(this.userRole);
@@ -51,7 +52,7 @@ class _DrawerListsState extends State<DrawerLists> {
         drawerListWidget(
           index: 0,
           iconUrl: "assets/home.png",
-          name: "Home",
+          name: AppLocalizations.of(context).home,
           page: Home(),
         ),
         widget.userRole == 0
@@ -59,19 +60,19 @@ class _DrawerListsState extends State<DrawerLists> {
             : drawerListWidget(
                 index: 1,
                 iconUrl: "assets/services.png",
-                name: "My Services",
+                name: AppLocalizations.of(context).myServices,
                 page: MyServices(),
               ),
         drawerListWidget(
           index: 2,
           iconUrl: "assets/profile.png",
-          name: "Profile",
+          name: AppLocalizations.of(context).profile,
           page: Profile(),
         ),
         drawerListWidget(
           index: 3,
           iconUrl: "assets/orders.png",
-          name: "Orders",
+          name: AppLocalizations.of(context).orders,
           page: Order(widget.userRole == 0 ? false : true),
         ),
         Divider(
@@ -83,24 +84,24 @@ class _DrawerListsState extends State<DrawerLists> {
         drawerListWidget(
           index: 4,
           iconUrl: "assets/setting.png",
-          name: "Settings",
+          name: AppLocalizations.of(context).settings,
           page: Settings(),
         ),
         drawerListWidget(
           index: 5,
           iconUrl: "assets/about.png",
-          name: "About Us",
+          name: AppLocalizations.of(context).aboutUs,
           page: AboutUs(),
         ),
         drawerListWidget(
           index: 6,
           iconUrl: "assets/question.png",
-          name: "Help",
+          name: AppLocalizations.of(context).help,
           page: Help(),
         ),
         drawerListWidget(
           iconUrl: "assets/logout.png",
-          name: "Logout",
+          name: AppLocalizations.of(context).logout,
           onTap: () {},
         ),
       ],

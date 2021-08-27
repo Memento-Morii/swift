@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final orderHistoryModel = orderHistoryModelFromJson(jsonString);
+
 import 'dart:convert';
 
 List<OrderHistoryModel> orderHistoryModelFromJson(String str) =>
@@ -15,6 +19,7 @@ class OrderHistoryModel {
     this.serviceId,
     this.serviceCategoryId,
     this.serviceReceiveTime,
+    this.orderHistory,
     this.service,
     this.serviceCategory,
   });
@@ -26,6 +31,7 @@ class OrderHistoryModel {
   int serviceId;
   int serviceCategoryId;
   DateTime serviceReceiveTime;
+  OrderHistory orderHistory;
   Service service;
   Service serviceCategory;
 
@@ -37,6 +43,7 @@ class OrderHistoryModel {
         serviceId: json["service_id"],
         serviceCategoryId: json["service_category_id"],
         serviceReceiveTime: DateTime.parse(json["service_receive_time"]),
+        orderHistory: OrderHistory.fromJson(json["order_history"]),
         service: Service.fromJson(json["service"]),
         serviceCategory: Service.fromJson(json["service_category"]),
       );
@@ -49,39 +56,52 @@ class OrderHistoryModel {
         "service_id": serviceId,
         "service_category_id": serviceCategoryId,
         "service_receive_time": serviceReceiveTime.toIso8601String(),
+        "order_history": orderHistory.toJson(),
         "service": service.toJson(),
         "service_category": serviceCategory.toJson(),
       };
 }
 
-class Service {
-  Service({
+class OrderHistory {
+  OrderHistory({
     this.id,
     this.status,
-    this.name,
-    this.image,
-    this.serviceId,
   });
 
   int id;
   int status;
-  String name;
-  String image;
-  int serviceId;
 
-  factory Service.fromJson(Map<String, dynamic> json) => Service(
+  factory OrderHistory.fromJson(Map<String, dynamic> json) => OrderHistory(
         id: json["id"],
         status: json["status"],
-        name: json["name"],
-        image: json["image"],
-        serviceId: json["service_id"] == null ? null : json["service_id"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "status": status,
+      };
+}
+
+class Service {
+  Service({
+    this.name,
+    this.image,
+    this.id,
+  });
+
+  String name;
+  String image;
+  int id;
+
+  factory Service.fromJson(Map<String, dynamic> json) => Service(
+        name: json["name"],
+        image: json["image"],
+        id: json["id"],
+      );
+
+  Map<String, dynamic> toJson() => {
         "name": name,
         "image": image,
-        "service_id": serviceId == null ? null : serviceId,
+        "id": id,
       };
 }

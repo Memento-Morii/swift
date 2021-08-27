@@ -18,8 +18,8 @@ class ServiceProviderRequest {
   String address;
   double priceRangeFrom;
   double priceRangeTo;
-  DateTime timeRangeFrom;
-  DateTime timeRangeTo;
+  String timeRangeFrom;
+  String timeRangeTo;
   int serviceId;
   int serviceCategoryId;
   String description;

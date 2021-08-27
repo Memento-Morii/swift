@@ -51,7 +51,7 @@ class ProviderOrderBloc extends Bloc<ProviderOrderEvent, ProviderOrderState> {
     } else if (event is RefuseOrder) {
       try {
         yield ProviderOrderLoading();
-        var acceptResponse = await _repo.acceptOrder(event.orderId);
+        var acceptResponse = await _repo.declineOrder(event.orderId);
         if (acceptResponse.statusCode == 200) {
           print(acceptResponse);
           yield Refused();

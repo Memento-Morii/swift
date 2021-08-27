@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:swift/models/service_category_model.dart';
 import 'package:swift/models/service_model.dart';
+import 'package:swift/screens/create_order/create_order_view.dart';
 import 'package:swift/screens/register/add_services/bloc/add_service_bloc.dart';
 import 'package:swift/widgets/custom_network_image.dart';
 
@@ -54,10 +56,10 @@ class _AllServiceState extends State<AllService> {
                           Container(
                             width: MediaQuery.of(context).size.width * 0.75,
                             padding: EdgeInsets.all(10),
-                            color: Colors.greenAccent[400],
+                            color: Color(0xff09DE04),
                             child: Text(
                               _service.name.toUpperCase(),
-                              style: CustomTextStyles.boldTitleText,
+                              style: CustomTextStyles.bigWhiteText,
                             ),
                           ),
                           SizedBox(height: 10),
@@ -67,25 +69,42 @@ class _AllServiceState extends State<AllService> {
                             itemCount: _service.serviceCategories.length,
                             itemBuilder: (context, smallIndex) {
                               ServiceModel _categories = _service.serviceCategories[smallIndex];
-                              return Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    // borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                  color: CustomColors.primaryColor,
-                                  width: 2,
-                                )),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      _categories.name,
-                                      style: CustomTextStyles.boldMediumText,
+                              return InkWell(
+                                onTap: () {
+                                  ServiceCategoryModel _category = ServiceCategoryModel(
+                                    id: _categories.id,
+                                    image: _categories.image,
+                                    name: _categories.name,
+                                    serviceId: _categories.serviceId,
+                                  );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CreateOrderView(
+                                        serviceCategory: _category,
+                                      ),
                                     ),
-                                    CustomNetworkImage(
-                                      imgUrl: _categories.image,
-                                    )
-                                  ],
+                                  );
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                    color: CustomColors.primaryColor,
+                                    width: 2,
+                                  )),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
+                                        _categories.name,
+                                        style: CustomTextStyles.boldMediumText,
+                                      ),
+                                      CustomNetworkImage(
+                                        imgUrl: _categories.image,
+                                      )
+                                    ],
+                                  ),
                                 ),
                               );
                             },

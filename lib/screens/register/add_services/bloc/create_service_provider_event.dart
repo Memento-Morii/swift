@@ -4,8 +4,6 @@ part of 'create_service_provider_bloc.dart';
 abstract class CreateServiceProviderEvent {}
 
 class CreateServiceProvider extends CreateServiceProviderEvent {
-  CreateServiceProvider({this.request, this.token, this.context});
+  CreateServiceProvider({this.request});
   final ServiceProviderRequest request;
-  final String token;
-  final BuildContext context;
 }

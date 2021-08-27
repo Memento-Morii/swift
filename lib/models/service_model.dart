@@ -4,8 +4,8 @@
 
 import 'dart:convert';
 
-List<ServiceModel> serviceModelFromJson(String str) => List<ServiceModel>.from(
-    json.decode(str).map((x) => ServiceModel.fromJson(x)));
+List<ServiceModel> serviceModelFromJson(String str) =>
+    List<ServiceModel>.from(json.decode(str).map((x) => ServiceModel.fromJson(x)));
 
 String serviceModelToJson(List<ServiceModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -31,8 +31,8 @@ class ServiceModel {
         image: json["image"],
         serviceCategories: json["service_categories"] == null
             ? null
-            : List<ServiceModel>.from(json["service_categories"]
-                .map((x) => ServiceModel.fromJson(x))),
+            : List<ServiceModel>.from(
+                json["service_categories"].map((x) => ServiceModel.fromJson(x))),
         serviceId: json["service_id"] == null ? null : json["service_id"],
       );
 

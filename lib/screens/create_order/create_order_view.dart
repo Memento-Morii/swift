@@ -31,9 +31,13 @@ class _CreateOrderViewState extends State<CreateOrderView> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.serviceCategory.serviceId);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          "CREATE ORDER",
+          style: CustomTextStyles.bigWhiteText,
+        ),
+      ),
       body: BlocProvider(
         create: (context) => CreateOrderBloc(),
         child: SingleChildScrollView(

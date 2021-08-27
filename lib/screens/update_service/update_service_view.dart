@@ -6,6 +6,7 @@ import 'package:swift/models/my_services_model.dart';
 import 'package:swift/screens/my_services/my_services_view.dart';
 import 'package:swift/screens/update_service/bloc/update_service_bloc.dart';
 import 'package:swift/widgets/custom_button.dart';
+import 'package:swift/widgets/range_field.dart';
 
 // ignore: must_be_immutable
 class UpdateServiceView extends StatefulWidget {
@@ -16,8 +17,6 @@ class UpdateServiceView extends StatefulWidget {
 }
 
 class _UpdateServiceViewState extends State<UpdateServiceView> {
-  RangeValues selectedPriceRanges = RangeValues(100, 900);
-  RangeValues selectedTimeRanges = RangeValues(1, 10);
   TextEditingController addressController = TextEditingController();
   UpdateServiceBloc _updateServiceBloc;
   @override
@@ -25,6 +24,13 @@ class _UpdateServiceViewState extends State<UpdateServiceView> {
     _updateServiceBloc = UpdateServiceBloc();
     super.initState();
   }
+
+  TextEditingController priceFromController = TextEditingController();
+  TextEditingController priceToController = TextEditingController();
+  TextEditingController timeFromController = TextEditingController();
+  TextEditingController timeToController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -51,71 +57,62 @@ class _UpdateServiceViewState extends State<UpdateServiceView> {
         create: (context) => UpdateServiceBloc(),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'Address',
-                style: CustomTextStyles.mediumText,
-              ),
-              TextField(
-                controller: addressController,
-                style: CustomTextStyles.textField,
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Price Range',
-                style: CustomTextStyles.mediumText,
-              ),
-              SliderTheme(
-                data: SliderThemeData(
-                  showValueIndicator: ShowValueIndicator.always,
-                  valueIndicatorColor: CustomColors.primaryColor,
-                  valueIndicatorTextStyle: CustomTextStyles.mediumText,
+          child: Form(
+            key: _formkey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Address',
+                  style: CustomTextStyles.mediumText,
                 ),
-                child: RangeSlider(
-                    labels: RangeLabels(
-                      "${selectedPriceRanges.start.round()}",
-                      "${selectedPriceRanges.end.round()}",
+                TextField(
+                  controller: addressController,
+                  style: CustomTextStyles.textField,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Price Range',
+                  style: CustomTextStyles.mediumText,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    RangeField(
+                      controller: priceFromController,
+                      keyboardType: TextInputType.number,
                     ),
-                    activeColor: CustomColors.primaryColor,
-                    values: selectedPriceRanges,
-                    max: 1000,
-                    min: 100,
-                    onChanged: (newRanges) {
-                      setState(() {
-                        selectedPriceRanges = newRanges;
-                      });
-                    }),
-              ),
-              SizedBox(height: 30),
-              Text(
-                'Time Range',
-                style: CustomTextStyles.mediumText,
-              ),
-              SliderTheme(
-                data: SliderThemeData(
-                  showValueIndicator: ShowValueIndicator.always,
-                  valueIndicatorColor: CustomColors.primaryColor,
-                  valueIndicatorTextStyle: CustomTextStyles.mediumText,
+                    Text(
+                      'To',
+                      style: CustomTextStyles.boldTitleText,
+                    ),
+                    RangeField(
+                      controller: priceToController,
+                      keyboardType: TextInputType.number,
+                    ),
+                  ],
                 ),
-                child: RangeSlider(
-                  activeColor: CustomColors.primaryColor,
-                  values: selectedTimeRanges,
-                  max: 13,
-                  min: 1,
-                  labels: RangeLabels(
-                    "${selectedTimeRanges.start.round()}:00",
-                    "${selectedTimeRanges.end.round()}:00",
-                  ),
-                  onChanged: (newRanges) {
-                    setState(() {
-                      selectedTimeRanges = newRanges;
-                    });
-                  },
+                SizedBox(height: 30),
+                Text(
+                  'Time Range',
+                  style: CustomTextStyles.mediumText,
                 ),
-              ),
-            ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    RangeField(controller: timeFromController),
+                    Text(
+                      'To',
+                      style: CustomTextStyles.boldTitleText,
+                    ),
+                    RangeField(controller: timeToController),
+                  ],
+                ),
+                SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
       ),
@@ -124,11 +121,14 @@ class _UpdateServiceViewState extends State<UpdateServiceView> {
         height: 50,
         child: CustomButton(
           onPressed: () {
-            widget.myService.priceRangeFrom = selectedPriceRanges.start.round();
-            widget.myService.priceRangeTo = selectedPriceRanges.end.round();
-            widget.myService.timeRangeFrom = "${selectedPriceRanges.start.round()}:00";
-            widget.myService.timeRangeTo = "${selectedPriceRanges.end.round()}:00";
-            _updateServiceBloc.add(UpdateMyService(context: context, myService: widget.myService));
+            if (_formkey.currentState.validate()) {
+              widget.myService.priceRangeFrom = double.parse((priceFromController.text.trim()));
+              widget.myService.priceRangeTo = double.parse((priceToController.text.trim()));
+              widget.myService.timeRangeFrom = timeFromController.text.trim();
+              widget.myService.timeRangeTo = timeToController.text.trim();
+              _updateServiceBloc
+                  .add(UpdateMyService(context: context, myService: widget.myService));
+            }
           },
           color: CustomColors.primaryColor,
           child: BlocBuilder<UpdateServiceBloc, UpdateServiceState>(

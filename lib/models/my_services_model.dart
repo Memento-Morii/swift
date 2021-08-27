@@ -35,8 +35,8 @@ class MyServicesModel {
   String description;
   dynamic document;
   String address;
-  int priceRangeFrom;
-  int priceRangeTo;
+  double priceRangeFrom;
+  double priceRangeTo;
   String timeRangeFrom;
   String timeRangeTo;
   int status;
@@ -51,8 +51,8 @@ class MyServicesModel {
         description: json["description"],
         document: json["document"],
         address: json["address"],
-        priceRangeFrom: json["price_range_from"],
-        priceRangeTo: json["price_range_to"],
+        priceRangeFrom: json["price_range_from"].toDouble(),
+        priceRangeTo: json["price_range_to"].toDouble(),
         timeRangeFrom: json["time_range_from"],
         timeRangeTo: json["time_range_to"],
         status: json["status"],

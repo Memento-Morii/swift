@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -22,18 +23,16 @@ class CreateServiceProviderBloc
       try {
         print("Im here");
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        var token = prefs.get("token");
-        print(token);
-        var response = await _repos.createServiceProvider(
-          request: event.request,
-          token: token,
-          file: null,
-        );
+        var response = await _repos.createServiceProvider(request: event.request);
         print(response);
         prefs.setInt("serviceProvider", 2);
         if (response.statusCode == 200) {
-          print("success");
-          yield CreateServiceProviderSuccess();
+          bool isSuccess = jsonDecode(response.data)['success'];
+          if (isSuccess == true) {
+            yield CreateServiceProviderSuccess();
+          } else {
+            yield CreateServiceProviderFailed(message: 'You have already added this service');
+          }
         } else {
           print(response);
           yield CreateServiceProviderFailed(message: response.data.toString());

@@ -39,6 +39,7 @@ class _ServiceProviderOrderViewState extends State<ServiceProviderOrderView> {
             List<ProviderOrderModel> orders = state.orders;
             return ListView.separated(
               shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 ProviderOrderModel order = orders[index];
                 return ProviderOrderCard(order);

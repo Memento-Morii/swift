@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:swift/models/service_category_model.dart';
 import 'package:swift/models/service_model.dart';
 import 'package:swift/services/repositories.dart';
 
@@ -22,11 +23,12 @@ class GetAllServicesBloc extends Bloc<GetAllServicesEvent, GetAllServicesState> 
         var freqentServiceResponse = await _repos.getFrequentServices();
         if (allServiceResponse.statusCode == 200 && freqentServiceResponse.statusCode == 200) {
           List<ServiceModel> _allService;
-          List<ServiceModel> _frequentService;
+          List<ServiceCategoryModel> _frequentService;
           var allServiceDecoded = jsonDecode(allServiceResponse.data);
           _allService = serviceModelFromJson(jsonEncode(allServiceDecoded['results']));
           var frequentServiceDecoded = jsonDecode(freqentServiceResponse.data);
-          _frequentService = serviceModelFromJson(jsonEncode(frequentServiceDecoded['results']));
+          _frequentService =
+              serviceCategoryModelFromJson(jsonEncode(frequentServiceDecoded['results']));
           yield GotServices(allServices: _allService, frequentServices: _frequentService);
         } else {
           print(allServiceResponse);

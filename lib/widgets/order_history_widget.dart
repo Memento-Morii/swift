@@ -3,6 +3,7 @@ import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/order_history_model.dart';
 import 'package:intl/intl.dart';
+import 'package:swift/screens/order_detail/order_detail_view.dart';
 
 import 'custom_network_image.dart';
 
@@ -12,6 +13,7 @@ class OrderHistoryWidget extends StatelessWidget {
   final DateFormat dateFormat = DateFormat.yMMMMd().add_jm();
   @override
   Widget build(BuildContext context) {
+    order.orderHistory.status == 2 ? print(order.orderId) : print('ob');
     return Container(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,9 +44,16 @@ class OrderHistoryWidget extends StatelessWidget {
                     style: CustomTextStyles.textField,
                   ),
                   SizedBox(height: 10),
-                  order.service.status == 2
+                  order.orderHistory.status == 2
                       ? TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OrderDetailView(order.orderId),
+                              ),
+                            );
+                          },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(CustomColors.primaryColor),
                           ),
@@ -61,7 +70,7 @@ class OrderHistoryWidget extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              order.service.status == 2
+              order.orderHistory.status == 2
                   ? CircleAvatar(
                       radius: 5,
                       backgroundColor: Colors.green,
@@ -72,7 +81,7 @@ class OrderHistoryWidget extends StatelessWidget {
                     ),
               SizedBox(width: 5),
               Text(
-                order.service.status == 2 ? 'Accepted' : "Pending",
+                order.orderHistory.status == 2 ? 'Accepted' : "Pending",
                 style: CustomTextStyles.normalText,
               )
             ],

@@ -125,10 +125,10 @@ class _OTPViewState extends State<OTPView> {
                   child: BlocBuilder<OtpBloc, OtpState>(
                     bloc: _otpBloc,
                     builder: (context, state) {
-                      if (state is OtpInitial) {
-                        return Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          color: Colors.white,
+                      if (state is OtpFailed) {
+                        return Text(
+                          "Failed",
+                          style: CustomTextStyles.mediumWhiteText,
                         );
                       } else if (state is OtpLoading) {
                         return SizedBox(
@@ -140,15 +140,10 @@ class _OTPViewState extends State<OTPView> {
                             ),
                           ),
                         );
-                      } else if (state is OtpLoaded || state is GoToRegister) {
+                      } else {
                         return Icon(
                           Icons.arrow_forward_ios_rounded,
                           color: Colors.white,
-                        );
-                      } else {
-                        return Text(
-                          'Failed',
-                          style: CustomTextStyles.normalWhiteText,
                         );
                       }
                     },
@@ -172,6 +167,19 @@ class _OTPViewState extends State<OTPView> {
                   ),
                 ],
               ),
+              SizedBox(height: 20),
+              BlocBuilder<OtpBloc, OtpState>(
+                bloc: _otpBloc,
+                builder: (context, state) {
+                  if (state is OtpFailed) {
+                    return Text(
+                      state.message,
+                      style: CustomTextStyles.errorText,
+                    );
+                  } else
+                    return SizedBox();
+                },
+              )
             ],
           ),
         ),

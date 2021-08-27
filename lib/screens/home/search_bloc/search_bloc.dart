@@ -25,9 +25,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           var response = await _repo.searchCategories(event.searchTerm);
           if (response.statusCode == 200) {
             var decoded = jsonDecode(response.data);
-            List<ServiceCategoryModel> searchResults =
-                serviceCategoryModelFromJson(jsonEncode(decoded['results']));
-            yield SearchFound(searchResults);
+            if (decoded['results'] != null) {
+              List<ServiceCategoryModel> searchResults =
+                  serviceCategoryModelFromJson(jsonEncode(decoded['results']));
+              yield SearchFound(searchResults);
+            } else {
+              yield SearchNotFound();
+            }
           } else {
             print(response);
             yield Error();

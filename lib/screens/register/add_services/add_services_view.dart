@@ -1,8 +1,11 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
@@ -14,6 +17,8 @@ import 'package:swift/screens/home/home_view.dart';
 import 'package:swift/screens/register/add_services/bloc/add_service_bloc.dart';
 import 'package:swift/screens/register/add_services/bloc/create_service_provider_bloc.dart';
 import 'package:swift/widgets/category_card.dart';
+import 'package:swift/widgets/custom_button.dart';
+import 'package:swift/widgets/range_field.dart';
 
 class AddService extends StatefulWidget {
   AddService(this.isAnother);
@@ -27,19 +32,12 @@ class _AddServiceState extends State<AddService> {
   RangeValues selectedTimeRanges = RangeValues(100, 900);
   AddServiceBloc _serviceBloc;
   CreateServiceProviderBloc _serviceProviderBloc;
-  ServiceProviderRequest _requestModel = ServiceProviderRequest(
-    description: "This is my description",
-    address: "some address",
-    document: "test",
-    timeRangeFrom: DateTime.now(),
-    lat: 2.32324,
-    lng: 4.53432,
-    timeRangeTo: DateTime.now(),
-  );
+  ServiceProviderRequest _requestModel = ServiceProviderRequest(document: null);
   List<ServiceModel> categories = [];
   int serviceId;
   int serviceCategoryId;
   LocationModel selectedLocation;
+  GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   @override
   void initState() {
     _serviceBloc = AddServiceBloc();
@@ -70,6 +68,12 @@ class _AddServiceState extends State<AddService> {
   }
 
   TextEditingController addressController = TextEditingController();
+  TextEditingController priceFromController = TextEditingController();
+  TextEditingController priceToController = TextEditingController();
+  TextEditingController timeFromController = TextEditingController();
+  TextEditingController timeToController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  final snackBar = SnackBar(content: Text('No Files Selected'));
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -85,6 +89,7 @@ class _AddServiceState extends State<AddService> {
           create: (context) => AddServiceBloc(),
           child: SafeArea(
             child: BlocListener<CreateServiceProviderBloc, CreateServiceProviderState>(
+              bloc: _serviceProviderBloc,
               listener: (context, state) {
                 if (state is CreateServiceProviderSuccess) {
                   widget.isAnother
@@ -95,6 +100,9 @@ class _AddServiceState extends State<AddService> {
                             builder: (context) => Home(),
                           ),
                         );
+                }
+                if (state is CreateServiceProviderFailed) {
+                  Utils.showToast(context, true, state.message, 2);
                 }
               },
               child: BlocBuilder<AddServiceBloc, AddServiceState>(
@@ -111,158 +119,181 @@ class _AddServiceState extends State<AddService> {
                           return nameLower.contains(queryLower);
                         }).toList();
                     return Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
                       child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            TypeAheadField<LocationModel>(
-                              textFieldConfiguration: TextFieldConfiguration(
-                                controller: addressController,
-                                style: CustomTextStyles.textField,
-                                decoration: InputDecoration(
-                                  contentPadding:
-                                      EdgeInsets.symmetric(horizontal: 32, vertical: 20),
-                                  border: InputBorder.none,
-                                  hintText: "Search Connection",
-                                  hintStyle: CustomTextStyles.textField,
-                                  prefixIcon: Icon(
-                                    Icons.search,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ),
-                              suggestionsCallback: (pattern) {
-                                return getSuggestions(pattern);
-                              },
-                              itemBuilder: (context, itemData) {
-                                return ListTile(
-                                    title: Text(
-                                  itemData.name,
-                                  style: CustomTextStyles.boldMediumText,
-                                ));
-                              },
-                              onSuggestionSelected: (suggestion) {
-                                setState(() {
-                                  addressController.text = suggestion.name;
-                                  selectedLocation = suggestion;
-                                });
-                              },
-                            ),
-                            SizedBox(height: 20),
-                            CustomRadioButton(
-                              buttonTextStyle: ButtonTextStyle(
-                                selectedColor: Colors.white,
-                                unSelectedColor: CustomColors.primaryColor,
-                                textStyle: CustomTextStyles.textField,
-                              ),
-                              unSelectedColor: Colors.white,
-                              buttonLables: names,
-                              buttonValues: names,
-                              spacing: 0,
-                              radioButtonValue: (value) {
-                                setState(() {
-                                  getCategories(
-                                    services: state.service,
-                                    name: value,
-                                  );
-                                });
-                              },
-                              horizontal: false,
-                              enableButtonWrap: false,
-                              width: 150,
-                              absoluteZeroSpacing: false,
-                              selectedColor: CustomColors.primaryColor,
-                              padding: 10,
-                            ),
-                            SizedBox(height: 30),
-                            categories.length == 0
-                                ? SizedBox()
-                                : GridView.builder(
-                                    shrinkWrap: true,
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
-                                      childAspectRatio: 0.75,
-                                      crossAxisSpacing: 20,
-                                      mainAxisSpacing: 20,
+                        child: Form(
+                          key: _formkey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              TypeAheadField<LocationModel>(
+                                textFieldConfiguration: TextFieldConfiguration(
+                                  controller: addressController,
+                                  style: CustomTextStyles.textField,
+                                  decoration: InputDecoration(
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+                                    border: InputBorder.none,
+                                    hintText: "Search For Location",
+                                    hintStyle: CustomTextStyles.textField,
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                      color: Colors.grey,
                                     ),
-                                    itemCount: categories.length,
-                                    itemBuilder: (context, index) {
-                                      return InkWell(
-                                        onTap: () {
-                                          _requestModel.serviceCategoryId = categories[index].id;
-                                          print(categories[index].id);
-                                          Utils.showToast(
-                                            context,
-                                            false,
-                                            "${categories[index].name} is Selected!",
-                                            2,
-                                          );
-                                        },
-                                        child: CategoryCard(
-                                          categories[index],
-                                        ),
-                                      );
-                                    },
                                   ),
-                            Text(
-                              'Price Range',
-                              style: CustomTextStyles.mediumText,
-                            ),
-                            SliderTheme(
-                              data: SliderThemeData(
-                                showValueIndicator: ShowValueIndicator.always,
-                                valueIndicatorColor: CustomColors.primaryColor,
-                                valueIndicatorTextStyle: CustomTextStyles.mediumText,
-                              ),
-                              child: RangeSlider(
-                                  labels: RangeLabels(
-                                    "${selectedPriceRanges.start.round()}",
-                                    "${selectedPriceRanges.end.round()}",
-                                  ),
-                                  activeColor: CustomColors.primaryColor,
-                                  values: selectedPriceRanges,
-                                  max: 1000,
-                                  min: 100,
-                                  onChanged: (newRanges) {
-                                    setState(() {
-                                      selectedPriceRanges = newRanges;
-                                    });
-                                    _requestModel.priceRangeFrom =
-                                        newRanges.start.round().ceilToDouble();
-                                    _requestModel.priceRangeTo =
-                                        newRanges.end.round().ceilToDouble();
-                                  }),
-                            ),
-                            SizedBox(height: 30),
-                            Text(
-                              'Time Range',
-                              style: CustomTextStyles.mediumText,
-                            ),
-                            SliderTheme(
-                              data: SliderThemeData(
-                                showValueIndicator: ShowValueIndicator.always,
-                                valueIndicatorColor: CustomColors.primaryColor,
-                                valueIndicatorTextStyle: CustomTextStyles.mediumText,
-                              ),
-                              child: RangeSlider(
-                                activeColor: CustomColors.primaryColor,
-                                values: selectedTimeRanges,
-                                max: 1000,
-                                min: 100,
-                                labels: RangeLabels(
-                                  "${selectedTimeRanges.start.round()}",
-                                  "${selectedTimeRanges.end.round()}",
                                 ),
-                                onChanged: (newRanges) {
+                                suggestionsCallback: (pattern) {
+                                  return getSuggestions(pattern);
+                                },
+                                itemBuilder: (context, itemData) {
+                                  return ListTile(
+                                      title: Text(
+                                    itemData.name,
+                                    style: CustomTextStyles.boldMediumText,
+                                  ));
+                                },
+                                onSuggestionSelected: (suggestion) {
                                   setState(() {
-                                    selectedTimeRanges = newRanges;
+                                    addressController.text = suggestion.name;
+                                    selectedLocation = suggestion;
                                   });
                                 },
                               ),
-                            ),
-                          ],
+                              SizedBox(height: 20),
+                              CustomRadioButton(
+                                buttonTextStyle: ButtonTextStyle(
+                                  selectedColor: Colors.white,
+                                  unSelectedColor: CustomColors.primaryColor,
+                                  textStyle: CustomTextStyles.textField,
+                                ),
+                                unSelectedColor: Colors.white,
+                                buttonLables: names,
+                                buttonValues: names,
+                                spacing: 0,
+                                radioButtonValue: (value) {
+                                  setState(() {
+                                    getCategories(
+                                      services: state.service,
+                                      name: value,
+                                    );
+                                  });
+                                },
+                                horizontal: false,
+                                enableButtonWrap: false,
+                                width: 150,
+                                absoluteZeroSpacing: false,
+                                selectedColor: CustomColors.primaryColor,
+                                padding: 10,
+                              ),
+                              SizedBox(height: 30),
+                              categories.length == 0
+                                  ? SizedBox()
+                                  : GridView.builder(
+                                      shrinkWrap: true,
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        childAspectRatio: 0.75,
+                                        crossAxisSpacing: 20,
+                                        mainAxisSpacing: 20,
+                                      ),
+                                      itemCount: categories.length,
+                                      itemBuilder: (context, index) {
+                                        return InkWell(
+                                          onTap: () {
+                                            _requestModel.serviceCategoryId = categories[index].id;
+                                            print(categories[index].id);
+                                            Utils.showToast(
+                                              context,
+                                              false,
+                                              "${categories[index].name} is Selected!",
+                                              2,
+                                            );
+                                          },
+                                          child: CategoryCard(
+                                            categories[index],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                              Text(
+                                'Price Range',
+                                style: CustomTextStyles.mediumText,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: <Widget>[
+                                  RangeField(
+                                    controller: priceFromController,
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                  Text(
+                                    'To',
+                                    style: CustomTextStyles.boldTitleText,
+                                  ),
+                                  RangeField(
+                                    controller: priceToController,
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 30),
+                              Text(
+                                'Time Range',
+                                style: CustomTextStyles.mediumText,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: <Widget>[
+                                  RangeField(controller: timeFromController),
+                                  Text(
+                                    'To',
+                                    style: CustomTextStyles.boldTitleText,
+                                  ),
+                                  RangeField(controller: timeToController),
+                                ],
+                              ),
+                              SizedBox(height: 30),
+                              Text(
+                                'Description',
+                                style: CustomTextStyles.mediumText,
+                              ),
+                              TextFormField(
+                                style: CustomTextStyles.textField,
+                                controller: descriptionController,
+                                decoration: InputDecoration(
+                                  hintText: "Describe yourself",
+                                  hintStyle: CustomTextStyles.textField,
+                                  errorStyle: CustomTextStyles.errorText,
+                                ),
+                                validator: RequiredValidator(errorText: "Required"),
+                              ),
+                              SizedBox(height: 20),
+                              Text(
+                                'Description ( optional & 2MB Max )',
+                                style: CustomTextStyles.mediumText,
+                              ),
+                              SizedBox(height: 20),
+                              CustomButton(
+                                onPressed: () async {
+                                  FilePickerResult result = await FilePicker.platform.pickFiles();
+                                  if (result != null) {
+                                    _requestModel.document = result.files.single.path;
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
+                                },
+                                width: 160,
+                                color: CustomColors.primaryColor,
+                                child: Text(
+                                  'Add a document',
+                                  style: CustomTextStyles.mediumWhiteText,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -277,23 +308,24 @@ class _AddServiceState extends State<AddService> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: CustomColors.primaryColor,
           onPressed: () async {
-            inspect(_requestModel);
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            var token = prefs.get("token");
-            _serviceProviderBloc.add(CreateServiceProvider(
-              token: token,
-              request: _requestModel,
-              context: context,
-            ));
+            if (_formkey.currentState.validate()) {
+              _requestModel.address = addressController.text.trim();
+              _requestModel.description = descriptionController.text.trim();
+              _requestModel.priceRangeFrom = double.parse((priceFromController.text.trim()));
+              _requestModel.priceRangeTo = double.parse((priceToController.text.trim()));
+              _requestModel.timeRangeFrom = timeFromController.text.trim();
+              _requestModel.timeRangeTo = timeToController.text.trim();
+              _requestModel.lat = selectedLocation.lat;
+              _requestModel.lng = selectedLocation.lng;
+              inspect(_requestModel);
+              _serviceProviderBloc.add(CreateServiceProvider(request: _requestModel));
+            }
           },
           child: BlocBuilder<CreateServiceProviderBloc, CreateServiceProviderState>(
             bloc: _serviceProviderBloc,
             builder: (context, state) {
-              if (state is CreateServiceProviderInitial) {
-                return Icon(
-                  Icons.add,
-                  color: Colors.white,
-                );
+              if (state is CreateServiceProviderFailed) {
+                return Text('Failed');
               } else if (state is CreateServiceProviderLoading) {
                 return SizedBox(
                   height: 30,
@@ -305,7 +337,10 @@ class _AddServiceState extends State<AddService> {
                   ),
                 );
               } else {
-                return Text('Failed');
+                return Icon(
+                  Icons.add,
+                  color: Colors.white,
+                );
               }
             },
           ),

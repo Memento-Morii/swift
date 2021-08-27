@@ -31,35 +31,37 @@ class _OrderState extends State<Order> {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
-        child: Column(
-          children: [
-            widget.isServiceProvider
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'MY USER ORDERS',
-                        style: CustomTextStyles.boldMediumText,
-                      ),
-                      Switch(
-                        value: isUserOrder,
-                        inactiveThumbColor: Colors.green,
-                        inactiveTrackColor: Colors.green[300],
-                        onChanged: (value) {
-                          setState(() {
-                            isUserOrder = !isUserOrder;
-                          });
-                        },
-                      ),
-                      Text(
-                        'ORDERS RECEIVED',
-                        style: CustomTextStyles.boldMediumText,
-                      ),
-                    ],
-                  )
-                : SizedBox(),
-            isUserOrder == false ? OrderHistoryView() : ServiceProviderOrderView()
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              widget.isServiceProvider
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'MY USER ORDERS',
+                          style: CustomTextStyles.boldMediumText,
+                        ),
+                        Switch(
+                          value: isUserOrder,
+                          inactiveThumbColor: Colors.green,
+                          inactiveTrackColor: Colors.green[300],
+                          onChanged: (value) {
+                            setState(() {
+                              isUserOrder = !isUserOrder;
+                            });
+                          },
+                        ),
+                        Text(
+                          'ORDERS RECEIVED',
+                          style: CustomTextStyles.boldMediumText,
+                        ),
+                      ],
+                    )
+                  : SizedBox(),
+              isUserOrder == false ? OrderHistoryView() : ServiceProviderOrderView()
+            ],
+          ),
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/user_model.dart';
+import 'package:swift/screens/profile/profile_view.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/profile_textfield.dart';
 
@@ -27,7 +28,24 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          'EDIT PROFILE',
+          style: CustomTextStyles.bigWhiteText,
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Profile(),
+              ),
+              (Route<dynamic> route) => false,
+            );
+          },
+        ),
+      ),
       body: BlocProvider(
         create: (context) => EditProfileBloc(),
         child: SafeArea(

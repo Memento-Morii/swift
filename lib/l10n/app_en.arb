@@ -2,5 +2,13 @@
     "language": "English",
     "@language" :{
         "description": "The current language"
-    }
+    },
+    "myServices": "My Services",
+    "orders": "Orders",
+    "profile": "Profile",
+    "home": "Home",
+    "settings": "Settings",
+    "aboutUs": "About Us",
+    "help" : "Help",
+    "logout": "Logout"
 }

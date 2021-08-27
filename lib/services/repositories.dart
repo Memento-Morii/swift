@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/models/my_services_model.dart';
@@ -93,13 +91,14 @@ class Repositories {
     }
   }
 
-  Future<Response> updateUser({UserModel user, String token}) async {
+  Future<Response> updateUser({UserModel user}) async {
     Map data = {
       "first_name": user.firstName,
       "last_name": user.lastName,
       "site_name": user.siteName,
       "house_number": user.houseNumber,
       "block_number": user.blockNumber,
+      // "uuid": user.uuid,
     };
     try {
       var response = await _dio.put(
@@ -128,7 +127,8 @@ class Repositories {
 
   Future<Response> getFrequentServices() async {
     try {
-      var response = await _dio.get("$baseUrl/service/frequent-services", options: options);
+      var response =
+          await _dio.get("$baseUrl/service-categories/frequent-services", options: options);
       return response;
     } catch (_) {
       print(_);
@@ -159,11 +159,14 @@ class Repositories {
     }
   }
 
-  Future<Response> createServiceProvider(
-      {ServiceProviderRequest request, String token, File file}) async {
+  Future<Response> createServiceProvider({ServiceProviderRequest request}) async {
     var data = FormData.fromMap({
-      "document":
-          file == null ? null : await MultipartFile.fromFile(file.path, filename: file.path),
+      "document": request.document == null
+          ? null
+          : await MultipartFile.fromFile(
+              request.document,
+              filename: "document",
+            ),
       "lat": request.lat,
       "lng": request.lng,
       "address": request.address,
@@ -286,7 +289,7 @@ class Repositories {
     }
   }
 
-  Future<Response> declineOrder({String orderId, String token}) async {
+  Future<Response> declineOrder(String orderId) async {
     Map data = {"order_id": orderId};
     try {
       var response = await _dio.post(
@@ -307,6 +310,19 @@ class Repositories {
       var response = await _dio.post(
         "$baseUrl/order/accept",
         data: data,
+        options: await optionsWithHeader(),
+      );
+      return response;
+    } catch (_) {
+      print(_);
+      return null;
+    }
+  }
+
+  Future<Response> getOrderDetails(String orderId) async {
+    try {
+      var response = await _dio.get(
+        "$baseUrl/order/detail/$orderId",
         options: await optionsWithHeader(),
       );
       return response;

@@ -1,3 +1,11 @@
 {
-    "language": "አማርኛ"
+    "language": "አማርኛ",
+    "myServices": "የእኔ አገልግሎቶች",
+    "orders": "ትዕዛዞች",
+    "settings": "ቅንብሮች",
+    "home": "ዋና",
+    "profile": "መገለጫ",
+    "help": "እገዛ",
+    "aboutUs": "ስለ እኛ",
+    "logout": "ውጣ"
 }

@@ -14,4 +14,7 @@ class GoToRegister extends OtpState {
   final String phone;
 }
 
-class OtpFailed extends OtpState {}
+class OtpFailed extends OtpState {
+  OtpFailed(this.message);
+  final String message;
+}
