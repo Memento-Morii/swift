@@ -1,3 +1,5 @@
+import 'package:file_picker/file_picker.dart';
+
 class ServiceProviderRequest {
   ServiceProviderRequest({
     this.document,
@@ -12,7 +14,7 @@ class ServiceProviderRequest {
     this.timeRangeTo,
     this.description,
   });
-  String document;
+  PlatformFile document;
   double lat;
   double lng;
   String address;

@@ -8,7 +8,7 @@ import 'package:swift/models/user_model.dart';
 
 class Repositories {
   Dio _dio = Dio();
-  final String baseUrl = "http://64.227.16.59:4000/api/v1";
+  final String baseUrl = "https://swiftolio.com/api/v1";
   Options options = Options(
     followRedirects: false,
     validateStatus: (status) {
@@ -127,8 +127,9 @@ class Repositories {
 
   Future<Response> getFrequentServices() async {
     try {
-      var response =
-          await _dio.get("$baseUrl/service-categories/frequent-services", options: options);
+      var response = await _dio.get(
+          "$baseUrl/service-categories/frequent-services",
+          options: options);
       return response;
     } catch (_) {
       print(_);
@@ -138,7 +139,8 @@ class Repositories {
 
   Future<Response> getServicesCategories(int serviceId) async {
     try {
-      var response = await _dio.get("$baseUrl/service-categories/$serviceId", options: options);
+      var response = await _dio.get("$baseUrl/service-categories/$serviceId",
+          options: options);
       return response;
     } catch (_) {
       print(_);
@@ -159,12 +161,13 @@ class Repositories {
     }
   }
 
-  Future<Response> createServiceProvider({ServiceProviderRequest request}) async {
+  Future<Response> createServiceProvider(
+      {ServiceProviderRequest request}) async {
     var data = FormData.fromMap({
       "document": request.document == null
           ? null
           : await MultipartFile.fromFile(
-              request.document,
+              request.document.path,
               filename: "document",
             ),
       "lat": request.lat,
@@ -207,7 +210,8 @@ class Repositories {
     }
   }
 
-  Future<Response> updateMyService({String token, MyServicesModel myService}) async {
+  Future<Response> updateMyService(
+      {String token, MyServicesModel myService}) async {
     Map data = {
       'uuid': myService.uuid,
       'document': 'test',
@@ -262,7 +266,8 @@ class Repositories {
     }
   }
 
-  Future<Response> createOrder(OrderRequest orderRequest, bool isAddress) async {
+  Future<Response> createOrder(
+      OrderRequest orderRequest, bool isAddress) async {
     try {
       Map dataWithAddress = {
         "service_id": orderRequest.serviceId,
