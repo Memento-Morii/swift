@@ -304,6 +304,31 @@ class Repositories {
     }
   }
 
+  Future<Response> submitPayment({
+    int orderId,
+    int userId,
+    int serviceProviderId,
+    double payment,
+  }) async {
+    Map data = {
+      "order_id": orderId,
+      "user_id": userId,
+      "service_provider_id": serviceProviderId,
+      "payment": payment,
+    };
+    try {
+      var response = await _dio.post(
+        "$baseUrl/order/submit-payment",
+        data: data,
+        options: await optionsWithHeader(),
+      );
+      return response;
+    } catch (_) {
+      print(_);
+      return null;
+    }
+  }
+
   Future<Response> acceptOrder(String orderId) async {
     Map data = {"order_id": orderId};
     try {

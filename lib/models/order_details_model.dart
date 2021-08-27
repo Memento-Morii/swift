@@ -11,7 +11,7 @@ String orderDetailsModelToJson(OrderDetailsModel data) => json.encode(data.toJso
 
 class OrderDetailsModel {
   OrderDetailsModel({
-    this.orderId,
+    this.id,
     this.userId,
     this.serviceProviderId,
     this.serviceId,
@@ -20,7 +20,7 @@ class OrderDetailsModel {
     this.orderDetail,
   });
 
-  String orderId;
+  int id;
   int userId;
   int serviceProviderId;
   int serviceId;
@@ -29,7 +29,7 @@ class OrderDetailsModel {
   OrderDetail orderDetail;
 
   factory OrderDetailsModel.fromJson(Map<String, dynamic> json) => OrderDetailsModel(
-        orderId: json["order_id"],
+        id: json["id"],
         userId: json["user_id"],
         serviceProviderId: json["service_provider_id"],
         serviceId: json["service_id"],
@@ -39,7 +39,7 @@ class OrderDetailsModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "order_id": orderId,
+        "id": id,
         "user_id": userId,
         "service_provider_id": serviceProviderId,
         "service_id": serviceId,

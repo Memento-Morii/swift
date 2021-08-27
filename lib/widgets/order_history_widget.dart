@@ -13,7 +13,6 @@ class OrderHistoryWidget extends StatelessWidget {
   final DateFormat dateFormat = DateFormat.yMMMMd().add_jm();
   @override
   Widget build(BuildContext context) {
-    order.orderHistory.status == 2 ? print(order.orderId) : print('ob');
     return Container(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
