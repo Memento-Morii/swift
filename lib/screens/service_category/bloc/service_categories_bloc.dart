@@ -24,7 +24,11 @@ class ServiceCategoriesBloc extends Bloc<ServiceCategoriesEvent, ServiceCategori
           var encoded = jsonEncode(decoded['results']);
           // print(encoded);
           List<ServiceCategoryModel> categories = serviceCategoryModelFromJson(encoded);
-          yield ServiceCategoriesLoaded(categories);
+          if (categories.length == 0) {
+            yield ServiceCategoriesEmpty();
+          } else {
+            yield ServiceCategoriesLoaded(categories);
+          }
         }
       } catch (_) {
         print(_);

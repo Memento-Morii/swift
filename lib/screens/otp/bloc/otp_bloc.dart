@@ -37,7 +37,7 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
             var serviceProvider = jsonDecode(response.data)['results']['is_service_provider'];
             sharedPreferences.setString("token", token);
             sharedPreferences.setInt("serviceProvider", serviceProvider);
-            yield OtpLoaded();
+            yield OtpLoaded(serviceProvider == 2 ? false : true);
           } else {
             yield GoToRegister(event.phone);
           }

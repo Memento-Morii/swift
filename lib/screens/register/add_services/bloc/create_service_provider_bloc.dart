@@ -21,14 +21,12 @@ class CreateServiceProviderBloc
     if (event is CreateServiceProvider) {
       yield CreateServiceProviderLoading();
       try {
-        print("Im here");
         SharedPreferences prefs = await SharedPreferences.getInstance();
         var response = await _repos.createServiceProvider(request: event.request);
-        print(response);
-        prefs.setInt("serviceProvider", 2);
         if (response.statusCode == 200) {
           bool isSuccess = jsonDecode(response.data)['success'];
           if (isSuccess == true) {
+            prefs.setInt("serviceProvider", 1);
             yield CreateServiceProviderSuccess();
           } else {
             yield CreateServiceProviderFailed(message: 'You have already added this service');

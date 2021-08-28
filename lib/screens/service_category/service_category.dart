@@ -103,8 +103,18 @@ class _ServiceCategoryState extends State<ServiceCategory> {
                     return SizedBox(height: 20);
                   },
                 );
+              } else if (state is ServiceCategoriesEmpty) {
+                return Center(
+                    child: Text(
+                  'Empty Categories',
+                  style: CustomTextStyles.errorText,
+                ));
               } else {
-                return Center(child: Text('Failed'));
+                return Center(
+                    child: Text(
+                  'Failed',
+                  style: CustomTextStyles.errorText,
+                ));
               }
             },
           ),

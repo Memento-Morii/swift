@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:swift/helper/utils.dart';
 import 'package:swift/models/service_category_model.dart';
 import 'package:swift/models/service_model.dart';
 import 'package:swift/screens/all_services/all_service_view.dart';
@@ -218,14 +219,19 @@ class _HomeState extends State<Home> {
                                             "assets/telegram.png",
                                             height: 40,
                                           ),
-                                          Image.asset(
-                                            "assets/instagram.png",
-                                            height: 40,
+                                          InkWell(
+                                            onTap: () async {
+                                              await Utils.openLink(url: "https://www.google.com");
+                                            },
+                                            child: Image.asset(
+                                              "assets/instagram.png",
+                                              height: 40,
+                                            ),
                                           ),
-                                          Image.asset(
-                                            "assets/facebook.png",
-                                            height: 40,
-                                          ),
+                                          // Utils.openLinkWidget(
+                                          //   iconUrl: "assets/facebook.png",
+                                          //   url: 'https://www.google.com',
+                                          // ),
                                           Image.asset(
                                             "assets/whatsapp.png",
                                             height: 40,

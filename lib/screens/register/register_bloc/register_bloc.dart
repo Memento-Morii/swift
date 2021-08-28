@@ -32,7 +32,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           var token = jsonDecode(response.data)['token'];
           sharedPreferences.setInt(
             "serviceProvider",
-            event.role == "User" ? jsonDecode(response.data)['results']['is_service_provider'] : 1,
+            event.role == "User" ? jsonDecode(response.data)['results']['is_service_provider'] : 2,
           );
           print(token);
           sharedPreferences.setString("token", token);

@@ -8,7 +8,6 @@ import 'package:swift/helper/utils.dart';
 import 'package:swift/models/signup_request_model.dart';
 import 'package:swift/screens/otp/otp_view.dart';
 import 'package:swift/screens/register/register_bloc/register_bloc.dart';
-import 'package:swift/screens/register/signIn_view.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/custom_textfield.dart';
 
@@ -30,7 +29,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   TextEditingController fnameController = TextEditingController();
   TextEditingController lnameController = TextEditingController();
-  // TextEditingController phoneController = TextEditingController();
+
   String role;
   TextEditingController emailController = TextEditingController();
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -120,29 +119,8 @@ class _SignUpViewState extends State<SignUpView> {
                                 absoluteZeroSpacing: false,
                                 selectedColor: CustomColors.primaryColor,
                                 padding: 10,
-
-                                // enableShape: true,
                               ),
                             ),
-                            // SizedBox(height: 20),
-                            // Center(
-                            //   child: Row(
-                            //     mainAxisSize: MainAxisSize.min,
-                            //     children: <Widget>[
-                            //       CircleAvatar(
-                            //         radius: 25,
-                            //         backgroundColor: Color(0xff3b5999),
-                            //         backgroundImage: AssetImage('assets/facebook-logo.png'),
-                            //       ),
-                            //       SizedBox(width: 30),
-                            //       CircleAvatar(
-                            //         radius: 25,
-                            //         backgroundColor: Colors.transparent,
-                            //         backgroundImage: AssetImage('assets/gmail.png'),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
                             SizedBox(height: 30),
                             CustomButton(
                               color: CustomColors.primaryColor,
@@ -153,6 +131,7 @@ class _SignUpViewState extends State<SignUpView> {
                                       firstName: fnameController.text.trim(),
                                       lastName: lnameController.text.trim(),
                                       phone: widget.phone,
+                                      isServiceProvider: role == 'Provider' ? 2 : null,
                                     );
                                     Navigator.push(
                                       context,
@@ -189,33 +168,6 @@ class _SignUpViewState extends State<SignUpView> {
                                 }
                               },
                             ),
-                            // SizedBox(height: 20),
-                            // Padding(
-                            //   padding: const EdgeInsets.symmetric(horizontal: 10),
-                            //   child: Row(
-                            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //     children: <Widget>[
-                            //       Text(
-                            //         'Already have an account?',
-                            //         style: CustomTextStyles.mediumText,
-                            //       ),
-                            //       TextButton(
-                            //         onPressed: () {
-                            //           Navigator.pushReplacement(
-                            //             context,
-                            //             MaterialPageRoute(
-                            //               builder: (context) => SignInView(),
-                            //             ),
-                            //           );
-                            //         },
-                            //         child: Text(
-                            //           'Login',
-                            //           style: CustomTextStyles.coloredBold,
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
                           ],
                         ),
                       );

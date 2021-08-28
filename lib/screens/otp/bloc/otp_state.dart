@@ -7,7 +7,10 @@ class OtpInitial extends OtpState {}
 
 class OtpLoading extends OtpState {}
 
-class OtpLoaded extends OtpState {}
+class OtpLoaded extends OtpState {
+  OtpLoaded(this.isFinished);
+  final bool isFinished;
+}
 
 class GoToRegister extends OtpState {
   GoToRegister(this.phone);

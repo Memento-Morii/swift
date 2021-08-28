@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Utils {
   static showToast(BuildContext context, bool isError, String message, int duration) {
@@ -34,5 +35,15 @@ class Utils {
       curve: Curves.elasticOut,
       reverseCurve: Curves.fastOutSlowIn,
     );
+  }
+
+  static Future openLink({String url}) async => await _launchUrl(url);
+
+  static Future _launchUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      print("error");
+    }
   }
 }

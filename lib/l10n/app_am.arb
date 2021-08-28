@@ -7,5 +7,40 @@
     "profile": "መገለጫ",
     "help": "እገዛ",
     "aboutUs": "ስለ እኛ",
-    "logout": "ውጣ"
+    "logout": "ውጣ",
+    "motto":"ስዊፍት፤ ቀላል መፍትሄ፣ ለሁሉም ነገር በሁሉም ቦታ",
+
+    "viewAllServices" : "አገልግሎቶች ይመልከቱ",
+    "frequentServices": "ተደጋጋሚ አገልግሎቶች",
+    "orderUsing": "በዚህ ማዘዝ",
+    "followUs": "ተከተሉን",
+    "searchForServices": "አገልግሎቶችን ይፈልጉ",
+    
+    "add": "ይጨምሩ",
+    "update": "አዘምን",
+    "priceRangeFrom": "የዋጋ ክልል ከ",
+    "to": "እስከ",
+
+    "houseInfo": "የቤት መረጃ",
+    "blockNumber": "የቤት ቁጥር",
+    "siteName": "የጣቢያ ስም",
+
+    "myUserOrders": "የእኔ የተጠቃሚ ትዕዛዞች",
+    "orderReceived": "የተቀበለ ትዕዛዝ",
+    "pending": "በመጠባበቅ ላይ",
+    "accepted": "ተቀባይነት አግኝቷል",
+    "viewOrder": "የትዕዛዝ ዝርዝሮችን ይመልከቱ",
+
+    "companyProfile": "ስለ ኩባንያው",
+    "seeMore": "ተጨማሪ ይመልከቱ",
+    "seeDetails": "ዝርዝሮችን ይመልከቱ",
+    "keyPersonnel": "ቁልፍ ሰው",
+
+    "contactForHelp": "ለማንኛውም እርዳታ የእኛን የደንበኛ አገልግሎት ያነጋግሩ",
+    "callUs": "ይደውሉልን",
+    "telegramUs": "ቴሌግራም ያደርጉ",
+    "leaveFeedback": "አስተያየትዎን እዚህ ይተውልን",
+    "sendFeedback": "ግብረ - መልስ ላክ",
+
+    "aboutUsDescription": "ስዊፍት በአዲስ አበባ የሚገኙ አገልግሎት ሰጪዎችን ከ ተጠቃሚዎችጋር የሚያገናኝ የቴክኖሎጂ ውጤት ሲሆን፣ በውስጡ የተለያዩ አገልግሎት ሰጪዎች አገልግሎታቸውን በማስገባት ተደራሽነታቸውን ማስፋት አንዲሁም ገቢያቸውን ማሳደግ ያስችላቸዋል። የአገልግሎት ተጠቃሚዎችንም እንዲሁ የሚፈልጉትን የአገልግሎት ዓይነት ከፈለጉት መስፈርት አንጻር መርጠው ማዘዝ ያስችላቸዋል።"
 }

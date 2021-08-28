@@ -7,6 +7,7 @@ class SignupRequest {
     this.siteNumber,
     this.blockNumber,
     this.email,
+    this.isServiceProvider,
   });
   String firstName;
   String lastName;
@@ -15,4 +16,5 @@ class SignupRequest {
   String siteNumber;
   String blockNumber;
   String email;
+  int isServiceProvider;
 }

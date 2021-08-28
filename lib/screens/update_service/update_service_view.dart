@@ -66,9 +66,12 @@ class _UpdateServiceViewState extends State<UpdateServiceView> {
                   'Address',
                   style: CustomTextStyles.mediumText,
                 ),
-                TextField(
-                  controller: addressController,
+                TextFormField(
+                  initialValue: widget.myService.address,
                   style: CustomTextStyles.textField,
+                  onChanged: (value) {
+                    widget.myService.address = value;
+                  },
                 ),
                 SizedBox(height: 20),
                 Text(

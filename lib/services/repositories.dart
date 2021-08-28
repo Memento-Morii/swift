@@ -35,7 +35,7 @@ class Repositories {
   Future<Response> signUp({
     SignupRequest signupRequest,
   }) async {
-    Map<String, String> data = {
+    Map data = {
       "first_name": signupRequest.firstName,
       "last_name": signupRequest.lastName,
       "email": signupRequest.email,
@@ -43,6 +43,7 @@ class Repositories {
       "house_number": signupRequest.houseNumber,
       "block_number": signupRequest.blockNumber,
       "phone_number": signupRequest.phone,
+      "is_service_provider": signupRequest.isServiceProvider,
     };
     try {
       Response response = await _dio.post(
@@ -127,9 +128,8 @@ class Repositories {
 
   Future<Response> getFrequentServices() async {
     try {
-      var response = await _dio.get(
-          "$baseUrl/service-categories/frequent-services",
-          options: options);
+      var response =
+          await _dio.get("$baseUrl/service-categories/frequent-services", options: options);
       return response;
     } catch (_) {
       print(_);
@@ -139,8 +139,7 @@ class Repositories {
 
   Future<Response> getServicesCategories(int serviceId) async {
     try {
-      var response = await _dio.get("$baseUrl/service-categories/$serviceId",
-          options: options);
+      var response = await _dio.get("$baseUrl/service-categories/$serviceId", options: options);
       return response;
     } catch (_) {
       print(_);
@@ -161,8 +160,7 @@ class Repositories {
     }
   }
 
-  Future<Response> createServiceProvider(
-      {ServiceProviderRequest request}) async {
+  Future<Response> createServiceProvider({ServiceProviderRequest request}) async {
     var data = FormData.fromMap({
       "document": request.document == null
           ? null
@@ -210,8 +208,7 @@ class Repositories {
     }
   }
 
-  Future<Response> updateMyService(
-      {String token, MyServicesModel myService}) async {
+  Future<Response> updateMyService({String token, MyServicesModel myService}) async {
     Map data = {
       'uuid': myService.uuid,
       'document': 'test',
@@ -266,8 +263,7 @@ class Repositories {
     }
   }
 
-  Future<Response> createOrder(
-      OrderRequest orderRequest, bool isAddress) async {
+  Future<Response> createOrder(OrderRequest orderRequest, bool isAddress) async {
     try {
       Map dataWithAddress = {
         "service_id": orderRequest.serviceId,

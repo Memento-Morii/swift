@@ -1,5 +1,5 @@
 {
-    "language": "English",
+    "language": "Language",
     "@language" :{
         "description": "The current language"
     },
@@ -10,5 +10,40 @@
     "settings": "Settings",
     "aboutUs": "About Us",
     "help" : "Help",
-    "logout": "Logout"
+    "logout": "Logout",
+    "motto": "Swift, The Ultimate Solution for Everything, Anywhere!",
+
+    "viewAllServices" : "View All Services",
+    "frequentServices": "Frequent Services",
+    "orderUsing": "ORDER USING",
+    "followUs": "FOLLOW US",
+    "searchForServices": "Search For Services",
+
+    "add": "Add",
+    "update": "Update",
+    "priceRangeFrom": "Price Range From",
+    "to": "To",
+
+    "houseInfo": "House Information",
+    "blockNumber": "House Number",
+    "siteName": "Site Name",
+
+    "myUserOrders": "My User Orders",
+    "orderReceived": "Order Received",
+    "pending": "Pending",
+    "accepted": "Accepted",
+    "viewOrder": "View Order Details",
+
+    "companyProfile": "Company Profile",
+    "seeMore": "SEE MORE",
+    "seeDetails": "SEE DETAILS",
+    "keyPersonnel": "KEY PERSONNEL",
+
+    "contactForHelp": "CONTACT OUR CUSTOMER SERVICE FOR ANY HELP",
+    "callUs": "Call Us",
+    "telegramUs": "Telegram Us",
+    "leaveFeedback": "Leave us your feedback here",
+    "sendFeedback": "Send Feedback",
+
+    "aboutUsDescription" : "Swift is an online service booking platform that connects Addis Ababa's service providers with consumers, enabling a variety of service providers to expand their reach and increase their revenue. It also allows users to select the type of service they want and order according to their requirements."
 }

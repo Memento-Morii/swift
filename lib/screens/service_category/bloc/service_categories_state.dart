@@ -7,6 +7,8 @@ class ServiceCategoriesInitial extends ServiceCategoriesState {}
 
 class ServiceCategoriesFailed extends ServiceCategoriesState {}
 
+class ServiceCategoriesEmpty extends ServiceCategoriesState {}
+
 class ServiceCategoriesLoaded extends ServiceCategoriesState {
   ServiceCategoriesLoaded(this.categories);
   final List<ServiceCategoryModel> categories;

@@ -7,8 +7,9 @@ import 'package:swift/helper/text_styles.dart';
 import 'package:swift/l10n/l10n.dart';
 import 'package:swift/provider/local_provider.dart';
 import 'package:swift/screens/register/signIn_view.dart';
+import 'package:swift/wrapper.dart';
 import 'helper/colors.dart';
-import 'screens/home/home_view.dart';
+// import 'screens/home/home_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> main() async {
@@ -16,6 +17,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.get("token");
+  int serviceProvider = prefs.get('serviceProvider');
   // prefs.clear();
   print(token);
   runApp(
@@ -42,7 +44,7 @@ Future<void> main() async {
             GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          home: token == null ? SignInView() : Home(),
+          home: token == null ? SignInView() : Wrapper(serviceProvider),
         );
       },
     ),
