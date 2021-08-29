@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/user_model.dart';
 import 'package:swift/screens/edit_profile/edit_profile_view.dart';
+import 'package:swift/widgets/custom_network_image.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
 
 import 'bloc/profile_bloc.dart';
@@ -71,6 +72,11 @@ class _ProfileState extends State<Profile> {
                           child: CircleAvatar(
                             backgroundColor: Colors.grey,
                             radius: 80,
+                            child: state.userModel.userImage == null
+                                ? null
+                                : CustomNetworkImage(
+                                    imgUrl: state.userModel.userImage,
+                                  ),
                           ),
                         ),
                         Positioned(

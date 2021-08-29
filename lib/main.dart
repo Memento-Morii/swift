@@ -18,6 +18,7 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.get("token");
   int serviceProvider = prefs.get('serviceProvider');
+  int locale = prefs.get('locale');
   // prefs.clear();
   print(token);
   runApp(

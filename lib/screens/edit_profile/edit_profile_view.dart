@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/colors.dart';
@@ -19,6 +20,7 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   EditProfileBloc _editProfileBloc;
+  PlatformFile photo;
   @override
   void initState() {
     _editProfileBloc = EditProfileBloc();
@@ -58,6 +60,21 @@ class _EditProfileState extends State<EditProfile> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      Center(
+                        child: InkWell(
+                          onTap: () async {
+                            FilePickerResult result = await FilePicker.platform.pickFiles(
+                              allowMultiple: false,
+                            );
+                            if (result != null) {
+                              photo = result.files.single;
+                            }
+                          },
+                          child: CircleAvatar(
+                            radius: 60,
+                          ),
+                        ),
+                      ),
                       Text(
                         'First Name',
                         style: CustomTextStyles.boldText,
@@ -115,6 +132,7 @@ class _EditProfileState extends State<EditProfile> {
                           _editProfileBloc.add(EditUserProfile(
                             editedUser: widget.user,
                             context: context,
+                            photo: photo,
                           ));
                         },
                         child: Text(

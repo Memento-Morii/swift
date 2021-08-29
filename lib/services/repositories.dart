@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/models/my_services_model.dart';
 import 'package:swift/models/order_request_model.dart';
@@ -92,15 +93,33 @@ class Repositories {
     }
   }
 
-  Future<Response> updateUser({UserModel user}) async {
-    Map data = {
+  Future<Response> updateUser({UserModel user, PlatformFile photo}) async {
+    // var data = FormData.fromMap({
+    //
+    //   "lat": request.lat,
+    //   "lng": request.lng,
+    //   "address": request.address,
+    //   "price_range_from": request.priceRangeFrom,
+    //   "price_range_to": request.priceRangeTo,
+    //   "time_range_from": "2021-07-15 12:39:58",
+    //   "time_range_to": "2021-07-15 12:39:58",
+    //   "service_id": request.serviceId,
+    //   "service_category_id": request.serviceCategoryId,
+    //   "description": request.description,
+    // });
+    var data = FormData.fromMap({
       "first_name": user.firstName,
       "last_name": user.lastName,
       "site_name": user.siteName,
       "house_number": user.houseNumber,
       "block_number": user.blockNumber,
-      // "uuid": user.uuid,
-    };
+      "user_image": photo == null
+          ? null
+          : await MultipartFile.fromFile(
+              photo.path,
+              filename: "profile",
+            ),
+    });
     try {
       var response = await _dio.put(
         "$baseUrl/user/update-profile",

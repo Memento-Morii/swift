@@ -12,6 +12,8 @@
     "help" : "Help",
     "logout": "Logout",
     "motto": "Swift, The Ultimate Solution for Everything, Anywhere!",
+    "phone": "Phone",
+    "go": "Go",
 
     "viewAllServices" : "View All Services",
     "frequentServices": "Frequent Services",

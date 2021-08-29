@@ -142,9 +142,19 @@ class _OTPViewState extends State<OTPView> {
                           ),
                         );
                       } else {
-                        return Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          color: Colors.white,
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "Go",
+                              style: CustomTextStyles.mediumWhiteText,
+                            ),
+                            SizedBox(width: 10),
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: Colors.white,
+                            ),
+                          ],
                         );
                       }
                     },

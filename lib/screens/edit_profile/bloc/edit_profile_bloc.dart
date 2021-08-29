@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:swift/helper/utils.dart';
@@ -21,7 +22,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
   ) async* {
     if (event is EditUserProfile) {
       try {
-        var response = await _repo.updateUser(user: event.editedUser);
+        var response = await _repo.updateUser(user: event.editedUser, photo: event.photo);
         if (response.statusCode == 200) {
           Utils.showToast(event.context, false, "Success", 2);
         } else {
