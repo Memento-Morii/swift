@@ -1,12 +1,9 @@
-import 'dart:developer';
-import 'dart:io';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/helper/utils.dart';
@@ -86,7 +83,8 @@ class _AddServiceState extends State<AddService> {
         body: BlocProvider(
           create: (context) => AddServiceBloc(),
           child: SafeArea(
-            child: BlocListener<CreateServiceProviderBloc, CreateServiceProviderState>(
+            child: BlocListener<CreateServiceProviderBloc,
+                CreateServiceProviderState>(
               bloc: _serviceProviderBloc,
               listener: (context, state) {
                 if (state is CreateServiceProviderSuccess) {
@@ -129,8 +127,8 @@ class _AddServiceState extends State<AddService> {
                                   controller: addressController,
                                   style: CustomTextStyles.textField,
                                   decoration: InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 32, vertical: 20),
                                     border: InputBorder.none,
                                     hintText: "Search For Location",
                                     hintStyle: CustomTextStyles.textField,
@@ -188,8 +186,10 @@ class _AddServiceState extends State<AddService> {
                                   ? SizedBox()
                                   : GridView.builder(
                                       shrinkWrap: true,
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 3,
                                         childAspectRatio: 0.75,
                                         crossAxisSpacing: 20,
@@ -199,7 +199,8 @@ class _AddServiceState extends State<AddService> {
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                           onTap: () {
-                                            _requestModel.serviceCategoryId = categories[index].id;
+                                            _requestModel.serviceCategoryId =
+                                                categories[index].id;
                                             print(categories[index].id);
                                             Utils.showToast(
                                               context,
@@ -219,7 +220,8 @@ class _AddServiceState extends State<AddService> {
                                 style: CustomTextStyles.mediumText,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
                                   RangeField(
@@ -242,7 +244,8 @@ class _AddServiceState extends State<AddService> {
                                 style: CustomTextStyles.mediumText,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
                                   RangeField(controller: timeFromController),
@@ -266,7 +269,8 @@ class _AddServiceState extends State<AddService> {
                                   hintStyle: CustomTextStyles.textField,
                                   errorStyle: CustomTextStyles.errorText,
                                 ),
-                                validator: RequiredValidator(errorText: "Required"),
+                                validator:
+                                    RequiredValidator(errorText: "Required"),
                               ),
                               SizedBox(height: 20),
                               Text(
@@ -276,14 +280,17 @@ class _AddServiceState extends State<AddService> {
                               SizedBox(height: 20),
                               CustomButton(
                                 onPressed: () async {
-                                  FilePickerResult result = await FilePicker.platform.pickFiles(
+                                  FilePickerResult result =
+                                      await FilePicker.platform.pickFiles(
                                     allowMultiple: false,
                                     allowedExtensions: ['pdf'],
                                   );
                                   if (result != null) {
-                                    _requestModel.document = result.files.single;
+                                    _requestModel.document =
+                                        result.files.single;
                                   } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
                                   }
                                 },
                                 width: 160,
@@ -313,19 +320,24 @@ class _AddServiceState extends State<AddService> {
               if (selectedLocation != null) {
                 _requestModel.address = addressController.text.trim();
                 _requestModel.description = descriptionController.text.trim();
-                _requestModel.priceRangeFrom = double.parse((priceFromController.text.trim()));
-                _requestModel.priceRangeTo = double.parse((priceToController.text?.trim()));
+                _requestModel.priceRangeFrom =
+                    double.parse((priceFromController.text.trim()));
+                _requestModel.priceRangeTo =
+                    double.parse((priceToController.text?.trim()));
                 _requestModel.timeRangeFrom = timeFromController.text.trim();
                 _requestModel.timeRangeTo = timeToController.text.trim();
                 _requestModel.lat = selectedLocation.lat;
                 _requestModel.lng = selectedLocation.lng;
-                _serviceProviderBloc.add(CreateServiceProvider(request: _requestModel));
+                _serviceProviderBloc
+                    .add(CreateServiceProvider(request: _requestModel));
               } else {
-                Utils.showToast(context, true, "Please select your location", 2);
+                Utils.showToast(
+                    context, true, "Please select your location", 2);
               }
             }
           },
-          child: BlocBuilder<CreateServiceProviderBloc, CreateServiceProviderState>(
+          child: BlocBuilder<CreateServiceProviderBloc,
+              CreateServiceProviderState>(
             bloc: _serviceProviderBloc,
             builder: (context, state) {
               if (state is CreateServiceProviderFailed) {

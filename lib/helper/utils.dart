@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:swift/widgets/social_network.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Utils {
-  static showToast(BuildContext context, bool isError, String message, int duration) {
+  static showToast(
+      BuildContext context, bool isError, String message, int duration) {
     return showToastWidget(
       Material(
         elevation: 10,
@@ -37,11 +39,26 @@ class Utils {
     );
   }
 
-  static Future openLink({String url}) async => await _launchUrl(url);
+  static Future openLink(
+          {@required String url, @required URL_TYPE urlType}) async =>
+      await _launchUrl(url, urlType);
 
-  static Future _launchUrl(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+  static Future _launchUrl(String url, URL_TYPE urlType) async {
+    String finalLink;
+    switch (urlType) {
+      case URL_TYPE.Link:
+        finalLink = url;
+        break;
+      case URL_TYPE.SMS:
+        finalLink = 'sms:$url';
+        break;
+      case URL_TYPE.Telephone:
+        finalLink = 'tel:$url';
+        break;
+      default:
+    }
+    if (await canLaunch(finalLink)) {
+      await launch(finalLink);
     } else {
       print("error");
     }
