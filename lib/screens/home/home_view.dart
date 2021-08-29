@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
-import 'package:swift/helper/utils.dart';
 import 'package:swift/models/service_category_model.dart';
 import 'package:swift/models/service_model.dart';
 import 'package:swift/screens/all_services/all_service_view.dart';
@@ -12,7 +11,7 @@ import 'package:swift/screens/service_category/service_category.dart';
 import 'package:swift/widgets/custom_network_image.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
 import 'package:swift/widgets/service_card.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:swift/widgets/social_network.dart';
 import 'search_bloc/search_bloc.dart';
 
 class Home extends StatefulWidget {
@@ -66,7 +65,8 @@ class _HomeState extends State<Home> {
                         color: Colors.red,
                         size: 30,
                       ),
-                      contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 20.0),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 16, horizontal: 20.0),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(),
                       ),
@@ -80,7 +80,8 @@ class _HomeState extends State<Home> {
                     bloc: _searchBloc,
                     builder: (context, state) {
                       if (state is SearchInitial) {
-                        return BlocBuilder<GetAllServicesBloc, GetAllServicesState>(
+                        return BlocBuilder<GetAllServicesBloc,
+                            GetAllServicesState>(
                           bloc: _serviceBloc,
                           builder: (context, state) {
                             if (state is GetAllServicesInitial) {
@@ -90,25 +91,30 @@ class _HomeState extends State<Home> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 10),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       GridView.builder(
-                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 4,
                                           crossAxisSpacing: 5,
                                           mainAxisSpacing: 5,
                                         ),
                                         shrinkWrap: true,
-                                        physics: const NeverScrollableScrollPhysics(),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
                                         itemCount: 8,
                                         itemBuilder: (context, index) {
-                                          ServiceModel _result = state.allServices[index];
+                                          ServiceModel _result =
+                                              state.allServices[index];
                                           return InkWell(
                                             onTap: () {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => ServiceCategory(
+                                                  builder: (context) =>
+                                                      ServiceCategory(
                                                     serviceId: _result.id,
                                                     name: _result.name,
                                                   ),
@@ -126,20 +132,23 @@ class _HomeState extends State<Home> {
                                           width: 200,
                                           decoration: BoxDecoration(
                                             color: CustomColors.primaryColor,
-                                            borderRadius: BorderRadius.circular(20),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                           ),
                                           child: TextButton(
                                             onPressed: () {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => AllService(),
+                                                  builder: (context) =>
+                                                      AllService(),
                                                 ),
                                               );
                                             },
                                             child: Text(
                                               "View All Services",
-                                              style: CustomTextStyles.normalWhiteText,
+                                              style: CustomTextStyles
+                                                  .normalWhiteText,
                                             ),
                                           ),
                                         ),
@@ -154,7 +163,8 @@ class _HomeState extends State<Home> {
                                         height: 100,
                                         child: ListView.separated(
                                           shrinkWrap: true,
-                                          itemCount: state.frequentServices.length,
+                                          itemCount:
+                                              state.frequentServices.length,
                                           scrollDirection: Axis.horizontal,
                                           itemBuilder: (context, index) {
                                             return InkWell(
@@ -162,15 +172,19 @@ class _HomeState extends State<Home> {
                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                      builder: (context) => CreateOrderView(
-                                                        serviceCategory:
-                                                            state.frequentServices[index],
+                                                      builder: (context) =>
+                                                          CreateOrderView(
+                                                        serviceCategory: state
+                                                                .frequentServices[
+                                                            index],
                                                       ),
                                                     ),
                                                   );
                                                 },
                                                 child: CustomNetworkImage(
-                                                  imgUrl: state.frequentServices[index].image,
+                                                  imgUrl: state
+                                                      .frequentServices[index]
+                                                      .image,
                                                   width: 80,
                                                 ));
                                           },
@@ -191,15 +205,17 @@ class _HomeState extends State<Home> {
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: <Widget>[
-                                            Image.asset(
-                                              "assets/phone_green.png",
-                                              height: 60,
-                                            ),
+                                            SocialNetwork(
+                                                icon: "assets/phone_green.png",
+                                                url: "0923759362",
+                                                urlType: URL_TYPE.Telephone),
                                             SizedBox(width: 20),
-                                            Image.asset(
-                                              "assets/telegram.png",
-                                              height: 60,
-                                            )
+                                            SocialNetwork(
+                                              icon: "assets/telegram.png",
+                                              url:
+                                                  "https://t.me/my_sheger_gebeya",
+                                              urlType: URL_TYPE.Link,
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -212,40 +228,37 @@ class _HomeState extends State<Home> {
                                       ),
                                       SizedBox(height: 10),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        // mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Image.asset(
-                                            "assets/telegram.png",
-                                            height: 40,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          SocialNetwork(
+                                            icon: "assets/telegram.png",
+                                            url:
+                                                "https://t.me/my_sheger_gebeya",
+                                            urlType: URL_TYPE.Link,
                                           ),
-                                          InkWell(
-                                            onTap: () async {
-                                              await Utils.openLink(url: "https://www.google.com");
-                                            },
-                                            child: Image.asset(
-                                              "assets/instagram.png",
-                                              height: 40,
-                                            ),
+                                          SocialNetwork(
+                                            icon: "assets/facebook.png",
+                                            url: "facebooklink",
+                                            urlType: URL_TYPE.Link,
                                           ),
-                                          // Utils.openLinkWidget(
-                                          //   iconUrl: "assets/facebook.png",
-                                          //   url: 'https://www.google.com',
-                                          // ),
-                                          Image.asset(
-                                            "assets/whatsapp.png",
-                                            height: 40,
+                                          SocialNetwork(
+                                            icon: "assets/whatsapp.png",
+                                            url: "whatsapplink",
+                                            urlType: URL_TYPE.Link,
                                           ),
-                                          Image.asset(
-                                            "assets/twitter.png",
-                                            height: 40,
+                                          SocialNetwork(
+                                            icon: "assets/twitter.png",
+                                            url: "twitterlink",
+                                            urlType: URL_TYPE.Link,
                                           ),
-                                          Image.asset(
-                                            "assets/tiktok.png",
-                                            height: 40,
+                                          SocialNetwork(
+                                            icon: "assets/tiktok.png",
+                                            url: "tiktoklink",
+                                            urlType: URL_TYPE.Link,
                                           ),
                                         ],
-                                      ),
+                                      )
                                     ],
                                   ),
                                 ),
@@ -261,9 +274,11 @@ class _HomeState extends State<Home> {
                           },
                         );
                       } else if (state is SearchFound) {
-                        List<ServiceCategoryModel> searchResults = state.searchResults;
+                        List<ServiceCategoryModel> searchResults =
+                            state.searchResults;
                         return GridView.builder(
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             crossAxisSpacing: 5,
                             mainAxisSpacing: 5,
