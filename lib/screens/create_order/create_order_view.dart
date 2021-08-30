@@ -9,6 +9,7 @@ import 'package:swift/screens/create_order/bloc/create_order_bloc.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/custom_network_image.dart';
 import 'package:swift/widgets/myTextField.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CreateOrderView extends StatefulWidget {
   CreateOrderView({this.serviceCategory});
@@ -34,7 +35,7 @@ class _CreateOrderViewState extends State<CreateOrderView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "CREATE ORDER",
+          AppLocalizations.of(context).createOrder.toUpperCase(),
           style: CustomTextStyles.bigWhiteText,
         ),
       ),
@@ -69,21 +70,21 @@ class _CreateOrderViewState extends State<CreateOrderView> {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      'Site Name:',
+                      AppLocalizations.of(context).siteName,
                       style: CustomTextStyles.mediumText,
                     ),
                     MyTextField(
                       controller: siteController,
                     ),
                     Text(
-                      'Block Number:',
+                      AppLocalizations.of(context).blockNumber,
                       style: CustomTextStyles.mediumText,
                     ),
                     MyTextField(
                       controller: blockController,
                     ),
                     Text(
-                      'House Number:',
+                      AppLocalizations.of(context).houseNo,
                       style: CustomTextStyles.mediumText,
                     ),
                     MyTextField(
@@ -94,7 +95,7 @@ class _CreateOrderViewState extends State<CreateOrderView> {
                       width: 120,
                       color: CustomColors.primaryColor,
                       child: Text(
-                        'Order Now',
+                        AppLocalizations.of(context).orderNow,
                         style: CustomTextStyles.mediumWhiteText,
                       ),
                       onPressed: () async {
@@ -129,7 +130,7 @@ class _CreateOrderViewState extends State<CreateOrderView> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            'Instead,',
+                            AppLocalizations.of(context).instead,
                             style: CustomTextStyles.normalText,
                           ),
                           SizedBox(width: 10),
@@ -137,7 +138,7 @@ class _CreateOrderViewState extends State<CreateOrderView> {
                             width: 220,
                             color: CustomColors.primaryColor,
                             child: Text(
-                              'Use Registered Address',
+                              AppLocalizations.of(context).useRegistered,
                               style: CustomTextStyles.mediumWhiteText,
                             ),
                             onPressed: () async {

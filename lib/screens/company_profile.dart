@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CompanyProfile extends StatelessWidget {
   @override
@@ -11,12 +12,12 @@ class CompanyProfile extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Text(
-              'Company Profile'.toUpperCase(),
+              AppLocalizations.of(context).companyProfile.toUpperCase(),
               style: CustomTextStyles.bigBoldText,
             ),
             SizedBox(height: 20),
             Text(
-              'SwiftOlio is an online service booking platform in Addis Ababa, Ethiopia',
+              AppLocalizations.of(context).aboutUsDescription,
               style: CustomTextStyles.boldText,
             ),
           ],

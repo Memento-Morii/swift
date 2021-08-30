@@ -5,6 +5,7 @@ import 'package:swift/models/my_services_model.dart';
 import 'package:swift/screens/register/add_services/add_services_view.dart';
 import 'package:swift/widgets/my_services_card.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'bloc/my_services_bloc.dart';
 
@@ -28,7 +29,7 @@ class _MyServicesState extends State<MyServices> {
       drawer: NavigatorDrawer(),
       appBar: AppBar(
         title: Text(
-          'MY SERVICES',
+          AppLocalizations.of(context).myServices.toUpperCase(),
           style: CustomTextStyles.bigWhiteText,
         ),
         actions: [
@@ -42,7 +43,7 @@ class _MyServicesState extends State<MyServices> {
               );
             },
             child: Text(
-              'Add',
+              AppLocalizations.of(context).add,
               style: CustomTextStyles.mediumWhiteText,
             ),
           ),

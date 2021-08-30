@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/order_history_model.dart';
 import 'package:swift/widgets/order_history_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'bloc/order_bloc.dart';
 
@@ -32,7 +33,7 @@ class _OrderHistoryViewState extends State<OrderHistoryView> {
           } else if (state is OrderEmpty) {
             return Center(
                 child: Text(
-              'Your Order is Empty',
+              AppLocalizations.of(context).orderEmpty,
               style: CustomTextStyles.errorText,
             ));
           } else if (state is OrderLoaded) {
@@ -50,7 +51,10 @@ class _OrderHistoryViewState extends State<OrderHistoryView> {
               itemCount: orders.length,
             );
           } else {
-            return Text('Failed', style: CustomTextStyles.errorText);
+            return Text(
+              AppLocalizations.of(context).failed,
+              style: CustomTextStyles.errorText,
+            );
           }
         },
       ),

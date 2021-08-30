@@ -94,19 +94,6 @@ class Repositories {
   }
 
   Future<Response> updateUser({UserModel user, PlatformFile photo}) async {
-    // var data = FormData.fromMap({
-    //
-    //   "lat": request.lat,
-    //   "lng": request.lng,
-    //   "address": request.address,
-    //   "price_range_from": request.priceRangeFrom,
-    //   "price_range_to": request.priceRangeTo,
-    //   "time_range_from": "2021-07-15 12:39:58",
-    //   "time_range_to": "2021-07-15 12:39:58",
-    //   "service_id": request.serviceId,
-    //   "service_category_id": request.serviceCategoryId,
-    //   "description": request.description,
-    // });
     var data = FormData.fromMap({
       "first_name": user.firstName,
       "last_name": user.lastName,
@@ -256,7 +243,7 @@ class Repositories {
   ///////////////////////////////////////////////////////////////////////
 
   /// ORDERS
-  Future<Response> getOrderHistory(String token) async {
+  Future<Response> getOrderHistory() async {
     try {
       var response = await _dio.get(
         "$baseUrl/order/user",

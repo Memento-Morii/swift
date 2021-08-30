@@ -9,6 +9,7 @@ import 'package:swift/screens/register/add_services/add_services_view.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/screens/register/signup_view.dart';
 import 'bloc/otp_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class OTPView extends StatefulWidget {
@@ -55,13 +56,13 @@ class _OTPViewState extends State<OTPView> {
             children: <Widget>[
               Center(
                 child: Text(
-                  'Verify your phone',
+                  AppLocalizations.of(context).verifyPhone,
                   style: CustomTextStyles.headlineText3,
                 ),
               ),
               SizedBox(height: 40),
               Text(
-                'A text message has been sent to',
+                AppLocalizations.of(context).messageSent,
                 style: CustomTextStyles.mediumText,
               ),
               Text(
@@ -128,7 +129,7 @@ class _OTPViewState extends State<OTPView> {
                     builder: (context, state) {
                       if (state is OtpFailed) {
                         return Text(
-                          "Failed",
+                          AppLocalizations.of(context).failed,
                           style: CustomTextStyles.mediumWhiteText,
                         );
                       } else if (state is OtpLoading) {
@@ -146,7 +147,7 @@ class _OTPViewState extends State<OTPView> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              "Go",
+                              AppLocalizations.of(context).go,
                               style: CustomTextStyles.mediumWhiteText,
                             ),
                             SizedBox(width: 10),
@@ -161,23 +162,23 @@ class _OTPViewState extends State<OTPView> {
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Didn\'t Recieve Code',
-                    style: CustomTextStyles.mediumText,
-                  ),
-                  SizedBox(width: 10),
-                  TextButton(
-                    onPressed: () async {},
-                    child: Text(
-                      'Resend',
-                      style: CustomTextStyles.coloredBold,
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: <Widget>[
+              //     Text(
+              //       'Didn\'t Recieve Code',
+              //       style: CustomTextStyles.mediumText,
+              //     ),
+              //     SizedBox(width: 10),
+              //     TextButton(
+              //       onPressed: () async {},
+              //       child: Text(
+              //         'Resend',
+              //         style: CustomTextStyles.coloredBold,
+              //       ),
+              //     ),
+              //   ],
+              // ),
               SizedBox(height: 20),
               BlocBuilder<OtpBloc, OtpState>(
                 bloc: _otpBloc,

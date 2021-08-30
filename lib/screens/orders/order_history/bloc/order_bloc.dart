@@ -15,11 +15,9 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   Stream<OrderState> mapEventToState(
     OrderEvent event,
   ) async* {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token = prefs.get("token");
     if (event is FetchOrderHistory) {
       try {
-        var historyResponse = await _repo.getOrderHistory(token);
+        var historyResponse = await _repo.getOrderHistory();
         if (historyResponse.statusCode == 200) {
           var decodedHistory = jsonDecode(historyResponse.data);
           if (decodedHistory['results'] == null) {

@@ -3,6 +3,7 @@ import 'package:swift/helper/text_styles.dart';
 import 'package:swift/screens/orders/order_history/order_history_view.dart';
 import 'package:swift/screens/orders/service_provider_order/service_provider_order_view.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class Order extends StatefulWidget {
@@ -25,7 +26,7 @@ class _OrderState extends State<Order> {
       drawer: NavigatorDrawer(),
       appBar: AppBar(
         title: Text(
-          'ORDERS',
+          AppLocalizations.of(context).orders.toUpperCase(),
           style: CustomTextStyles.bigWhiteText,
         ),
       ),
@@ -39,7 +40,7 @@ class _OrderState extends State<Order> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'MY USER ORDERS',
+                          AppLocalizations.of(context).myUserOrders,
                           style: CustomTextStyles.boldMediumText,
                         ),
                         Switch(
@@ -53,7 +54,7 @@ class _OrderState extends State<Order> {
                           },
                         ),
                         Text(
-                          'ORDERS RECEIVED',
+                          AppLocalizations.of(context).orderReceived,
                           style: CustomTextStyles.boldMediumText,
                         ),
                       ],

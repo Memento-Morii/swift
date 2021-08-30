@@ -10,7 +10,7 @@ import 'package:swift/screens/otp/otp_view.dart';
 import 'package:swift/screens/register/register_bloc/register_bloc.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/custom_textfield.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'house_info.dart';
 
 class SignUpView extends StatefulWidget {
@@ -67,26 +67,27 @@ class _SignUpViewState extends State<SignUpView> {
                                 );
                               },
                               child: Text(
-                                'Create',
+                                AppLocalizations.of(context).create,
                                 style: CustomTextStyles.headlineText,
                               ),
                             ),
                             Text(
-                              'Account.',
+                              AppLocalizations.of(context).account,
                               style: CustomTextStyles.headlineText,
                             ),
+                            SizedBox(height: 15),
                             Text(
-                              'to get started!',
+                              AppLocalizations.of(context).getStarted,
                               style: CustomTextStyles.headlineText2,
                             ),
                             SizedBox(height: 30),
                             CustomField(
-                              hintText: "First Name",
+                              hintText: AppLocalizations.of(context).firstName,
                               iconUrl: 'assets/user.png',
                               controller: fnameController,
                             ),
                             CustomField(
-                              hintText: "Last Name",
+                              hintText: AppLocalizations.of(context).lastName,
                               iconUrl: 'assets/user.png',
                               controller: lnameController,
                             ),
@@ -101,8 +102,8 @@ class _SignUpViewState extends State<SignUpView> {
                                 ),
                                 unSelectedColor: Colors.white,
                                 buttonLables: [
-                                  "User",
-                                  "Provider",
+                                  AppLocalizations.of(context).user,
+                                  AppLocalizations.of(context).provider,
                                 ],
                                 buttonValues: [
                                   "User",
@@ -147,9 +148,19 @@ class _SignUpViewState extends State<SignUpView> {
                                   }
                                 }
                               },
-                              child: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                color: Colors.white,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context).go,
+                                    style: CustomTextStyles.mediumWhiteText,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Icon(
+                                    Icons.arrow_forward_ios_rounded,
+                                    color: Colors.white,
+                                  ),
+                                ],
                               ),
                             ),
                             SizedBox(height: 20),

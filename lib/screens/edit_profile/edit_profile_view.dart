@@ -7,6 +7,7 @@ import 'package:swift/models/user_model.dart';
 import 'package:swift/screens/profile/profile_view.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/profile_textfield.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'bloc/edit_profile_bloc.dart';
 
@@ -32,7 +33,7 @@ class _EditProfileState extends State<EditProfile> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'EDIT PROFILE',
+          AppLocalizations.of(context).editProfile.toUpperCase(),
           style: CustomTextStyles.bigWhiteText,
         ),
         leading: IconButton(
@@ -76,7 +77,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ),
                       Text(
-                        'First Name',
+                        AppLocalizations.of(context).firstName,
                         style: CustomTextStyles.boldText,
                       ),
                       ProfileTextField(
@@ -86,7 +87,7 @@ class _EditProfileState extends State<EditProfile> {
                         },
                       ),
                       Text(
-                        'Last Name',
+                        AppLocalizations.of(context).lastName,
                         style: CustomTextStyles.boldText,
                       ),
                       ProfileTextField(
@@ -96,7 +97,7 @@ class _EditProfileState extends State<EditProfile> {
                         },
                       ),
                       Text(
-                        'House Number',
+                        AppLocalizations.of(context).houseNo,
                         style: CustomTextStyles.boldText,
                       ),
                       ProfileTextField(
@@ -106,7 +107,7 @@ class _EditProfileState extends State<EditProfile> {
                         },
                       ),
                       Text(
-                        'Site Name',
+                        AppLocalizations.of(context).siteName,
                         style: CustomTextStyles.boldText,
                       ),
                       ProfileTextField(
@@ -116,7 +117,7 @@ class _EditProfileState extends State<EditProfile> {
                         },
                       ),
                       Text(
-                        'Block Number',
+                        AppLocalizations.of(context).blockNumber,
                         style: CustomTextStyles.boldText,
                       ),
                       ProfileTextField(
@@ -136,7 +137,7 @@ class _EditProfileState extends State<EditProfile> {
                           ));
                         },
                         child: Text(
-                          'Update',
+                          AppLocalizations.of(context).update,
                           style: CustomTextStyles.mediumWhiteText,
                         ),
                       )

@@ -18,7 +18,7 @@ class _LanguageViewState extends State<LanguageView> {
     super.initState();
   }
 
-  List<String> names = ['English', 'Amharic'];
+  List<String> names = ['English', 'አማርኛ'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

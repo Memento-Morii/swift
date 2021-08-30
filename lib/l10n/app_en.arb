@@ -14,9 +14,27 @@
     "motto": "Swift, The Ultimate Solution for Everything, Anywhere!",
     "phone": "Phone",
     "go": "Go",
+    
+    "addService": "Add Services",
+    "searchForLocation": "Search For Location",
+    "priceRange": "Price Range",
+    "timeRange": "Time Range",
+    "description": "Description",
+    "document": "Document",
+    "optional": "optional",
+    "notTwoMb": "2 MB Max",
+    "addDocument": "Add a document",
+
+    "updateService": "Update My Services",
+    "address": "Address",
+    "editProfile": "Edit Profile",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "viewOrderDetails": "View Order Details",
 
     "viewAllServices" : "View All Services",
     "frequentServices": "Frequent Services",
+    "allServices": "All Services",
     "orderUsing": "ORDER USING",
     "followUs": "FOLLOW US",
     "searchForServices": "Search For Services",
@@ -27,8 +45,25 @@
     "to": "To",
 
     "houseInfo": "House Information",
+    "houseNo": "House Number",
     "blockNumber": "House Number",
     "siteName": "Site Name",
+
+    "create": "Create",
+    "account": "Account",
+    "getStarted": "to get started!",
+    "user": "User",
+    "provider": "Provider",
+    "email": "Email",
+    "house": "House",
+    "info": "Information",
+
+    "createOrder": "Create Order",
+    "verifyPhone": "Verify your phone",
+    "messageSent": "A text message has been sent to",
+
+    "failed": "Failed",
+    "orderEmpty": "Order is Empty",
 
     "myUserOrders": "My User Orders",
     "orderReceived": "Order Received",
@@ -40,12 +75,20 @@
     "seeMore": "SEE MORE",
     "seeDetails": "SEE DETAILS",
     "keyPersonnel": "KEY PERSONNEL",
+    "aboutSwift": "Swift is an online service booking platform that connects Addis Ababa's service providers with consumers.",
 
     "contactForHelp": "CONTACT OUR CUSTOMER SERVICE FOR ANY HELP",
     "callUs": "Call Us",
     "telegramUs": "Telegram Us",
     "leaveFeedback": "Leave us your feedback here",
     "sendFeedback": "Send Feedback",
+
+    "orderNow": "Order Now",
+    "useRegistered": "Use Registered Address",
+    "instead": "Instead",
+    
+    "seeTechProfile" : "See Technician's Profile",
+    "swiftTech": "Swift Technologies",
 
     "aboutUsDescription" : "Swift is an online service booking platform that connects Addis Ababa's service providers with consumers, enabling a variety of service providers to expand their reach and increase their revenue. It also allows users to select the type of service they want and order according to their requirements."
 }

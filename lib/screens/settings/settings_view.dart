@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/screens/language/language_view.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _SettingsState extends State<Settings> {
         drawer: NavigatorDrawer(),
         appBar: AppBar(
           title: Text(
-            'SETTINGS',
+            AppLocalizations.of(context).settings.toUpperCase(),
             style: CustomTextStyles.bigWhiteText,
           ),
         ),
@@ -25,7 +26,7 @@ class _SettingsState extends State<Settings> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  'Language',
+                  AppLocalizations.of(context).language,
                   style: CustomTextStyles.boldText,
                 ),
                 IconButton(

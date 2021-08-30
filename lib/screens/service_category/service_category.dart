@@ -6,6 +6,7 @@ import 'package:swift/models/service_category_model.dart';
 import 'package:swift/screens/create_order/create_order_view.dart';
 import 'package:swift/screens/service_category/bloc/service_categories_bloc.dart';
 import 'package:swift/widgets/custom_network_image.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ServiceCategory extends StatefulWidget {
   ServiceCategory({this.serviceId, this.name});
@@ -91,7 +92,7 @@ class _ServiceCategoryState extends State<ServiceCategory> {
                               );
                             },
                             child: Text(
-                              "Order",
+                              AppLocalizations.of(context).orders,
                               style: CustomTextStyles.coloredBold,
                             ),
                           ),
@@ -112,7 +113,7 @@ class _ServiceCategoryState extends State<ServiceCategory> {
               } else {
                 return Center(
                     child: Text(
-                  'Failed',
+                  AppLocalizations.of(context).failed,
                   style: CustomTextStyles.errorText,
                 ));
               }

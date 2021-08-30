@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/my_services_model.dart';
 import 'package:swift/screens/update_service/update_service_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyServicesCard extends StatelessWidget {
   MyServicesCard(this.myServices);
@@ -33,7 +34,7 @@ class MyServicesCard extends StatelessWidget {
                     );
                   },
                   child: Text(
-                    'Update',
+                    AppLocalizations.of(context).update,
                     style: CustomTextStyles.coloredBold,
                   ),
                 )
@@ -48,7 +49,7 @@ class MyServicesCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text(
-                  "Price Range From  ",
+                  "${AppLocalizations.of(context).priceRangeFrom}  ",
                   style: CustomTextStyles.mediumText,
                 ),
                 Text(
@@ -56,7 +57,7 @@ class MyServicesCard extends StatelessWidget {
                   style: CustomTextStyles.boldTitleText,
                 ),
                 Text(
-                  "  To  ",
+                  "  ${AppLocalizations.of(context).to}  ",
                   style: CustomTextStyles.mediumText,
                 ),
                 Text(

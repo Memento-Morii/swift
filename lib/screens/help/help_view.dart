@@ -4,6 +4,7 @@ import 'package:swift/helper/text_styles.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/myTextField.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Help extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class _HelpState extends State<Help> {
       drawer: NavigatorDrawer(),
       appBar: AppBar(
         title: Text(
-          'HELP',
+          AppLocalizations.of(context).help.toUpperCase(),
           style: CustomTextStyles.bigWhiteText,
         ),
       ),
@@ -30,7 +31,7 @@ class _HelpState extends State<Help> {
                 child: Container(
                   width: 250,
                   child: Text(
-                    'Contact Our Customer Service For any help'.toUpperCase(),
+                    AppLocalizations.of(context).contactForHelp.toUpperCase(),
                     style: CustomTextStyles.bigBoldText,
                     textAlign: TextAlign.center,
                   ),
@@ -51,12 +52,12 @@ class _HelpState extends State<Help> {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text(
-                            'Call Us',
+                            AppLocalizations.of(context).callUs,
                             style: CustomTextStyles.boldTitleText,
                           ),
                           SizedBox(height: 20),
                           Text(
-                            'Telegram Us',
+                            AppLocalizations.of(context).telegramUs,
                             style: CustomTextStyles.boldTitleText,
                           ),
                         ],
@@ -82,7 +83,7 @@ class _HelpState extends State<Help> {
               ),
               SizedBox(height: 20),
               Text(
-                'Leave us your feedback here',
+                AppLocalizations.of(context).leaveFeedback,
                 style: CustomTextStyles.mediumText,
               ),
               MyTextField(
@@ -95,7 +96,7 @@ class _HelpState extends State<Help> {
                   width: 160,
                   color: CustomColors.primaryColor,
                   child: Text(
-                    'Send Feedback',
+                    AppLocalizations.of(context).sendFeedback,
                     style: CustomTextStyles.mediumWhiteText,
                   ),
                 ),

@@ -40,7 +40,7 @@ class _SignInViewState extends State<SignInView> {
                       SizedBox(height: 20),
                       Center(
                         child: Image.asset(
-                          "assets/swift_logo.jpg",
+                          "assets/swift_logo.png",
                           height: 150,
                         ),
                       ),
@@ -52,7 +52,7 @@ class _SignInViewState extends State<SignInView> {
                       ),
                       SizedBox(height: 70),
                       CustomField(
-                        hintText: "Phone",
+                        hintText: AppLocalizations.of(context).phone,
                         iconUrl: 'assets/phone.png',
                         controller: phoneController,
                         textInputType: TextInputType.phone,
@@ -86,7 +86,7 @@ class _SignInViewState extends State<SignInView> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    "Go",
+                                    AppLocalizations.of(context).go,
                                     style: CustomTextStyles.mediumWhiteText,
                                   ),
                                   SizedBox(width: 10),

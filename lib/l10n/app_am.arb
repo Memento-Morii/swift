@@ -1,5 +1,5 @@
 {
-    "language": "አማርኛ",
+    "language": "ቋንቋ",
     "myServices": "የእኔ አገልግሎቶች",
     "orders": "ትዕዛዞች",
     "settings": "ቅንብሮች",
@@ -12,8 +12,26 @@
     "phone": "ስልክ",
     "go": "ሂድ",
 
+    "addService": "አገልግሎት ያክሉ",
+    "searchForLocation": "አካባቢን ይፈልጉ",
+    "priceRange": "የዋጋ ክልል",
+    "timeRange": "የጊዜ ክልል",
+    "description": "መግለጫ",
+    "document": "ሰነድ",
+    "optional": "እንደ አማራጭ",
+    "notTwoMb": "ከ 2 ሜባ አይበልጥም",
+    "addDocument": "ሰነድ ያክሉ",
+    
+    "updateService": "አገልግሎቶቼን አዘምን",
+    "address": "አድራሻ",
+    "editProfile": "መገለጫ አርትዕ",
+    "firstName": "የመጀመሪያ ስም",
+    "lastName": "ያባት ስም",
+    "viewOrderDetails": "የትዕዛዝ ዝርዝሮችን ይመልከቱ",
+
     "viewAllServices" : "አገልግሎቶች ይመልከቱ",
     "frequentServices": "ተደጋጋሚ አገልግሎቶች",
+    "allServices": "ሁሉም አገልግሎቶች",
     "orderUsing": "በዚህ ማዘዝ",
     "followUs": "ተከተሉን",
     "searchForServices": "አገልግሎቶችን ይፈልጉ",
@@ -24,8 +42,25 @@
     "to": "እስከ",
 
     "houseInfo": "የቤት መረጃ",
+    "houseNo": "የቤት ቁጥር",
     "blockNumber": "የቤት ቁጥር",
     "siteName": "የጣቢያ ስም",
+
+    "create": "መለያ",
+    "account": "ፍጠር",
+    "getStarted": "ለመጀመር!",
+    "user": "ተጠቃሚ",
+    "provider": "አቅራቢ",
+    "email": "ኢሜል",
+    "house": "የቤት",
+    "info": "መረጃ",
+
+    "createOrder": "ትዕዛዝ ፍጠር",
+    "verifyPhone": "ስልክዎን ያረጋግጡ",
+    "messageSent": "የጽሑፍ መልእክት ተልኳል",
+
+    "failed": "አልተሳካም",
+    "orderEmpty": "ትዕዛዝ ባዶ ነው",
 
     "myUserOrders": "የእኔ የተጠቃሚ ትዕዛዞች",
     "orderReceived": "የተቀበለ ትዕዛዝ",
@@ -37,12 +72,20 @@
     "seeMore": "ተጨማሪ ይመልከቱ",
     "seeDetails": "ዝርዝሮችን ይመልከቱ",
     "keyPersonnel": "ቁልፍ ሰው",
+    "aboutSwift": "ስዊፍት የአዲስ አበባ አገልግሎት ሰጪዎችን ከሸማቾች ጋር የሚያገናኝ የመስመር ላይ አገልግሎት ማስያዣ መድረክ ነው።",
 
     "contactForHelp": "ለማንኛውም እርዳታ የእኛን የደንበኛ አገልግሎት ያነጋግሩ",
     "callUs": "ይደውሉልን",
     "telegramUs": "ቴሌግራም ያደርጉ",
     "leaveFeedback": "አስተያየትዎን እዚህ ይተውልን",
     "sendFeedback": "ግብረ - መልስ ላክ",
+
+    "orderNow" : "አሁን እዘዝ",
+    "useRegistered": "የተመዘገበ አድራሻ ይጠቀሙ",
+    "instead": "በምትኩ",
+
+    "seeTechProfile": "የቴክኒካን መገለጫ ይመልከቱ",
+    "swiftTech": "ስዊፍት ቴክኖሎጂዎች",
 
     "aboutUsDescription": "ስዊፍት በአዲስ አበባ የሚገኙ አገልግሎት ሰጪዎችን ከ ተጠቃሚዎችጋር የሚያገናኝ የቴክኖሎጂ ውጤት ሲሆን፣ በውስጡ የተለያዩ አገልግሎት ሰጪዎች አገልግሎታቸውን በማስገባት ተደራሽነታቸውን ማስፋት አንዲሁም ገቢያቸውን ማሳደግ ያስችላቸዋል። የአገልግሎት ተጠቃሚዎችንም እንዲሁ የሚፈልጉትን የአገልግሎት ዓይነት ከፈለጉት መስፈርት አንጻር መርጠው ማዘዝ ያስችላቸዋል።"
 }

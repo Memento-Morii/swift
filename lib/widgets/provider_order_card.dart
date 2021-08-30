@@ -4,6 +4,7 @@ import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/provider_order_model.dart';
 import 'package:swift/screens/orders/service_provider_order/bloc/provider_order_bloc.dart';
 import 'package:swift/widgets/custom_network_image.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProviderOrderCard extends StatefulWidget {
   ProviderOrderCard(this.order);
@@ -50,7 +51,7 @@ class _ProviderOrderCardState extends State<ProviderOrderCard> {
                   ),
                   widget.order.orderHistory.status == 2
                       ? Text(
-                          'Accepted',
+                          AppLocalizations.of(context).accepted,
                           style: CustomTextStyles.coloredBold,
                         )
                       : BlocBuilder<ProviderOrderBloc, ProviderOrderState>(
@@ -103,7 +104,7 @@ class _ProviderOrderCardState extends State<ProviderOrderCard> {
                               );
                             } else {
                               return Text(
-                                'Accepted',
+                                AppLocalizations.of(context).accepted,
                                 style: CustomTextStyles.coloredBold,
                               );
                             }

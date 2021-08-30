@@ -7,6 +7,7 @@ import 'package:swift/screens/my_services/my_services_view.dart';
 import 'package:swift/screens/update_service/bloc/update_service_bloc.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/range_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class UpdateServiceView extends StatefulWidget {
@@ -49,7 +50,7 @@ class _UpdateServiceViewState extends State<UpdateServiceView> {
           },
         ),
         title: Text(
-          'UPDATE MY SERVICES',
+          AppLocalizations.of(context).updateService,
           style: CustomTextStyles.bigWhiteText,
         ),
       ),
@@ -63,7 +64,7 @@ class _UpdateServiceViewState extends State<UpdateServiceView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Address',
+                  AppLocalizations.of(context).address,
                   style: CustomTextStyles.mediumText,
                 ),
                 TextFormField(
@@ -75,7 +76,7 @@ class _UpdateServiceViewState extends State<UpdateServiceView> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'Price Range',
+                  AppLocalizations.of(context).priceRange,
                   style: CustomTextStyles.mediumText,
                 ),
                 Row(
@@ -87,7 +88,7 @@ class _UpdateServiceViewState extends State<UpdateServiceView> {
                       keyboardType: TextInputType.number,
                     ),
                     Text(
-                      'To',
+                      AppLocalizations.of(context).to,
                       style: CustomTextStyles.boldTitleText,
                     ),
                     RangeField(
@@ -98,7 +99,7 @@ class _UpdateServiceViewState extends State<UpdateServiceView> {
                 ),
                 SizedBox(height: 30),
                 Text(
-                  'Time Range',
+                  AppLocalizations.of(context).timeRange,
                   style: CustomTextStyles.mediumText,
                 ),
                 Row(
@@ -107,7 +108,7 @@ class _UpdateServiceViewState extends State<UpdateServiceView> {
                   children: <Widget>[
                     RangeField(controller: timeFromController),
                     Text(
-                      'To',
+                      AppLocalizations.of(context).to,
                       style: CustomTextStyles.boldTitleText,
                     ),
                     RangeField(controller: timeToController),

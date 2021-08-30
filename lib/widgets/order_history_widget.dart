@@ -4,7 +4,7 @@ import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/order_history_model.dart';
 import 'package:intl/intl.dart';
 import 'package:swift/screens/order_detail/order_detail_view.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'custom_network_image.dart';
 
 class OrderHistoryWidget extends StatelessWidget {
@@ -26,7 +26,7 @@ class OrderHistoryWidget extends StatelessWidget {
                 height: 80,
                 width: 80,
               ),
-              SizedBox(width: 20),
+              SizedBox(width: 5),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -57,7 +57,7 @@ class OrderHistoryWidget extends StatelessWidget {
                             backgroundColor: MaterialStateProperty.all(CustomColors.primaryColor),
                           ),
                           child: Text(
-                            'View Order Detail',
+                            AppLocalizations.of(context).viewOrderDetails,
                             style: CustomTextStyles.normalText2,
                           ),
                         )
@@ -80,7 +80,9 @@ class OrderHistoryWidget extends StatelessWidget {
                     ),
               SizedBox(width: 5),
               Text(
-                order.orderHistory.status == 2 ? 'Accepted' : "Pending",
+                order.orderHistory.status == 2
+                    ? AppLocalizations.of(context).accepted
+                    : AppLocalizations.of(context).pending,
                 style: CustomTextStyles.normalText,
               )
             ],

@@ -3,6 +3,7 @@ import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/helper/utils.dart';
 import 'package:swift/screens/home/home_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SuccessPage extends StatelessWidget {
   @override
@@ -36,17 +37,17 @@ class SuccessPage extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    'Order Received!',
+                    AppLocalizations.of(context).orderReceived,
                     style: CustomTextStyles.bigWhiteText,
                   ),
                 ),
               ),
               Image.asset(
-                "assets/swift_logo.jpg",
+                "assets/swift_logo.png",
                 height: 200,
               ),
               Text(
-                'Swift Technologies PLC',
+                AppLocalizations.of(context).swiftTech,
                 style: CustomTextStyles.headlineText3,
               ),
               SizedBox(height: 60),
@@ -63,7 +64,7 @@ class SuccessPage extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      'See Technician\'s Profile',
+                      AppLocalizations.of(context).seeTechProfile,
                       style: CustomTextStyles.bigWhiteText,
                     ),
                   ),

@@ -7,6 +7,7 @@ import 'package:swift/models/service_model.dart';
 import 'package:swift/screens/create_order/create_order_view.dart';
 import 'package:swift/screens/register/add_services/bloc/add_service_bloc.dart';
 import 'package:swift/widgets/custom_network_image.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AllService extends StatefulWidget {
   @override

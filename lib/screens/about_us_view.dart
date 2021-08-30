@@ -4,6 +4,7 @@ import 'package:swift/screens/company_profile.dart';
 import 'package:swift/screens/key_personnel.dart';
 import 'package:swift/widgets/about_us_card.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AboutUs extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class _AboutUsState extends State<AboutUs> {
       drawer: NavigatorDrawer(),
       appBar: AppBar(
         title: Text(
-          'ABOUT US',
+          AppLocalizations.of(context).aboutUs.toUpperCase(),
           style: CustomTextStyles.bigWhiteText,
         ),
       ),
@@ -26,8 +27,8 @@ class _AboutUsState extends State<AboutUs> {
         child: ListView(
           children: [
             AboutUsCard(
-              title: "Company Profile",
-              buttonName: "See More",
+              title: AppLocalizations.of(context).companyProfile,
+              buttonName: AppLocalizations.of(context).seeMore,
               onPressed: () {
                 Navigator.push(
                   context,
@@ -37,14 +38,14 @@ class _AboutUsState extends State<AboutUs> {
                 );
               },
               child: Text(
-                'Swift Technologies PLC is an online service booking platform in Addis Ababa, Ethiopia',
+                AppLocalizations.of(context).aboutSwift,
                 style: CustomTextStyles.boldText,
               ),
             ),
             SizedBox(height: 40),
             AboutUsCard(
-                title: "Key Personnel",
-                buttonName: "See Details",
+                title: AppLocalizations.of(context).keyPersonnel,
+                buttonName: AppLocalizations.of(context).seeDetails,
                 onPressed: () {
                   Navigator.push(
                     context,

@@ -10,6 +10,7 @@ import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/custom_textfield.dart';
 import 'add_services/add_services_view.dart';
 import 'register_bloc/register_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HouseInfo extends StatefulWidget {
   HouseInfo({this.signupRequest, this.role});
@@ -63,28 +64,28 @@ class _HouseInfoState extends State<HouseInfo> {
                   children: <Widget>[
                     SizedBox(height: 20),
                     Text(
-                      'House Information',
+                      AppLocalizations.of(context).houseInfo,
                       style: CustomTextStyles.headlineText,
                     ),
                     SizedBox(height: 50),
                     CustomField(
-                      hintText: "Email",
+                      hintText: AppLocalizations.of(context).email,
                       iconUrl: 'assets/mail.png',
                       controller: emailController,
                       textInputType: TextInputType.emailAddress,
                     ),
                     CustomField(
-                      hintText: "House Number",
+                      hintText: AppLocalizations.of(context).houseNo,
                       iconUrl: 'assets/home-filled.png',
                       controller: houseController,
                     ),
                     CustomField(
-                      hintText: "Site Name",
+                      hintText: AppLocalizations.of(context).siteName,
                       iconUrl: 'assets/home-broken.png',
                       controller: siteController,
                     ),
                     CustomField(
-                      hintText: "Block Number",
+                      hintText: AppLocalizations.of(context).siteName,
                       iconUrl: 'assets/home-broken.png',
                       controller: blockController,
                     ),
@@ -136,9 +137,19 @@ class _HouseInfoState extends State<HouseInfo> {
                                 ),
                               );
                             }
-                            return Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: Colors.white,
+                            return Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context).go,
+                                  style: CustomTextStyles.mediumWhiteText,
+                                ),
+                                SizedBox(width: 10),
+                                Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  color: Colors.white,
+                                ),
+                              ],
                             );
                           },
                         ),

@@ -16,6 +16,7 @@ import 'package:swift/screens/register/add_services/bloc/create_service_provider
 import 'package:swift/widgets/category_card.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/range_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddService extends StatefulWidget {
   AddService(this.isAnother);
@@ -76,15 +77,14 @@ class _AddServiceState extends State<AddService> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'ADD SERVICE',
+            AppLocalizations.of(context).addService.toUpperCase(),
             style: CustomTextStyles.bigWhiteText,
           ),
         ),
         body: BlocProvider(
           create: (context) => AddServiceBloc(),
           child: SafeArea(
-            child: BlocListener<CreateServiceProviderBloc,
-                CreateServiceProviderState>(
+            child: BlocListener<CreateServiceProviderBloc, CreateServiceProviderState>(
               bloc: _serviceProviderBloc,
               listener: (context, state) {
                 if (state is CreateServiceProviderSuccess) {
@@ -127,10 +127,10 @@ class _AddServiceState extends State<AddService> {
                                   controller: addressController,
                                   style: CustomTextStyles.textField,
                                   decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 32, vertical: 20),
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 32, vertical: 20),
                                     border: InputBorder.none,
-                                    hintText: "Search For Location",
+                                    hintText: AppLocalizations.of(context).searchForLocation,
                                     hintStyle: CustomTextStyles.textField,
                                     prefixIcon: Icon(
                                       Icons.search,
@@ -186,10 +186,8 @@ class _AddServiceState extends State<AddService> {
                                   ? SizedBox()
                                   : GridView.builder(
                                       shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 3,
                                         childAspectRatio: 0.75,
                                         crossAxisSpacing: 20,
@@ -199,8 +197,7 @@ class _AddServiceState extends State<AddService> {
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                           onTap: () {
-                                            _requestModel.serviceCategoryId =
-                                                categories[index].id;
+                                            _requestModel.serviceCategoryId = categories[index].id;
                                             print(categories[index].id);
                                             Utils.showToast(
                                               context,
@@ -216,12 +213,11 @@ class _AddServiceState extends State<AddService> {
                                       },
                                     ),
                               Text(
-                                'Price Range',
+                                AppLocalizations.of(context).priceRange,
                                 style: CustomTextStyles.mediumText,
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
                                   RangeField(
@@ -229,7 +225,7 @@ class _AddServiceState extends State<AddService> {
                                     keyboardType: TextInputType.number,
                                   ),
                                   Text(
-                                    'To',
+                                    AppLocalizations.of(context).to,
                                     style: CustomTextStyles.boldTitleText,
                                   ),
                                   RangeField(
@@ -240,17 +236,16 @@ class _AddServiceState extends State<AddService> {
                               ),
                               SizedBox(height: 30),
                               Text(
-                                'Time Range',
+                                AppLocalizations.of(context).timeRange,
                                 style: CustomTextStyles.mediumText,
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
                                   RangeField(controller: timeFromController),
                                   Text(
-                                    'To',
+                                    AppLocalizations.of(context).to,
                                     style: CustomTextStyles.boldTitleText,
                                   ),
                                   RangeField(controller: timeToController),
@@ -258,45 +253,41 @@ class _AddServiceState extends State<AddService> {
                               ),
                               SizedBox(height: 30),
                               Text(
-                                'Description',
+                                AppLocalizations.of(context).description,
                                 style: CustomTextStyles.mediumText,
                               ),
                               TextFormField(
                                 style: CustomTextStyles.textField,
                                 controller: descriptionController,
                                 decoration: InputDecoration(
-                                  hintText: "Describe yourself",
+                                  // hintText: "Describe yourself",
                                   hintStyle: CustomTextStyles.textField,
                                   errorStyle: CustomTextStyles.errorText,
                                 ),
-                                validator:
-                                    RequiredValidator(errorText: "Required"),
+                                validator: RequiredValidator(errorText: "Required"),
                               ),
                               SizedBox(height: 20),
                               Text(
-                                'Description ( optional & 2MB Max )',
+                                '${AppLocalizations.of(context).document} (${AppLocalizations.of(context).optional} & ${AppLocalizations.of(context).notTwoMb})',
                                 style: CustomTextStyles.mediumText,
                               ),
                               SizedBox(height: 20),
                               CustomButton(
                                 onPressed: () async {
-                                  FilePickerResult result =
-                                      await FilePicker.platform.pickFiles(
+                                  FilePickerResult result = await FilePicker.platform.pickFiles(
                                     allowMultiple: false,
                                     allowedExtensions: ['pdf'],
                                   );
                                   if (result != null) {
-                                    _requestModel.document =
-                                        result.files.single;
+                                    _requestModel.document = result.files.single;
                                   } else {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                   }
                                 },
-                                width: 160,
+                                width: 180,
                                 color: CustomColors.primaryColor,
                                 child: Text(
-                                  'Add a document',
+                                  AppLocalizations.of(context).addDocument,
                                   style: CustomTextStyles.mediumWhiteText,
                                 ),
                               )
@@ -320,24 +311,19 @@ class _AddServiceState extends State<AddService> {
               if (selectedLocation != null) {
                 _requestModel.address = addressController.text.trim();
                 _requestModel.description = descriptionController.text.trim();
-                _requestModel.priceRangeFrom =
-                    double.parse((priceFromController.text.trim()));
-                _requestModel.priceRangeTo =
-                    double.parse((priceToController.text?.trim()));
+                _requestModel.priceRangeFrom = double.parse((priceFromController.text.trim()));
+                _requestModel.priceRangeTo = double.parse((priceToController.text?.trim()));
                 _requestModel.timeRangeFrom = timeFromController.text.trim();
                 _requestModel.timeRangeTo = timeToController.text.trim();
                 _requestModel.lat = selectedLocation.lat;
                 _requestModel.lng = selectedLocation.lng;
-                _serviceProviderBloc
-                    .add(CreateServiceProvider(request: _requestModel));
+                _serviceProviderBloc.add(CreateServiceProvider(request: _requestModel));
               } else {
-                Utils.showToast(
-                    context, true, "Please select your location", 2);
+                Utils.showToast(context, true, "Please select your location", 2);
               }
             }
           },
-          child: BlocBuilder<CreateServiceProviderBloc,
-              CreateServiceProviderState>(
+          child: BlocBuilder<CreateServiceProviderBloc, CreateServiceProviderState>(
             bloc: _serviceProviderBloc,
             builder: (context, state) {
               if (state is CreateServiceProviderFailed) {

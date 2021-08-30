@@ -5,6 +5,7 @@ import 'package:swift/models/user_model.dart';
 import 'package:swift/screens/edit_profile/edit_profile_view.dart';
 import 'package:swift/widgets/custom_network_image.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'bloc/profile_bloc.dart';
 
@@ -28,7 +29,7 @@ class _ProfileState extends State<Profile> {
       drawer: NavigatorDrawer(),
       appBar: AppBar(
         title: Text(
-          'PROFILE',
+          AppLocalizations.of(context).profile.toUpperCase(),
           style: CustomTextStyles.bigWhiteText,
         ),
       ),
@@ -114,12 +115,12 @@ class _ProfileState extends State<Profile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'House Information',
+                          AppLocalizations.of(context).houseInfo,
                           style: CustomTextStyles.coloredBold,
                         ),
                         SizedBox(height: 20),
                         Text(
-                          'Block Number',
+                          AppLocalizations.of(context).blockNumber,
                           style: CustomTextStyles.boldMediumText,
                         ),
                         Text(
@@ -128,7 +129,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         SizedBox(height: 20),
                         Text(
-                          'House Number',
+                          AppLocalizations.of(context).siteName,
                           style: CustomTextStyles.boldMediumText,
                         ),
                         Text(
