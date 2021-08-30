@@ -43,8 +43,9 @@
 
     "houseInfo": "የቤት መረጃ",
     "houseNo": "የቤት ቁጥር",
-    "blockNumber": "የቤት ቁጥር",
-    "siteName": "የጣቢያ ስም",
+    "blockNumber": "የብሎክ ቁጥር",
+    "siteName": "የሳይት ስም",
+    "required": "ያስፈልጋል",
 
     "create": "መለያ",
     "account": "ፍጠር",
@@ -61,12 +62,16 @@
 
     "failed": "አልተሳካም",
     "orderEmpty": "ትዕዛዝ ባዶ ነው",
+    "emptyServices": "ባዶ አገልግሎቶች",
+    "success": "ስኬት",
 
     "myUserOrders": "የእኔ የተጠቃሚ ትዕዛዞች",
     "orderReceived": "የተቀበለ ትዕዛዝ",
     "pending": "በመጠባበቅ ላይ",
     "accepted": "ተቀባይነት አግኝቷል",
     "viewOrder": "የትዕዛዝ ዝርዝሮችን ይመልከቱ",
+    "order": "እዘዝ",
+    "validEmail":"የሚሰራ የኢሜይል አድራሻ ያስገቡ",
 
     "companyProfile": "ስለ ኩባንያው",
     "seeMore": "ተጨማሪ ይመልከቱ",

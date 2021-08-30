@@ -6,7 +6,6 @@ import 'package:swift/screens/edit_profile/edit_profile_view.dart';
 import 'package:swift/widgets/custom_network_image.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'bloc/profile_bloc.dart';
 
 class Profile extends StatefulWidget {
@@ -129,7 +128,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         SizedBox(height: 20),
                         Text(
-                          AppLocalizations.of(context).siteName,
+                          AppLocalizations.of(context).houseNo,
                           style: CustomTextStyles.boldMediumText,
                         ),
                         Text(
@@ -138,7 +137,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         SizedBox(height: 20),
                         Text(
-                          'Site Name',
+                          AppLocalizations.of(context).siteName,
                           style: CustomTextStyles.boldMediumText,
                         ),
                         Text(
@@ -151,7 +150,12 @@ class _ProfileState extends State<Profile> {
                 ],
               );
             } else {
-              return Center(child: Text("Failed"));
+              return Center(
+                child: Text(
+                  AppLocalizations.of(context).failed,
+                  style: CustomTextStyles.bigErrorText,
+                ),
+              );
             }
           },
         ),

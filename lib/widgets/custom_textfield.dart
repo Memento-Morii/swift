@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomField extends StatelessWidget {
   CustomField({
@@ -18,18 +19,15 @@ class CustomField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RequiredValidator required = RequiredValidator(errorText: '$hintText is required');
-    MultiValidator email = MultiValidator([
-      RequiredValidator(errorText: "$hintText is required"),
-      EmailValidator(errorText: "Enter vaild email address"),
-    ]);
+    RequiredValidator required =
+        RequiredValidator(errorText: '$hintText ${AppLocalizations.of(context).required}');
+    EmailValidator email = EmailValidator(errorText: AppLocalizations.of(context).validEmail);
     return Container(
-      // margin: EdgeInsets.only(top: 10),
       child: TextFormField(
         validator: isEmail ? email : required,
         controller: controller,
         style: CustomTextStyles.textField,
-        maxLength: hintText == 'Phone' ? 10 : null,
+        maxLength: hintText == AppLocalizations.of(context).phone ? 10 : null,
         keyboardType: textInputType,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),

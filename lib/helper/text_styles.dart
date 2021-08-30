@@ -88,4 +88,9 @@ class CustomTextStyles {
     fontSize: 12,
     color: Colors.red,
   );
+  static TextStyle bigErrorText = GoogleFonts.poppins(
+    fontSize: 15,
+    color: Colors.red,
+    fontWeight: FontWeight.bold,
+  );
 }

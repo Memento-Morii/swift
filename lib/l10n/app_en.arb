@@ -57,6 +57,7 @@
     "email": "Email",
     "house": "House",
     "info": "Information",
+    "required": "Required",
 
     "createOrder": "Create Order",
     "verifyPhone": "Verify your phone",
@@ -64,12 +65,16 @@
 
     "failed": "Failed",
     "orderEmpty": "Order is Empty",
+    "emptyServices": "Empty Services",
+    "success": "Success",
 
     "myUserOrders": "My User Orders",
     "orderReceived": "Order Received",
     "pending": "Pending",
     "accepted": "Accepted",
     "viewOrder": "View Order Details",
+    "order": "Order",
+    "validEmail":"Enter valid email address",
 
     "companyProfile": "Company Profile",
     "seeMore": "SEE MORE",
