@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:swift/helper/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyTextField extends StatelessWidget {
   MyTextField({this.height = 50, this.width = 200, this.controller});
@@ -12,6 +14,7 @@ class MyTextField extends StatelessWidget {
       width: width,
       margin: EdgeInsets.symmetric(vertical: 10),
       child: TextFormField(
+        validator: RequiredValidator(errorText:AppLocalizations.of(context).required),
         controller: controller,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20.0),

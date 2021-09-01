@@ -94,8 +94,8 @@ class _ProviderOrderCardState extends State<ProviderOrderCard> {
                               );
                             } else if (state is ProviderOrderFailed) {
                               return Text(
-                                "Failed",
-                                style: CustomTextStyles.errorText,
+                                AppLocalizations.of(context).failed,
+                                style: CustomTextStyles.bigErrorText,
                               );
                             } else if (state is Refused) {
                               return Text(

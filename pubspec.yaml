@@ -33,7 +33,6 @@ dependencies:
   shared_preferences: ^2.0.6
   flutter_styled_toast: ^2.0.0
   form_field_validator: ^1.1.0
-  location: ^4.3.0
   firebase_core: ^1.4.0
   firebase_auth: ^3.0.1
   otp_text_field: ^1.1.1

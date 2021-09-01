@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/screens/orders/order_history/order_history_view.dart';
-import 'package:swift/screens/orders/service_provider_order/service_provider_order_view.dart';
+// import 'package:swift/screens/orders/order_tab.dart';
+// import 'package:swift/screens/orders/service_provider_order/service_provider_order_view.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class Order extends StatefulWidget {
-  Order(this.isServiceProvider);
-  bool isServiceProvider;
+  // Order(this.isServiceProvider);
+  // bool isServiceProvider;
   @override
   _OrderState createState() => _OrderState();
 }
@@ -32,38 +33,7 @@ class _OrderState extends State<Order> {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              widget.isServiceProvider
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context).myUserOrders,
-                          style: CustomTextStyles.boldMediumText,
-                        ),
-                        Switch(
-                          value: isUserOrder,
-                          inactiveThumbColor: Colors.green,
-                          inactiveTrackColor: Colors.green[300],
-                          onChanged: (value) {
-                            setState(() {
-                              isUserOrder = !isUserOrder;
-                            });
-                          },
-                        ),
-                        Text(
-                          AppLocalizations.of(context).orderReceived,
-                          style: CustomTextStyles.boldMediumText,
-                        ),
-                      ],
-                    )
-                  : SizedBox(),
-              isUserOrder == false ? OrderHistoryView() : ServiceProviderOrderView()
-            ],
-          ),
-        ),
+        child: OrderHistoryView(),
       ),
     );
   }

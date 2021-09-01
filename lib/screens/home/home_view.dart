@@ -100,7 +100,7 @@ class _HomeState extends State<Home> {
                                         ),
                                         shrinkWrap: true,
                                         physics: const NeverScrollableScrollPhysics(),
-                                        itemCount: 8,
+                                        itemCount: 12,
                                         itemBuilder: (context, index) {
                                           ServiceModel _result = state.allServices[index];
                                           return InkWell(
@@ -123,7 +123,7 @@ class _HomeState extends State<Home> {
                                       Center(
                                         child: Container(
                                           height: 40,
-                                          width: 200,
+                                          width: 230,
                                           decoration: BoxDecoration(
                                             color: CustomColors.primaryColor,
                                             borderRadius: BorderRadius.circular(20),
@@ -213,35 +213,49 @@ class _HomeState extends State<Home> {
                                         ),
                                       ),
                                       SizedBox(height: 10),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          SocialNetwork(
-                                            icon: "assets/telegram.png",
-                                            url: "https://t.me/SwiftOlio",
-                                            urlType: URL_TYPE.Link,
-                                          ),
-                                          SocialNetwork(
-                                            icon: "assets/instagram.png",
-                                            url: "https://instagram.com/swiftolio",
-                                            urlType: URL_TYPE.Link,
-                                          ),
-                                          SocialNetwork(
-                                            icon: "assets/facebook.png",
-                                            url: "https://facebook.com/SwiftOlio",
-                                            urlType: URL_TYPE.Link,
-                                          ),
-                                          SocialNetwork(
-                                            icon: "assets/twitter.png",
-                                            url: "https://twitter.com/SwiftOlio",
-                                            urlType: URL_TYPE.Link,
-                                          ),
-                                          SocialNetwork(
-                                            icon: "assets/tiktok.png",
-                                            url: "https://tiktok.com/@swiftolio",
-                                            urlType: URL_TYPE.Link,
-                                          ),
-                                        ],
+                                      Container(
+                                        height: 40,
+                                        child: ListView(
+                                          scrollDirection: Axis.horizontal,
+                                          children: [
+                                            SocialNetwork(
+                                              icon: "assets/telegram.png",
+                                              url: "https://t.me/SwiftOlio",
+                                              urlType: URL_TYPE.Link,
+                                            ),
+                                            SizedBox(width: 15),
+                                            SocialNetwork(
+                                              icon: "assets/instagram.png",
+                                              url: "https://instagram.com/swiftolio",
+                                              urlType: URL_TYPE.Link,
+                                            ),
+                                            SizedBox(width: 15),
+                                            SocialNetwork(
+                                              icon: "assets/facebook.png",
+                                              url: "https://facebook.com/SwiftOlio",
+                                              urlType: URL_TYPE.Link,
+                                            ),
+                                            SizedBox(width: 15),
+                                            SocialNetwork(
+                                              icon: "assets/linkedin.png",
+                                              url:
+                                                  "https://www.linkedin.com/company/swift-installation-and-maintenance",
+                                              urlType: URL_TYPE.Link,
+                                            ),
+                                            SizedBox(width: 15),
+                                            SocialNetwork(
+                                              icon: "assets/tiktok.png",
+                                              url: "https://tiktok.com/@swiftolio",
+                                              urlType: URL_TYPE.Link,
+                                            ),
+                                            SizedBox(width: 15),
+                                            SocialNetwork(
+                                              icon: "assets/twitter.png",
+                                              url: "https://twitter.com/SwiftOlio",
+                                              urlType: URL_TYPE.Link,
+                                            ),
+                                          ],
+                                        ),
                                       )
                                     ],
                                   ),
@@ -250,8 +264,8 @@ class _HomeState extends State<Home> {
                             } else {
                               return Center(
                                 child: Text(
-                                  "Failed",
-                                  style: CustomTextStyles.errorText,
+                                  AppLocalizations.of(context).failed,
+                                  style: CustomTextStyles.bigErrorText,
                                 ),
                               );
                             }
@@ -302,12 +316,12 @@ class _HomeState extends State<Home> {
                       } else if (state is SearchNotFound) {
                         return Text(
                           'Search Not Found',
-                          style: CustomTextStyles.errorText,
+                          style: CustomTextStyles.bigErrorText,
                         );
                       } else {
                         return Text(
                           'Error',
-                          style: CustomTextStyles.errorText,
+                          style: CustomTextStyles.bigErrorText,
                         );
                       }
                     },

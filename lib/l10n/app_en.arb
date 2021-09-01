@@ -15,6 +15,13 @@
     "phone": "Phone",
     "go": "Go",
     
+    "daniel": "Daniel Abera",
+    "andualem": "Andualem Yosef",
+    "birhane": "Birhane Tadele",
+    "danielTitle": "Founder & CEO",
+    "andualemTitle": "Marketing Manager",
+    "birhaneTitle": "Operational Manager",
+
     "addService": "Add Services",
     "searchForLocation": "Search For Location",
     "priceRange": "Price Range",
@@ -67,12 +74,15 @@
     "orderEmpty": "Order is Empty",
     "emptyServices": "Empty Services",
     "success": "Success",
+    "selectLocation": "Select your Location",
+    "addNewService": "Added New Service",
 
     "myUserOrders": "My User Orders",
     "orderReceived": "Order Received",
     "pending": "Pending",
     "accepted": "Accepted",
     "viewOrder": "View Order Details",
+    "myProviderOrders": "My Works",
     "order": "Order",
     "validEmail":"Enter valid email address",
 
@@ -80,7 +90,7 @@
     "seeMore": "SEE MORE",
     "seeDetails": "SEE DETAILS",
     "keyPersonnel": "KEY PERSONNEL",
-    "aboutSwift": "Swift is an online service booking platform that connects Addis Ababa's service providers with consumers.",
+    "aboutSwift": "Swift is an online service booking platform that connects Addis Ababa's service providers with consumers, enabling a variety of service providers to expand their reach and increase their revenue. It also allows users to select the type of service they want and order according to their requirements.",
 
     "contactForHelp": "CONTACT OUR CUSTOMER SERVICE FOR ANY HELP",
     "callUs": "Call Us",
@@ -95,5 +105,5 @@
     "seeTechProfile" : "See Technician's Profile",
     "swiftTech": "Swift Technologies",
 
-    "aboutUsDescription" : "Swift is an online service booking platform that connects Addis Ababa's service providers with consumers, enabling a variety of service providers to expand their reach and increase their revenue. It also allows users to select the type of service they want and order according to their requirements."
+    "aboutUsDescription" : "Swift is an online service booking platform that connects Addis Ababa's service providers with consumers, enabling a variety of service providers to expand their reach and increase their revenue. It also allows users to select the type of service they want and order according to their requirements. We are growing very fast since our launch, offering a wide range of services ranging from electrical, plumbing, carpentry, appliances Repair, home cleaning, car washing, etc. at affordable cost and in a timely manner. You name the service and we have the experts available to help you with it. We understand the trouble that people often face when looking for service providers, thus we have created SWIFT, a platform to help customers connect with and hire trusted professionals for all their service needs. Our network of professionals consists highly skilled and trained professionals, who aim to serve service seekers with the best solutions related to their needs. Starting from the launch, Swift has been dedicated to delivering the next-level of satisfaction through seamless craftsmanship by the experts. Discover the right category and explore the best service providers in your demography to pick the one you believe has the right skills to help you out. Have a look at the description, services-offered, reviews and ratings so you can make the right choice. When you find the right professional, sit back and relax as the expert will reach your place at the scheduled time and will complete the services immediately with no delay. At Swift, we don’t believe in any limits, thus we keep growing our network of services offered so you can be sure of getting the complete solution for all your needs, right at the single platform. Our crucial goal is to provide the best home service without interruption. We are flexible enough in our approach and focus absolutely on the essentials of our customers. Therefore, we are trying to expand our network to meet the ever-increasing demands of home services. Why Choose Us.?There is no single reason for choosing Swift for all your needs related to professional services... we aim to make things easier and affordable and seamless. Whether you are at home, office, shopping mall, traveling or at a celebration, simply visit our mobile-friendly website and hire certified and trusted professionals at very reasonable costs. Our network consists of trained and certified professionals. Our technicians come equipped with tools and other required equipment for the job. We are always on time and ensure 100% customer satisfaction. We can perform technical services within 24 hours. We provide top quality technical services at a fair price. All work undertaken is performed to the highest level of craftsmanship. We are always happy to answer any questions or queries you may have."
 }

@@ -5,6 +5,7 @@ import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/myTextField.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:swift/widgets/social_network.dart';
 
 class Help extends StatefulWidget {
   @override
@@ -37,8 +38,9 @@ class _HelpState extends State<Help> {
                   ),
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 70),
               Row(
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Image.asset(
                     "assets/customer-service.png",
@@ -51,6 +53,7 @@ class _HelpState extends State<Help> {
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
+                          SizedBox(height: 10),
                           Text(
                             AppLocalizations.of(context).callUs,
                             style: CustomTextStyles.boldTitleText,
@@ -66,14 +69,16 @@ class _HelpState extends State<Help> {
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          Image.asset(
-                            "assets/phone_green.png",
-                            height: 30,
+                          SocialNetwork(
+                            icon: "assets/phone_green.png",
+                            url: "+251113854444",
+                            urlType: URL_TYPE.Telephone,
                           ),
                           SizedBox(height: 12),
-                          Image.asset(
-                            "assets/telegram.png",
-                            height: 30,
+                          SocialNetwork(
+                            icon: "assets/telegram.png",
+                            url: "https://t.me/SwiftOlio_CustomerServiceBot",
+                            urlType: URL_TYPE.Link,
                           ),
                         ],
                       ),
@@ -81,26 +86,26 @@ class _HelpState extends State<Help> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
-              Text(
-                AppLocalizations.of(context).leaveFeedback,
-                style: CustomTextStyles.mediumText,
-              ),
-              MyTextField(
-                width: MediaQuery.of(context).size.width * 0.85,
-                height: 100,
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: CustomButton(
-                  width: 160,
-                  color: CustomColors.primaryColor,
-                  child: Text(
-                    AppLocalizations.of(context).sendFeedback,
-                    style: CustomTextStyles.mediumWhiteText,
-                  ),
-                ),
-              )
+              // SizedBox(height: 20),
+              // Text(
+              //   AppLocalizations.of(context).leaveFeedback,
+              //   style: CustomTextStyles.mediumText,
+              // ),
+              // MyTextField(
+              //   width: MediaQuery.of(context).size.width * 0.85,
+              //   height: 100,
+              // ),
+              // Align(
+              //   alignment: Alignment.bottomRight,
+              //   child: CustomButton(
+              //     width: 160,
+              //     color: CustomColors.primaryColor,
+              //     child: Text(
+              //       AppLocalizations.of(context).sendFeedback,
+              //       style: CustomTextStyles.mediumWhiteText,
+              //     ),
+              //   ),
+              // )
             ],
           ),
         ),

@@ -47,6 +47,7 @@ class _ProfileState extends State<Profile> {
                   Container(
                     color: Colors.black,
                     height: MediaQuery.of(context).size.height * 0.45,
+                    width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.all(10),
                     child: Stack(
                       children: [
@@ -69,39 +70,38 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         Center(
-                          child: CircleAvatar(
-                            backgroundColor: Colors.grey,
-                            radius: 80,
-                            child: state.userModel.userImage == null
-                                ? null
-                                : CustomNetworkImage(
-                                    imgUrl: state.userModel.userImage,
-                                  ),
-                          ),
-                        ),
-                        Positioned(
-                          left: MediaQuery.of(context).size.width * 0.35,
-                          bottom: 30,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Text(
-                                user.firstName,
-                                style: CustomTextStyles.bigWhiteText,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.grey,
+                                radius: 80,
+                                child: state.userModel.userImage == null
+                                    ? null
+                                    : CustomNetworkImage(
+                                        imgUrl: state.userModel.userImage,
+                                      ),
                               ),
-                              SizedBox(width: 10),
+                              SizedBox(height: 20),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Text(
+                                    user.firstName,
+                                    style: CustomTextStyles.bigWhiteText,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    user.lastName,
+                                    style: CustomTextStyles.normalWhiteText,
+                                  ),
+                                ],
+                              ),
                               Text(
-                                user.lastName,
-                                style: CustomTextStyles.normalWhiteText,
+                                user.email,
+                                style: CustomTextStyles.textField,
                               ),
                             ],
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Text(
-                            user.email,
-                            style: CustomTextStyles.textField,
                           ),
                         ),
                       ],

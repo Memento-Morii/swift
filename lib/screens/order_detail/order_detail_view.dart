@@ -8,6 +8,7 @@ import 'package:swift/models/order_details_model.dart';
 import 'package:swift/screens/order_detail/payment_bloc/payment_bloc.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'detail_bloc/order_detail_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderDetailView extends StatefulWidget {
   OrderDetailView(this.orderId);
@@ -52,10 +53,10 @@ class _OrderDetailViewState extends State<OrderDetailView> {
           bloc: _paymentBloc,
           listener: (context, state) {
             if (state is PaymentSuccess) {
-              Utils.showToast(context, false, "Payment Succeded", 2);
+              Utils.showToast(context, false, AppLocalizations.of(context).success, 2);
             }
             if (state is PaymentFailed) {
-              Utils.showToast(context, true, "Payment Failed", 2);
+              Utils.showToast(context, true, AppLocalizations.of(context).failed, 2);
             }
           },
           child: BlocBuilder<OrderDetailBloc, OrderDetailState>(
@@ -73,7 +74,7 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                       ),
                       SizedBox(height: 20),
                       Text(
-                        'First Name',
+                        AppLocalizations.of(context).firstName,
                         style: CustomTextStyles.mediumText,
                       ),
                       Text(
@@ -82,7 +83,7 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Last Name',
+                        AppLocalizations.of(context).lastName,
                         style: CustomTextStyles.mediumText,
                       ),
                       Text(
@@ -91,7 +92,7 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Phone',
+                        AppLocalizations.of(context).phone,
                         style: CustomTextStyles.mediumText,
                       ),
                       Text(
@@ -100,7 +101,7 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Email',
+                        AppLocalizations.of(context).email,
                         style: CustomTextStyles.mediumText,
                       ),
                       Text(
@@ -113,8 +114,8 @@ class _OrderDetailViewState extends State<OrderDetailView> {
               } else if (state is DetailFailed) {
                 return Center(
                   child: Text(
-                    "Failed",
-                    style: CustomTextStyles.errorText,
+                    AppLocalizations.of(context).failed,
+                    style: CustomTextStyles.bigErrorText,
                   ),
                 );
               } else {

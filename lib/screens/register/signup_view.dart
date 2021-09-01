@@ -171,7 +171,7 @@ class _SignUpViewState extends State<SignUpView> {
                                   return Center(
                                     child: Text(
                                       state.getMessage,
-                                      style: CustomTextStyles.errorText,
+                                      style: CustomTextStyles.bigErrorText,
                                     ),
                                   );
                                 } else {

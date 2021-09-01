@@ -5,6 +5,7 @@ import 'package:swift/screens/about_us_view.dart';
 import 'package:swift/screens/help/help_view.dart';
 import 'package:swift/screens/home/home_view.dart';
 import 'package:swift/screens/my_services/my_services_view.dart';
+import 'package:swift/screens/orders/order_tab.dart';
 import 'package:swift/screens/orders/order_view.dart';
 import 'package:swift/screens/profile/profile_view.dart';
 import 'package:swift/screens/register/signIn_view.dart';
@@ -73,7 +74,7 @@ class _DrawerListsState extends State<DrawerLists> {
           index: 3,
           iconUrl: "assets/orders.png",
           name: AppLocalizations.of(context).orders,
-          page: Order(widget.userRole == 0 ? false : true),
+          page: widget.userRole == 0 ? Order() : OrderTab(),
         ),
         Divider(
           color: Colors.grey[700],

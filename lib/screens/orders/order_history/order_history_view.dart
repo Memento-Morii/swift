@@ -34,7 +34,7 @@ class _OrderHistoryViewState extends State<OrderHistoryView> {
             return Center(
                 child: Text(
               AppLocalizations.of(context).orderEmpty,
-              style: CustomTextStyles.errorText,
+              style: CustomTextStyles.bigErrorText,
             ));
           } else if (state is OrderLoaded) {
             List<OrderHistoryModel> orders = state.orderHistories.reversed.toList();
@@ -53,7 +53,7 @@ class _OrderHistoryViewState extends State<OrderHistoryView> {
           } else {
             return Text(
               AppLocalizations.of(context).failed,
-              style: CustomTextStyles.errorText,
+              style: CustomTextStyles.bigErrorText,
             );
           }
         },

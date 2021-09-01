@@ -92,7 +92,7 @@ class _ServiceCategoryState extends State<ServiceCategory> {
                               );
                             },
                             child: Text(
-                              AppLocalizations.of(context).orders,
+                              AppLocalizations.of(context).order,
                               style: CustomTextStyles.coloredBold,
                             ),
                           ),
@@ -108,13 +108,13 @@ class _ServiceCategoryState extends State<ServiceCategory> {
                 return Center(
                     child: Text(
                   'Empty Categories',
-                  style: CustomTextStyles.errorText,
+                  style: CustomTextStyles.bigErrorText,
                 ));
               } else {
                 return Center(
                     child: Text(
                   AppLocalizations.of(context).failed,
-                  style: CustomTextStyles.errorText,
+                  style: CustomTextStyles.bigErrorText,
                 ));
               }
             },

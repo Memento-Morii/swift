@@ -95,8 +95,8 @@ class _OTPViewState extends State<OTPView> {
                 onPressed: () async {
                   _otpBloc.add(
                     CheckOtp(
-                      smsCode: smsCode,
-                      verificationId: widget.verificationId,
+                      // smsCode: smsCode,
+                      // verificationId: widget.verificationId,
                       phone: widget.phone,
                     ),
                   );
@@ -186,7 +186,7 @@ class _OTPViewState extends State<OTPView> {
                   if (state is OtpFailed) {
                     return Text(
                       state.message,
-                      style: CustomTextStyles.errorText,
+                      style: CustomTextStyles.bigErrorText,
                     );
                   } else
                     return SizedBox();

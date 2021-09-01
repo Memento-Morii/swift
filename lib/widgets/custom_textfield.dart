@@ -32,7 +32,7 @@ class CustomField extends StatelessWidget {
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           hintText: hintText,
-          errorStyle: CustomTextStyles.errorText,
+          errorStyle: CustomTextStyles.bigErrorText,
           hintStyle: CustomTextStyles.textField,
           prefixIcon: Padding(
             padding: EdgeInsets.all(10),

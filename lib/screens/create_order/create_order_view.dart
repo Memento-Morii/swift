@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:location/location.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:swift/helper/utils.dart';
+import 'package:swift/models/location_model.dart';
 import 'package:swift/models/order_request_model.dart';
 import 'package:swift/models/service_category_model.dart';
 import 'package:swift/screens/create_order/bloc/create_order_bloc.dart';
+import 'package:swift/services/repositories.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/custom_network_image.dart';
 import 'package:swift/widgets/myTextField.dart';
@@ -23,6 +26,8 @@ class _CreateOrderViewState extends State<CreateOrderView> {
   TextEditingController houseController = TextEditingController();
   TextEditingController siteController = TextEditingController();
   TextEditingController blockController = TextEditingController();
+  GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  LocationModel _selectedLocation;
   bool isAddress = false;
   @override
   void initState() {
@@ -47,116 +52,159 @@ class _CreateOrderViewState extends State<CreateOrderView> {
             child: BlocBuilder<CreateOrderBloc, CreateOrderState>(
               bloc: _orderBloc,
               builder: (context, state) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      // mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            widget.serviceCategory.name.toUpperCase(),
-                            style: CustomTextStyles.bigBoldText,
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        CustomNetworkImage(
-                          height: 110,
-                          width: 110,
-                          imgUrl: widget.serviceCategory.image,
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      AppLocalizations.of(context).siteName,
-                      style: CustomTextStyles.mediumText,
-                    ),
-                    MyTextField(
-                      controller: siteController,
-                    ),
-                    Text(
-                      AppLocalizations.of(context).blockNumber,
-                      style: CustomTextStyles.mediumText,
-                    ),
-                    MyTextField(
-                      controller: blockController,
-                    ),
-                    Text(
-                      AppLocalizations.of(context).houseNo,
-                      style: CustomTextStyles.mediumText,
-                    ),
-                    MyTextField(
-                      controller: houseController,
-                    ),
-                    SizedBox(height: 10),
-                    CustomButton(
-                      width: 120,
-                      color: CustomColors.primaryColor,
-                      child: Text(
-                        AppLocalizations.of(context).orderNow,
-                        style: CustomTextStyles.mediumWhiteText,
-                      ),
-                      onPressed: () async {
-                        Location location = Location();
-                        var serviceEnabled = await location.serviceEnabled();
-                        if (!serviceEnabled) {
-                          serviceEnabled = await location.requestService();
-                        }
-                        var mylocation = await location.getLocation();
-                        print(mylocation.latitude);
-                        print(mylocation.longitude);
-                        OrderRequest orderRequest = OrderRequest(
-                          lat: mylocation.latitude,
-                          lng: mylocation.longitude,
-                          blockNumber: blockController.text.trim(),
-                          houseNumber: houseController.text.trim(),
-                          siteName: siteController.text.trim(),
-                          serviceId: widget.serviceCategory.serviceId,
-                          serviceCategoryId: widget.serviceCategory.id,
-                        );
-                        _orderBloc.add(OrderEvent(
-                          context: context,
-                          isAddress: true,
-                          orderRequest: orderRequest,
-                        ));
-                      },
-                    ),
-                    SizedBox(height: 30),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context).instead,
-                            style: CustomTextStyles.normalText,
-                          ),
-                          SizedBox(width: 10),
-                          CustomButton(
-                            width: 220,
-                            color: CustomColors.primaryColor,
+                return Form(
+                  key: _formkey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
                             child: Text(
-                              AppLocalizations.of(context).useRegistered,
-                              style: CustomTextStyles.mediumWhiteText,
+                              widget.serviceCategory.name.toUpperCase(),
+                              style: CustomTextStyles.bigBoldText,
                             ),
-                            onPressed: () async {
+                          ),
+                          SizedBox(width: 20),
+                          CustomNetworkImage(
+                            height: 110,
+                            width: 110,
+                            imgUrl: widget.serviceCategory.image,
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        AppLocalizations.of(context).siteName,
+                        style: CustomTextStyles.mediumText,
+                      ),
+                      Container(
+                        width: 200,
+                        margin: EdgeInsets.symmetric(vertical: 10),
+                        child: TypeAheadField<LocationModel>(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            controller: siteController,
+                            style: CustomTextStyles.textField,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20.0),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 3,
+                                  color: CustomColors.primaryColor,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2,
+                                  color: CustomColors.primaryColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                          suggestionsCallback: (pattern) async {
+                            return await Repositories().searchLocation(pattern);
+                          },
+                          itemBuilder: (context, itemData) {
+                            return ListTile(
+                                title: Text(
+                              itemData.name,
+                              style: CustomTextStyles.boldMediumText,
+                            ));
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            setState(() {
+                              siteController.text = suggestion.name;
+                              _selectedLocation = suggestion;
+                            });
+                          },
+                        ),
+                      ),
+                      Text(
+                        AppLocalizations.of(context).blockNumber,
+                        style: CustomTextStyles.mediumText,
+                      ),
+                      MyTextField(
+                        controller: blockController,
+                      ),
+                      Text(
+                        AppLocalizations.of(context).houseNo,
+                        style: CustomTextStyles.mediumText,
+                      ),
+                      MyTextField(
+                        controller: houseController,
+                      ),
+                      SizedBox(height: 10),
+                      CustomButton(
+                        width: 120,
+                        color: CustomColors.primaryColor,
+                        child: Text(
+                          AppLocalizations.of(context).orderNow,
+                          style: CustomTextStyles.mediumWhiteText,
+                        ),
+                        onPressed: () async {
+                          if (_formkey.currentState.validate()) {
+                            if (_selectedLocation != null) {
                               OrderRequest orderRequest = OrderRequest(
+                                lat: _selectedLocation.lat,
+                                lng: _selectedLocation.lng,
+                                blockNumber: blockController.text.trim(),
+                                houseNumber: houseController.text.trim(),
+                                siteName: siteController.text.trim(),
                                 serviceId: widget.serviceCategory.serviceId,
                                 serviceCategoryId: widget.serviceCategory.id,
                               );
                               _orderBloc.add(OrderEvent(
                                 context: context,
-                                isAddress: false,
+                                isAddress: true,
                                 orderRequest: orderRequest,
                               ));
-                            },
-                          ),
-                        ],
+                            } else {
+                              Utils.showToast(
+                                context,
+                                true,
+                                AppLocalizations.of(context).selectLocation,
+                                2,
+                              );
+                            }
+                          }
+                        },
                       ),
-                    )
-                  ],
+                      SizedBox(height: 30),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context).instead,
+                              style: CustomTextStyles.normalText,
+                            ),
+                            SizedBox(width: 10),
+                            CustomButton(
+                              width: 220,
+                              color: CustomColors.primaryColor,
+                              child: Text(
+                                AppLocalizations.of(context).useRegistered,
+                                style: CustomTextStyles.mediumWhiteText,
+                              ),
+                              onPressed: () async {
+                                OrderRequest orderRequest = OrderRequest(
+                                  serviceId: widget.serviceCategory.serviceId,
+                                  serviceCategoryId: widget.serviceCategory.id,
+                                );
+                                _orderBloc.add(OrderEvent(
+                                  context: context,
+                                  isAddress: false,
+                                  orderRequest: orderRequest,
+                                ));
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 );
               },
             ),

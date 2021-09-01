@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:swift/models/location_model.dart';
 import 'package:swift/models/my_services_model.dart';
 import 'package:swift/models/order_request_model.dart';
 import 'package:swift/models/service_provider_request_model.dart';
@@ -9,7 +12,7 @@ import 'package:swift/models/user_model.dart';
 
 class Repositories {
   Dio _dio = Dio();
-  final String baseUrl = "https://swiftolio.com/api/v1";
+  static final String baseUrl = "https://swiftolio.com/api/v1";
   Options options = Options(
     followRedirects: false,
     validateStatus: (status) {
@@ -44,6 +47,8 @@ class Repositories {
       "house_number": signupRequest.houseNumber,
       "block_number": signupRequest.blockNumber,
       "phone_number": signupRequest.phone,
+      "lat": signupRequest.lat,
+      "lng": signupRequest.lng,
       "is_service_provider": signupRequest.isServiceProvider,
     };
     try {
@@ -373,6 +378,24 @@ class Repositories {
         options: await optionsWithHeader(),
       );
       return response;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<List<LocationModel>> searchLocation(String searchTerm) async {
+    List<LocationModel> locations;
+    try {
+      var response = await _dio.get(
+        "$baseUrl/location/search?location_name=$searchTerm",
+        options: options,
+      );
+      if (response.statusCode == 200) {
+        var locationDecoded = jsonDecode(response.data);
+        locations = locationModelFromJson(jsonEncode(locationDecoded['results']));
+      }
+      return locations;
     } catch (e) {
       print(e);
       return null;

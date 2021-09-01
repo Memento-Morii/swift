@@ -73,8 +73,8 @@ class _MyServicesState extends State<MyServices> {
                   );
                 } else {
                   return Text(
-                    'Failed',
-                    style: CustomTextStyles.errorText,
+                    AppLocalizations.of(context).failed,
+                    style: CustomTextStyles.bigErrorText,
                   );
                 }
               },

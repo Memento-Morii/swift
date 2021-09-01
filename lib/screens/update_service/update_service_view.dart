@@ -140,7 +140,7 @@ class _UpdateServiceViewState extends State<UpdateServiceView> {
             builder: (context, state) {
               if (state is UpdateServiceInitial) {
                 return Text(
-                  'Update',
+                  AppLocalizations.of(context).update,
                   style: CustomTextStyles.mediumWhiteText,
                 );
               } else if (state is UpdateServiceLoading) {
@@ -155,7 +155,7 @@ class _UpdateServiceViewState extends State<UpdateServiceView> {
                 );
               } else {
                 return Text(
-                  'Failed',
+                  AppLocalizations.of(context).failed,
                   style: CustomTextStyles.mediumWhiteText,
                 );
               }

@@ -11,8 +11,10 @@ import 'package:swift/models/location_model.dart';
 import 'package:swift/models/service_model.dart';
 import 'package:swift/models/service_provider_request_model.dart';
 import 'package:swift/screens/home/home_view.dart';
+import 'package:swift/screens/my_services/my_services_view.dart';
 import 'package:swift/screens/register/add_services/bloc/add_service_bloc.dart';
 import 'package:swift/screens/register/add_services/bloc/create_service_provider_bloc.dart';
+import 'package:swift/services/repositories.dart';
 import 'package:swift/widgets/category_card.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/range_field.dart';
@@ -28,7 +30,7 @@ class AddService extends StatefulWidget {
 class _AddServiceState extends State<AddService> {
   AddServiceBloc _serviceBloc;
   CreateServiceProviderBloc _serviceProviderBloc;
-  ServiceProviderRequest _requestModel = ServiceProviderRequest(document: null);
+  ServiceProviderRequest _requestModel = ServiceProviderRequest();
   List<ServiceModel> categories = [];
   int serviceId;
   int serviceCategoryId;
@@ -76,6 +78,18 @@ class _AddServiceState extends State<AddService> {
       create: (context) => CreateServiceProviderBloc(),
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyServices(),
+                ),
+                (Route<dynamic> route) => false,
+              );
+            },
+          ),
           title: Text(
             AppLocalizations.of(context).addService.toUpperCase(),
             style: CustomTextStyles.bigWhiteText,
@@ -89,7 +103,12 @@ class _AddServiceState extends State<AddService> {
               listener: (context, state) {
                 if (state is CreateServiceProviderSuccess) {
                   widget.isAnother
-                      ? Utils.showToast(context, false, "Added New Service", 2)
+                      ? Utils.showToast(
+                          context,
+                          false,
+                          AppLocalizations.of(context).addNewService,
+                          2,
+                        )
                       : Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -132,14 +151,10 @@ class _AddServiceState extends State<AddService> {
                                     border: InputBorder.none,
                                     hintText: AppLocalizations.of(context).searchForLocation,
                                     hintStyle: CustomTextStyles.textField,
-                                    prefixIcon: Icon(
-                                      Icons.search,
-                                      color: Colors.grey,
-                                    ),
                                   ),
                                 ),
-                                suggestionsCallback: (pattern) {
-                                  return getSuggestions(pattern);
+                                suggestionsCallback: (pattern) async {
+                                  return await Repositories().searchLocation(pattern);
                                 },
                                 itemBuilder: (context, itemData) {
                                   return ListTile(
@@ -262,35 +277,36 @@ class _AddServiceState extends State<AddService> {
                                 decoration: InputDecoration(
                                   // hintText: "Describe yourself",
                                   hintStyle: CustomTextStyles.textField,
-                                  errorStyle: CustomTextStyles.errorText,
+                                  errorStyle: CustomTextStyles.bigErrorText,
                                 ),
-                                validator: RequiredValidator(errorText: "Required"),
+                                validator: RequiredValidator(
+                                  errorText: AppLocalizations.of(context).required,
+                                ),
                               ),
                               SizedBox(height: 20),
-                              Text(
-                                '${AppLocalizations.of(context).document} (${AppLocalizations.of(context).optional} & ${AppLocalizations.of(context).notTwoMb})',
-                                style: CustomTextStyles.mediumText,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '${AppLocalizations.of(context).document} (${AppLocalizations.of(context).optional} & ${AppLocalizations.of(context).notTwoMb})',
+                                    style: CustomTextStyles.mediumText,
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.upload_file),
+                                    onPressed: () async {
+                                      FilePickerResult result = await FilePicker.platform.pickFiles(
+                                        allowMultiple: false,
+                                        // allowedExtensions: ['pdf'],
+                                      );
+                                      if (result != null) {
+                                        _requestModel.document = result.files.single;
+                                      } else {
+                                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                      }
+                                    },
+                                  ),
+                                ],
                               ),
-                              SizedBox(height: 20),
-                              CustomButton(
-                                onPressed: () async {
-                                  FilePickerResult result = await FilePicker.platform.pickFiles(
-                                    allowMultiple: false,
-                                    allowedExtensions: ['pdf'],
-                                  );
-                                  if (result != null) {
-                                    _requestModel.document = result.files.single;
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                  }
-                                },
-                                width: 180,
-                                color: CustomColors.primaryColor,
-                                child: Text(
-                                  AppLocalizations.of(context).addDocument,
-                                  style: CustomTextStyles.mediumWhiteText,
-                                ),
-                              )
                             ],
                           ),
                         ),
@@ -304,47 +320,54 @@ class _AddServiceState extends State<AddService> {
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: CustomColors.primaryColor,
-          onPressed: () async {
-            if (_formkey.currentState.validate()) {
-              if (selectedLocation != null) {
-                _requestModel.address = addressController.text.trim();
-                _requestModel.description = descriptionController.text.trim();
-                _requestModel.priceRangeFrom = double.parse((priceFromController.text.trim()));
-                _requestModel.priceRangeTo = double.parse((priceToController.text?.trim()));
-                _requestModel.timeRangeFrom = timeFromController.text.trim();
-                _requestModel.timeRangeTo = timeToController.text.trim();
-                _requestModel.lat = selectedLocation.lat;
-                _requestModel.lng = selectedLocation.lng;
-                _serviceProviderBloc.add(CreateServiceProvider(request: _requestModel));
-              } else {
-                Utils.showToast(context, true, "Please select your location", 2);
-              }
-            }
-          },
-          child: BlocBuilder<CreateServiceProviderBloc, CreateServiceProviderState>(
-            bloc: _serviceProviderBloc,
-            builder: (context, state) {
-              if (state is CreateServiceProviderFailed) {
-                return Text('Failed');
-              } else if (state is CreateServiceProviderLoading) {
-                return SizedBox(
-                  height: 30,
-                  width: 30,
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
-                  ),
-                );
-              } else {
-                return Icon(
-                  Icons.add,
-                  color: Colors.white,
-                );
+        floatingActionButton: Container(
+          height: 60,
+          child: CustomButton(
+            width: 180,
+            color: CustomColors.primaryColor,
+            onPressed: () async {
+              if (_formkey.currentState.validate()) {
+                if (selectedLocation != null) {
+                  _requestModel.address = addressController.text.trim();
+                  _requestModel.description = descriptionController.text.trim();
+                  _requestModel.priceRangeFrom = double.parse((priceFromController.text.trim()));
+                  _requestModel.priceRangeTo = double.parse((priceToController.text?.trim()));
+                  _requestModel.timeRangeFrom = timeFromController.text.trim();
+                  _requestModel.timeRangeTo = timeToController.text.trim();
+                  _requestModel.lat = selectedLocation.lat;
+                  _requestModel.lng = selectedLocation.lng;
+                  _serviceProviderBloc.add(CreateServiceProvider(request: _requestModel));
+                } else {
+                  Utils.showToast(context, true, AppLocalizations.of(context).selectLocation, 2);
+                }
               }
             },
+            child: BlocBuilder<CreateServiceProviderBloc, CreateServiceProviderState>(
+              bloc: _serviceProviderBloc,
+              builder: (context, state) {
+                if (state is CreateServiceProviderFailed) {
+                  return Text(
+                    AppLocalizations.of(context).failed,
+                    style: CustomTextStyles.mediumWhiteText,
+                  );
+                } else if (state is CreateServiceProviderLoading) {
+                  return SizedBox(
+                    height: 30,
+                    width: 30,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    ),
+                  );
+                } else {
+                  return Text(
+                    AppLocalizations.of(context).add,
+                    style: CustomTextStyles.mediumWhiteText,
+                  );
+                }
+              },
+            ),
           ),
         ),
       ),

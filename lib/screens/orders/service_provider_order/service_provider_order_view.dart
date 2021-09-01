@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/provider_order_model.dart';
 import 'package:swift/widgets/provider_order_card.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'bloc/provider_order_bloc.dart';
 
 class ServiceProviderOrderView extends StatefulWidget {
@@ -32,8 +32,8 @@ class _ServiceProviderOrderViewState extends State<ServiceProviderOrderView> {
           } else if (state is ProviderOrderEmpty) {
             return Center(
                 child: Text(
-              'Empty',
-              style: CustomTextStyles.errorText,
+              AppLocalizations.of(context).orderEmpty,
+              style: CustomTextStyles.bigErrorText,
             ));
           } else if (state is ProviderOrderLoaded) {
             List<ProviderOrderModel> orders = state.orders;
@@ -50,7 +50,9 @@ class _ServiceProviderOrderViewState extends State<ServiceProviderOrderView> {
               itemCount: orders.length,
             );
           } else {
-            return Center(child: Text('Failed', style: CustomTextStyles.errorText));
+            return Center(
+                child: Text(AppLocalizations.of(context).failed,
+                    style: CustomTextStyles.bigErrorText));
           }
         },
       ),
