@@ -1,9 +1,11 @@
+import 'dart:convert';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/user_model.dart';
 import 'package:swift/screens/edit_profile/edit_profile_view.dart';
-import 'package:swift/widgets/custom_network_image.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'bloc/profile_bloc.dart';
@@ -45,66 +47,77 @@ class _ProfileState extends State<Profile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    color: Colors.black,
                     height: MediaQuery.of(context).size.height * 0.45,
                     width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(10),
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          top: 10,
-                          right: 10,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.edit,
-                              color: Colors.white,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: user.userImage == null
+                            ? AssetImage("assets/profile-user.png")
+                            : MemoryImage(
+                                Base64Decoder().convert(user.userImage),
+                              ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 10,
+                            right: 10,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.edit,
+                                color: Colors.black,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditProfile(user),
+                                  ),
+                                );
+                              },
                             ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditProfile(user),
+                          ),
+                          Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  radius: 80,
+                                  backgroundImage: user.userImage == null
+                                      ? AssetImage("assets/profile-user.png")
+                                      : MemoryImage(
+                                          Base64Decoder().convert(user.userImage),
+                                        ),
                                 ),
-                              );
-                            },
+                                SizedBox(height: 20),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Text(
+                                      user.firstName,
+                                      style: CustomTextStyles.bigWhiteText,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      user.lastName,
+                                      style: CustomTextStyles.normalWhiteText,
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  user.email,
+                                  style: CustomTextStyles.textField,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.grey,
-                                radius: 80,
-                                child: state.userModel.userImage == null
-                                    ? null
-                                    : CustomNetworkImage(
-                                        imgUrl: state.userModel.userImage,
-                                      ),
-                              ),
-                              SizedBox(height: 20),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Text(
-                                    user.firstName,
-                                    style: CustomTextStyles.bigWhiteText,
-                                  ),
-                                  SizedBox(width: 10),
-                                  Text(
-                                    user.lastName,
-                                    style: CustomTextStyles.normalWhiteText,
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                user.email,
-                                style: CustomTextStyles.textField,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20),

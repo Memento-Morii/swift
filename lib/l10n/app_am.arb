@@ -49,6 +49,7 @@
     "to": "እስከ",
 
     "houseInfo": "የቤት መረጃ",
+    "providerInfo": "የአገልግሎት አቅራቢ መረጃ",
     "houseNo": "የቤት ቁጥር",
     "blockNumber": "የብሎክ ቁጥር",
     "siteName": "የሳይት ስም",

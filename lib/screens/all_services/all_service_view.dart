@@ -28,7 +28,7 @@ class _AllServiceState extends State<AllService> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'ALL SERVICES',
+          AppLocalizations.of(context).allServices,
           style: CustomTextStyles.bigWhiteText,
         ),
       ),
@@ -117,7 +117,12 @@ class _AllServiceState extends State<AllService> {
                       );
                     });
               } else {
-                return Center(child: Text('Failed'));
+                return Center(
+                  child: Text(
+                    AppLocalizations.of(context).failed,
+                    style: CustomTextStyles.bigErrorText,
+                  ),
+                );
               }
             },
           ),

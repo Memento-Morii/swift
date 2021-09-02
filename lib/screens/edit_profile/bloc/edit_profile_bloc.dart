@@ -5,9 +5,9 @@ import 'package:bloc/bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
-import 'package:swift/helper/utils.dart';
 import 'package:swift/models/user_model.dart';
 import 'package:swift/services/repositories.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'edit_profile_event.dart';
 part 'edit_profile_state.dart';
@@ -21,17 +21,17 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     EditProfileEvent event,
   ) async* {
     if (event is EditUserProfile) {
+      yield EditProfileLoading();
       try {
         var response = await _repo.updateUser(user: event.editedUser, photo: event.photo);
         if (response.statusCode == 200) {
-          Utils.showToast(event.context, false, "Success", 2);
+          yield EditProfileSuccess();
         } else {
           var decoded = jsonDecode(response.data);
-          Utils.showToast(event.context, true, decoded["message"], 2);
+          yield EditProfileFailed(decoded['message']);
         }
       } catch (_) {
-        print(_);
-        Utils.showToast(event.context, true, "Something went wrong", 2);
+        yield EditProfileFailed(AppLocalizations.of(event.context).failed);
       }
     }
   }

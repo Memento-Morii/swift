@@ -36,7 +36,7 @@ class _OrderDetailViewState extends State<OrderDetailView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "ORDER DETAILS",
+          AppLocalizations.of(context).viewOrderDetails.toUpperCase(),
           style: CustomTextStyles.bigWhiteText,
         ),
       ),
@@ -69,7 +69,7 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Service Provider Information',
+                        AppLocalizations.of(context).providerInfo,
                         style: CustomTextStyles.boldTitleText,
                       ),
                       SizedBox(height: 20),

@@ -52,6 +52,7 @@
     "to": "To",
 
     "houseInfo": "House Information",
+    "providerInfo": "Service Provider Information",
     "houseNo": "House Number",
     "blockNumber": "House Number",
     "siteName": "Site Name",
