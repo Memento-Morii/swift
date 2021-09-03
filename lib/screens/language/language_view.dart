@@ -35,7 +35,7 @@ class _LanguageViewState extends State<LanguageView> {
               provider.setLocale(locale);
             },
             child: Text(
-              'Save',
+              AppLocalizations.of(context).save,
               style: CustomTextStyles.mediumWhiteText,
             ),
           ),

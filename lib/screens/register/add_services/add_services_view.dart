@@ -127,12 +127,6 @@ class _AddServiceState extends State<AddService> {
                     return Center(child: CircularProgressIndicator());
                   } else if (state is AddServiceLoaded) {
                     List<String> names = getServiceName(state.service);
-                    List<LocationModel> getSuggestions(String query) =>
-                        List.of(state.locations).where((element) {
-                          final nameLower = element.name.toLowerCase();
-                          final queryLower = query.toLowerCase();
-                          return nameLower.contains(queryLower);
-                        }).toList();
                     return Padding(
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
                       child: SingleChildScrollView(
@@ -307,6 +301,59 @@ class _AddServiceState extends State<AddService> {
                                   ),
                                 ],
                               ),
+                              SizedBox(height: 20),
+                              CustomButton(
+                                // width: 180,
+                                color: CustomColors.primaryColor,
+                                onPressed: () async {
+                                  if (_formkey.currentState.validate()) {
+                                    if (selectedLocation != null) {
+                                      _requestModel.address = addressController.text.trim();
+                                      _requestModel.description = descriptionController.text.trim();
+                                      _requestModel.priceRangeFrom =
+                                          double.parse((priceFromController.text.trim()));
+                                      _requestModel.priceRangeTo =
+                                          double.parse((priceToController.text?.trim()));
+                                      _requestModel.timeRangeFrom = timeFromController.text.trim();
+                                      _requestModel.timeRangeTo = timeToController.text.trim();
+                                      _requestModel.lat = selectedLocation.lat;
+                                      _requestModel.lng = selectedLocation.lng;
+                                      _serviceProviderBloc
+                                          .add(CreateServiceProvider(request: _requestModel));
+                                    } else {
+                                      Utils.showToast(context, true,
+                                          AppLocalizations.of(context).selectLocation, 2);
+                                    }
+                                  }
+                                },
+                                child: BlocBuilder<CreateServiceProviderBloc,
+                                    CreateServiceProviderState>(
+                                  bloc: _serviceProviderBloc,
+                                  builder: (context, state) {
+                                    if (state is CreateServiceProviderFailed) {
+                                      return Text(
+                                        AppLocalizations.of(context).failed,
+                                        style: CustomTextStyles.mediumWhiteText,
+                                      );
+                                    } else if (state is CreateServiceProviderLoading) {
+                                      return SizedBox(
+                                        height: 30,
+                                        width: 30,
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return Text(
+                                        AppLocalizations.of(context).add,
+                                        style: CustomTextStyles.mediumWhiteText,
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -320,56 +367,56 @@ class _AddServiceState extends State<AddService> {
             ),
           ),
         ),
-        floatingActionButton: Container(
-          height: 60,
-          child: CustomButton(
-            width: 180,
-            color: CustomColors.primaryColor,
-            onPressed: () async {
-              if (_formkey.currentState.validate()) {
-                if (selectedLocation != null) {
-                  _requestModel.address = addressController.text.trim();
-                  _requestModel.description = descriptionController.text.trim();
-                  _requestModel.priceRangeFrom = double.parse((priceFromController.text.trim()));
-                  _requestModel.priceRangeTo = double.parse((priceToController.text?.trim()));
-                  _requestModel.timeRangeFrom = timeFromController.text.trim();
-                  _requestModel.timeRangeTo = timeToController.text.trim();
-                  _requestModel.lat = selectedLocation.lat;
-                  _requestModel.lng = selectedLocation.lng;
-                  _serviceProviderBloc.add(CreateServiceProvider(request: _requestModel));
-                } else {
-                  Utils.showToast(context, true, AppLocalizations.of(context).selectLocation, 2);
-                }
-              }
-            },
-            child: BlocBuilder<CreateServiceProviderBloc, CreateServiceProviderState>(
-              bloc: _serviceProviderBloc,
-              builder: (context, state) {
-                if (state is CreateServiceProviderFailed) {
-                  return Text(
-                    AppLocalizations.of(context).failed,
-                    style: CustomTextStyles.mediumWhiteText,
-                  );
-                } else if (state is CreateServiceProviderLoading) {
-                  return SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      ),
-                    ),
-                  );
-                } else {
-                  return Text(
-                    AppLocalizations.of(context).add,
-                    style: CustomTextStyles.mediumWhiteText,
-                  );
-                }
-              },
-            ),
-          ),
-        ),
+        // floatingActionButton: Container(
+        //   height: 60,
+        //   child: CustomButton(
+        //     // width: 180,
+        //     color: CustomColors.primaryColor,
+        //     onPressed: () async {
+        //       if (_formkey.currentState.validate()) {
+        //         if (selectedLocation != null) {
+        //           _requestModel.address = addressController.text.trim();
+        //           _requestModel.description = descriptionController.text.trim();
+        //           _requestModel.priceRangeFrom = double.parse((priceFromController.text.trim()));
+        //           _requestModel.priceRangeTo = double.parse((priceToController.text?.trim()));
+        //           _requestModel.timeRangeFrom = timeFromController.text.trim();
+        //           _requestModel.timeRangeTo = timeToController.text.trim();
+        //           _requestModel.lat = selectedLocation.lat;
+        //           _requestModel.lng = selectedLocation.lng;
+        //           _serviceProviderBloc.add(CreateServiceProvider(request: _requestModel));
+        //         } else {
+        //           Utils.showToast(context, true, AppLocalizations.of(context).selectLocation, 2);
+        //         }
+        //       }
+        //     },
+        //     child: BlocBuilder<CreateServiceProviderBloc, CreateServiceProviderState>(
+        //       bloc: _serviceProviderBloc,
+        //       builder: (context, state) {
+        //         if (state is CreateServiceProviderFailed) {
+        //           return Text(
+        //             AppLocalizations.of(context).failed,
+        //             style: CustomTextStyles.mediumWhiteText,
+        //           );
+        //         } else if (state is CreateServiceProviderLoading) {
+        //           return SizedBox(
+        //             height: 30,
+        //             width: 30,
+        //             child: Center(
+        //               child: CircularProgressIndicator(
+        //                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        //               ),
+        //             ),
+        //           );
+        //         } else {
+        //           return Text(
+        //             AppLocalizations.of(context).add,
+        //             style: CustomTextStyles.mediumWhiteText,
+        //           );
+        //         }
+        //       },
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }

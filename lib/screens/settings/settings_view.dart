@@ -20,29 +20,32 @@ class _SettingsState extends State<Settings> {
             style: CustomTextStyles.bigWhiteText,
           ),
         ),
-        body: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  AppLocalizations.of(context).language,
-                  style: CustomTextStyles.boldText,
-                ),
-                IconButton(
-                  icon: Icon(Icons.arrow_forward_ios_outlined),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LanguageView(),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            )
-          ],
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    AppLocalizations.of(context).language,
+                    style: CustomTextStyles.boldText,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.arrow_forward_ios_outlined),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LanguageView(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              )
+            ],
+          ),
         ));
   }
 }

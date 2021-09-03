@@ -18,7 +18,7 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.get("token");
   int serviceProvider = prefs.get('serviceProvider');
-  bool isAmharic = prefs.getBool('locale');
+  // bool isAmharic = prefs.getBool('locale');
   // prefs.clear();
   print(token);
   runApp(

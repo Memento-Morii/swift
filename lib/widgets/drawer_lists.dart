@@ -14,8 +14,20 @@ import 'package:swift/widgets/navigator_drawers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DrawerLists extends StatefulWidget {
-  DrawerLists(this.userRole);
+  DrawerLists({
+    this.userRole,
+    // this.email,
+    this.firstName,
+    this.lastName,
+    this.phone,
+    // this.userImage,
+  });
   final int userRole;
+  final String firstName;
+  final String lastName;
+  final String phone;
+  // final String email;
+  // final String userImage;
   @override
   _DrawerListsState createState() => _DrawerListsState();
 }
@@ -23,6 +35,8 @@ class DrawerLists extends StatefulWidget {
 class _DrawerListsState extends State<DrawerLists> {
   @override
   Widget build(BuildContext context) {
+    // print(widget.userImage);
+    // print(widget.firstName);
     return ListView(
       children: [
         SizedBox(height: 20),
@@ -30,7 +44,7 @@ class _DrawerListsState extends State<DrawerLists> {
           children: <Widget>[
             CircleAvatar(
               backgroundColor: Colors.white,
-              backgroundImage: AssetImage("assets/user.png"),
+              backgroundImage: AssetImage("assets/profile-user.png"),
               radius: 30,
             ),
             SizedBox(width: 20),
@@ -38,11 +52,11 @@ class _DrawerListsState extends State<DrawerLists> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Name",
+                  "${widget.firstName} ${widget.lastName}",
                   style: CustomTextStyles.bigWhiteText,
                 ),
                 Text(
-                  "lorem@ipsum.com",
+                  widget.phone,
                   style: CustomTextStyles.mediumWhiteText,
                 ),
               ],

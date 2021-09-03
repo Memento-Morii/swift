@@ -12,10 +12,20 @@ class NavigatorDrawer extends StatefulWidget {
 
 class _NavigatorDrawerState extends State<NavigatorDrawer> {
   int userRole;
+  String firstName;
+  String lastName;
+  // String email;
+  String phone;
+  // String userImage;
   Future getRole() async {
     userRole = null;
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    userRole = _prefs.get("serviceProvider");
+    userRole = _prefs.getInt("serviceProvider");
+    firstName = _prefs.getString("firstName");
+    lastName = _prefs.getString("lastName");
+    // email = _prefs.getString("email");
+    phone = _prefs.getString("phone");
+    // userImage = _prefs.getString("userImage");
   }
 
   @override
@@ -28,7 +38,13 @@ class _NavigatorDrawerState extends State<NavigatorDrawer> {
           future: getRole(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return DrawerLists(userRole);
+              return DrawerLists(
+                userRole: userRole,
+                firstName: firstName,
+                lastName: lastName,
+                // email: email,
+                phone: phone,
+              );
             } else {
               return SizedBox();
             }

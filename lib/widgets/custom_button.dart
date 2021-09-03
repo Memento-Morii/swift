@@ -5,31 +5,33 @@ class CustomButton extends StatelessWidget {
     this.child,
     this.onPressed,
     this.height = 50,
-    this.width = 100,
+    this.horizontalPadding = 10,
+    // this.width = 100,
     this.color,
   });
   final Widget child;
   final Function onPressed;
   final double height;
-  final double width;
+  final double horizontalPadding;
+  // final double width;
   final Color color;
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
+      child: Theme(
+        data: ThemeData(shadowColor: color),
+        child: Material(
+          elevation: 7,
           color: color,
           borderRadius: BorderRadius.circular(10),
-        ),
-        child: TextButton(
-          style: ButtonStyle(
-            elevation: MaterialStateProperty.all(5),
-            shadowColor: MaterialStateProperty.all(color),
+          child: Container(
+            height: height,
+            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+            child: TextButton(
+              onPressed: onPressed,
+              child: child,
+            ),
           ),
-          onPressed: onPressed,
-          child: child,
         ),
       ),
     );

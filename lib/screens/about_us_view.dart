@@ -44,7 +44,7 @@ class _AboutUsState extends State<AboutUs> {
             ),
             SizedBox(height: 40),
             AboutUsCard(
-                title: AppLocalizations.of(context).keyPersonnel,
+                title: AppLocalizations.of(context).meetTheTeam,
                 buttonName: AppLocalizations.of(context).seeDetails,
                 onPressed: () {
                   Navigator.push(
@@ -64,15 +64,15 @@ class _AboutUsState extends State<AboutUs> {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text(
-                            'Daniel Abera',
+                            AppLocalizations.of(context).daniel,
                             style: CustomTextStyles.coloredBold,
                           ),
                           Text(
-                            'Kebede Tenkir',
+                            AppLocalizations.of(context).andualem,
                             style: CustomTextStyles.coloredBold,
                           ),
                           Text(
-                            'Andualem Yosef',
+                            AppLocalizations.of(context).birhane,
                             style: CustomTextStyles.coloredBold,
                           ),
                         ],
@@ -83,17 +83,17 @@ class _AboutUsState extends State<AboutUs> {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text(
-                            'Founder & CEO',
+                            AppLocalizations.of(context).danielTitle,
                             style: CustomTextStyles.boldText,
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'CMO',
+                            AppLocalizations.of(context).andualemTitle,
                             style: CustomTextStyles.boldText,
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'COO,CTO',
+                            AppLocalizations.of(context).birhaneTitle,
                             style: CustomTextStyles.boldText,
                           ),
                         ],

@@ -123,7 +123,7 @@ class _HomeState extends State<Home> {
                                       Center(
                                         child: Container(
                                           height: 40,
-                                          width: 230,
+                                          padding: EdgeInsets.symmetric(horizontal: 5),
                                           decoration: BoxDecoration(
                                             color: CustomColors.primaryColor,
                                             borderRadius: BorderRadius.circular(20),

@@ -107,7 +107,7 @@ class _ServiceCategoryState extends State<ServiceCategory> {
               } else if (state is ServiceCategoriesEmpty) {
                 return Center(
                     child: Text(
-                  'Empty Categories',
+                  AppLocalizations.of(context).emptyServices,
                   style: CustomTextStyles.bigErrorText,
                 ));
               } else {
