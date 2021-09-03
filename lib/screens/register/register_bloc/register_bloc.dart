@@ -28,17 +28,27 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         );
         if (response.statusCode == 200) {
           SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-          var token = jsonDecode(response.data)['token'];
+          var decoded = jsonDecode(response.data);
+          var token = decoded['token'];
           sharedPreferences.setInt(
             "serviceProvider",
-            event.role == "User" ? jsonDecode(response.data)['results']['is_service_provider'] : 2,
+            event.role == "User" ? decoded['results']['is_service_provider'] : 2,
           );
-          print(token);
+          var firstName = decoded['results']['first_name'];
+          var lastName = decoded['results']['last_name'];
+          // var email = decoded['results']['email'];
+          var phone = decoded['results']['phone_number'];
+          // var userImage = decoded['results']['user_image'];
           sharedPreferences.setString("token", token);
+          sharedPreferences.setString("firstName", firstName);
+          sharedPreferences.setString("lastName", lastName);
+          // sharedPreferences.setString("email", email);
+          sharedPreferences.setString("phone", phone);
+          sharedPreferences.setString("token", token);
+          // sharedPreferences.setString("userImage", userImage);
           yield RegisterSuccess(event.role);
         } else {
           var some = jsonDecode(response.data);
-          print(some);
           yield RegisterInitial();
           yield RegisterFailed(message: some['message']);
         }

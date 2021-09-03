@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -70,6 +72,16 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundImage: details.serviceProvider.user.userImage
+                            ? AssetImage("assets/profile-user.png")
+                            : MemoryImage(
+                                Base64Decoder().convert(
+                                  details.serviceProvider.user.userImage,
+                                ),
+                              ),
+                      ),
                       Text(
                         AppLocalizations.of(context).providerInfo,
                         style: CustomTextStyles.boldTitleText,
@@ -131,10 +143,10 @@ class _OrderDetailViewState extends State<OrderDetailView> {
         height: 50,
         margin: EdgeInsets.only(bottom: 10),
         child: CustomButton(
-          width: 140,
+          // width: 140,
           color: CustomColors.primaryColor,
           child: Text(
-            'Go to payment',
+            AppLocalizations.of(context).goToPayment,
             style: CustomTextStyles.mediumWhiteText,
           ),
           onPressed: () {
@@ -145,14 +157,15 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                   key: _formkey,
                   child: AlertDialog(
                     title: Text(
-                      'Add Payment',
+                      AppLocalizations.of(context).addPayment,
                       style: CustomTextStyles.boldTitleText,
                     ),
                     content: TextFormField(
                       style: CustomTextStyles.textField,
                       controller: paymentController,
                       keyboardType: TextInputType.number,
-                      validator: RequiredValidator(errorText: "Required"),
+                      validator:
+                          RequiredValidator(errorText: AppLocalizations.of(context).required),
                     ),
                     actions: [
                       TextButton(
@@ -160,7 +173,7 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                           Navigator.pop(context);
                         },
                         child: Text(
-                          'Cancel',
+                          AppLocalizations.of(context).cancel,
                           style: CustomTextStyles.textField,
                         ),
                       ),

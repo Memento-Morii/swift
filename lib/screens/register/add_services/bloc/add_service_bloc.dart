@@ -20,17 +20,17 @@ class AddServiceBloc extends Bloc<AddServiceEvent, AddServiceState> {
     if (event is FetchServices) {
       try {
         var serviceResponse = await _repos.getServices();
-        var locationResponse = await _repos.getLocation();
-        if (serviceResponse.statusCode == 200 && locationResponse.statusCode == 200) {
+        // var locationResponse = await _repos.getLocation();
+        if (serviceResponse.statusCode == 200) {
           List<ServiceModel> _service;
-          List<LocationModel> _locations;
+          // List<LocationModel> _locations;
           var serviceDecoded = jsonDecode(serviceResponse.data);
           _service = serviceModelFromJson(jsonEncode(serviceDecoded['results']));
-          var locationDecoded = jsonDecode(locationResponse.data);
-          _locations = locationModelFromJson(jsonEncode(locationDecoded['results']));
+          // var locationDecoded = jsonDecode(locationResponse.data);
+          // _locations = locationModelFromJson(jsonEncode(locationDecoded['results']));
           yield AddServiceLoaded(
             service: _service,
-            locations: _locations,
+            // locations: _locations,
           );
         } else {
           yield AddServiceFailed();

@@ -136,7 +136,7 @@ class _CreateOrderViewState extends State<CreateOrderView> {
                       ),
                       SizedBox(height: 10),
                       CustomButton(
-                        width: 120,
+                        // width: 120,
                         color: CustomColors.primaryColor,
                         child: Text(
                           AppLocalizations.of(context).orderNow,
@@ -182,7 +182,7 @@ class _CreateOrderViewState extends State<CreateOrderView> {
                             ),
                             SizedBox(width: 10),
                             CustomButton(
-                              width: 220,
+                              // width: 220,
                               color: CustomColors.primaryColor,
                               child: Text(
                                 AppLocalizations.of(context).useRegistered,
