@@ -18,9 +18,8 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.get("token");
   int serviceProvider = prefs.get('serviceProvider');
-  bool isAmharic = prefs.getBool('locale');
+  int locale = prefs.getInt('locale');
   // prefs.clear();
-  print(token);
   runApp(
     ChangeNotifierProvider(
       create: (context) => LocalProvider(),
@@ -37,7 +36,7 @@ Future<void> main() async {
             ),
             primarySwatch: Colors.blue,
           ),
-          locale: provider.locale,
+          locale: provider.getLocale(prefs),
           supportedLocales: L10n.all,
           localizationsDelegates: [
             AppLocalizations.delegate,

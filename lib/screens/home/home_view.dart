@@ -66,7 +66,8 @@ class _HomeState extends State<Home> {
                         color: Colors.red,
                         size: 30,
                       ),
-                      contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 20.0),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 16, horizontal: 20.0),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(),
                       ),
@@ -80,7 +81,8 @@ class _HomeState extends State<Home> {
                     bloc: _searchBloc,
                     builder: (context, state) {
                       if (state is SearchInitial) {
-                        return BlocBuilder<GetAllServicesBloc, GetAllServicesState>(
+                        return BlocBuilder<GetAllServicesBloc,
+                            GetAllServicesState>(
                           bloc: _serviceBloc,
                           builder: (context, state) {
                             if (state is GetAllServicesInitial) {
@@ -90,25 +92,30 @@ class _HomeState extends State<Home> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 10),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       GridView.builder(
-                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 4,
                                           crossAxisSpacing: 5,
                                           mainAxisSpacing: 5,
                                         ),
                                         shrinkWrap: true,
-                                        physics: const NeverScrollableScrollPhysics(),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
                                         itemCount: 12,
                                         itemBuilder: (context, index) {
-                                          ServiceModel _result = state.allServices[index];
+                                          ServiceModel _result =
+                                              state.allServices[index];
                                           return InkWell(
                                             onTap: () {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => ServiceCategory(
+                                                  builder: (context) =>
+                                                      ServiceCategory(
                                                     serviceId: _result.id,
                                                     name: _result.name,
                                                   ),
@@ -126,27 +133,32 @@ class _HomeState extends State<Home> {
                                           width: 230,
                                           decoration: BoxDecoration(
                                             color: CustomColors.primaryColor,
-                                            borderRadius: BorderRadius.circular(20),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                           ),
                                           child: TextButton(
                                             onPressed: () {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => AllService(),
+                                                  builder: (context) =>
+                                                      AllService(),
                                                 ),
                                               );
                                             },
                                             child: Text(
-                                              AppLocalizations.of(context).viewAllServices,
-                                              style: CustomTextStyles.normalWhiteText,
+                                              AppLocalizations.of(context)
+                                                  .viewAllServices,
+                                              style: CustomTextStyles
+                                                  .normalWhiteText,
                                             ),
                                           ),
                                         ),
                                       ),
                                       SizedBox(height: 20),
                                       Text(
-                                        AppLocalizations.of(context).frequentServices,
+                                        AppLocalizations.of(context)
+                                            .frequentServices,
                                         style: CustomTextStyles.mediumText,
                                       ),
                                       SizedBox(height: 20),
@@ -154,7 +166,8 @@ class _HomeState extends State<Home> {
                                         height: 100,
                                         child: ListView.separated(
                                           shrinkWrap: true,
-                                          itemCount: state.frequentServices.length,
+                                          itemCount:
+                                              state.frequentServices.length,
                                           scrollDirection: Axis.horizontal,
                                           itemBuilder: (context, index) {
                                             return InkWell(
@@ -162,15 +175,19 @@ class _HomeState extends State<Home> {
                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                      builder: (context) => CreateOrderView(
-                                                        serviceCategory:
-                                                            state.frequentServices[index],
+                                                      builder: (context) =>
+                                                          CreateOrderView(
+                                                        serviceCategory: state
+                                                                .frequentServices[
+                                                            index],
                                                       ),
                                                     ),
                                                   );
                                                 },
                                                 child: CustomNetworkImage(
-                                                  imgUrl: state.frequentServices[index].image,
+                                                  imgUrl: state
+                                                      .frequentServices[index]
+                                                      .image,
                                                   width: 80,
                                                 ));
                                           },
@@ -182,7 +199,8 @@ class _HomeState extends State<Home> {
                                       SizedBox(height: 20),
                                       Center(
                                         child: Text(
-                                          AppLocalizations.of(context).orderUsing,
+                                          AppLocalizations.of(context)
+                                              .orderUsing,
                                           style: CustomTextStyles.coloredBold,
                                         ),
                                       ),
@@ -226,13 +244,15 @@ class _HomeState extends State<Home> {
                                             SizedBox(width: 15),
                                             SocialNetwork(
                                               icon: "assets/instagram.png",
-                                              url: "https://instagram.com/swiftolio",
+                                              url:
+                                                  "https://instagram.com/swiftolio",
                                               urlType: URL_TYPE.Link,
                                             ),
                                             SizedBox(width: 15),
                                             SocialNetwork(
                                               icon: "assets/facebook.png",
-                                              url: "https://facebook.com/SwiftOlio",
+                                              url:
+                                                  "https://facebook.com/SwiftOlio",
                                               urlType: URL_TYPE.Link,
                                             ),
                                             SizedBox(width: 15),
@@ -245,13 +265,15 @@ class _HomeState extends State<Home> {
                                             SizedBox(width: 15),
                                             SocialNetwork(
                                               icon: "assets/tiktok.png",
-                                              url: "https://tiktok.com/@swiftolio",
+                                              url:
+                                                  "https://tiktok.com/@swiftolio",
                                               urlType: URL_TYPE.Link,
                                             ),
                                             SizedBox(width: 15),
                                             SocialNetwork(
                                               icon: "assets/twitter.png",
-                                              url: "https://twitter.com/SwiftOlio",
+                                              url:
+                                                  "https://twitter.com/SwiftOlio",
                                               urlType: URL_TYPE.Link,
                                             ),
                                           ],
@@ -272,9 +294,11 @@ class _HomeState extends State<Home> {
                           },
                         );
                       } else if (state is SearchFound) {
-                        List<ServiceCategoryModel> searchResults = state.searchResults;
+                        List<ServiceCategoryModel> searchResults =
+                            state.searchResults;
                         return GridView.builder(
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             crossAxisSpacing: 5,
                             mainAxisSpacing: 5,

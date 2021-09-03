@@ -53,10 +53,12 @@ class _OrderDetailViewState extends State<OrderDetailView> {
           bloc: _paymentBloc,
           listener: (context, state) {
             if (state is PaymentSuccess) {
-              Utils.showToast(context, false, AppLocalizations.of(context).success, 2);
+              Utils.showToast(
+                  context, false, AppLocalizations.of(context).success, 2);
             }
             if (state is PaymentFailed) {
-              Utils.showToast(context, true, AppLocalizations.of(context).failed, 2);
+              Utils.showToast(
+                  context, true, AppLocalizations.of(context).failed, 2);
             }
           },
           child: BlocBuilder<OrderDetailBloc, OrderDetailState>(
@@ -168,7 +170,8 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                             Navigator.pop(context);
                             _paymentBloc.add(MakePayment(
                               orderId: details.id,
-                              payment: double.parse(paymentController.text.trim()),
+                              payment:
+                                  double.parse(paymentController.text.trim()),
                               serviceProviderId: details.serviceProviderId,
                               userId: details.userId,
                             ));
