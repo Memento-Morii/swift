@@ -82,36 +82,9 @@ class _CreateOrderViewState extends State<CreateOrderView> {
                       Container(
                         width: 200,
                         margin: EdgeInsets.symmetric(vertical: 10),
-                        child: TypeAheadField<LocationModel>(
-                          textFieldConfiguration: TextFieldConfiguration(
-                            controller: siteController,
-                            style: CustomTextStyles.textField,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20.0),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 3,
-                                  color: CustomColors.primaryColor,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 2,
-                                  color: CustomColors.primaryColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                          suggestionsCallback: (pattern) async {
-                            return await Repositories().searchLocation(pattern);
-                          },
-                          itemBuilder: (context, itemData) {
-                            return ListTile(
-                                title: Text(
-                              itemData.name,
-                              style: CustomTextStyles.boldMediumText,
-                            ));
-                          },
+                        child: Utils.siteNameWidget(
+                          siteController: siteController,
+                          color: CustomColors.primaryColor,
                           onSuggestionSelected: (suggestion) {
                             setState(() {
                               siteController.text = suggestion.name;
@@ -150,7 +123,7 @@ class _CreateOrderViewState extends State<CreateOrderView> {
                                 lng: _selectedLocation.lng,
                                 blockNumber: blockController.text.trim(),
                                 houseNumber: houseController.text.trim(),
-                                siteName: siteController.text.trim(),
+                                siteName: _selectedLocation.name,
                                 serviceId: widget.serviceCategory.serviceId,
                                 serviceCategoryId: widget.serviceCategory.id,
                               );

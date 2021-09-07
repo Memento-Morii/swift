@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:swift/helper/utils.dart';
 import 'package:swift/screens/orders/service_provider_order/service_provider_order_view.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
 import 'order_history/order_history_view.dart';
@@ -21,7 +22,8 @@ class _OrderTabState extends State<OrderTab> {
           title: TabBar(
             indicatorColor: Colors.white,
             indicatorWeight: 3,
-            labelStyle: CustomTextStyles.mediumWhiteText,
+            indicatorSize: TabBarIndicatorSize.label,
+            labelStyle: CustomTextStyles.tabWhiteText,
             tabs: <Widget>[
               Tab(
                 text: AppLocalizations.of(context).myProviderOrders,
@@ -32,11 +34,14 @@ class _OrderTabState extends State<OrderTab> {
             ],
           ),
         ),
-        body: TabBarView(
-          children: <Widget>[
-            ServiceProviderOrderView(),
-            OrderHistoryView(),
-          ],
+        body: Utils.exitDialog(
+          context: context,
+          child: TabBarView(
+            children: <Widget>[
+              ServiceProviderOrderView(),
+              OrderHistoryView(),
+            ],
+          ),
         ),
       ),
     );

@@ -46,9 +46,19 @@ class CustomTextStyles {
     fontSize: 16,
     color: Colors.white,
   );
+  static TextStyle tabWhiteText = GoogleFonts.poppins(
+    fontWeight: FontWeight.w500,
+    fontSize: 14,
+    color: Colors.white,
+  );
   static TextStyle coloredBold = GoogleFonts.poppins(
     fontWeight: FontWeight.w700,
     fontSize: 17,
+    color: CustomColors.primaryColor,
+  );
+  static TextStyle bodyColoredText = GoogleFonts.poppins(
+    fontWeight: FontWeight.bold,
+    fontSize: 15,
     color: CustomColors.primaryColor,
   );
   static TextStyle textField = GoogleFonts.poppins(
@@ -73,6 +83,11 @@ class CustomTextStyles {
   static TextStyle boldText = GoogleFonts.poppins(
     fontWeight: FontWeight.bold,
     fontSize: 13,
+  );
+  static TextStyle boldWhiteText = GoogleFonts.poppins(
+    fontWeight: FontWeight.bold,
+    fontSize: 13,
+    color: Colors.white,
   );
   static TextStyle boldMediumText = GoogleFonts.poppins(
     fontWeight: FontWeight.bold,

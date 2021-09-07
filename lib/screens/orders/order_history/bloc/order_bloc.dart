@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/models/order_history_model.dart';
 import 'package:swift/services/repositories.dart';
 part 'order_event.dart';

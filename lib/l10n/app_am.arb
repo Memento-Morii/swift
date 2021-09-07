@@ -20,8 +20,8 @@
     "andualemTitle": "Marketing Manager",
     "birhaneTitle": "Operational Manager",
 
-    "addService": "አገልግሎት ያክሉ",
-    "searchForLocation": "አካባቢን ይፈልጉ",
+    "addService": "አገልግሎት ይስገቡ",
+    "searchForLocation": "አድራሻ ይስገቡ",
     "priceRange": "የዋጋ ክልል",
     "timeRange": "የጊዜ ክልል",
     "description": "መግለጫ",
@@ -29,6 +29,7 @@
     "optional": "እንደ አማራጭ",
     "notTwoMb": "ከ 2 ሜባ አይበልጥም",
     "addDocument": "ሰነድ ያክሉ",
+    "continue": "ይቀጥሉ",
     
     "updateService": "አገልግሎቶቼን አዘምን",
     "address": "አድራሻ",
@@ -56,6 +57,7 @@
     "blockNumber": "የብሎክ ቁጥር",
     "siteName": "የሳይት ስም",
     "required": "ያስፈልጋል",
+    "isSelected": "ተመርጧል!",
 
     "create": "መለያ",
     "account": "ፍጠር",
@@ -69,6 +71,9 @@
     "createOrder": "ትዕዛዝ ፍጠር",
     "verifyPhone": "ስልክዎን ያረጋግጡ",
     "messageSent": "የጽሑፍ መልእክት ተልኳል",
+    "quit": "ማቋረጥ ይፈልጋሉ?",
+    "no": "አይ",
+    "yes": "አዎ",
 
     "failed": "አልተሳካም",
     "orderEmpty": "ትዕዛዝ ባዶ ነው",
@@ -89,6 +94,8 @@
     "goToPayment": "ወደ ክፍያ ይሂዱ",
     "addPayment": "ክፍያ ያክሉ",
     "cancel": "ይሰርዙት",
+    "and": "እና",
+    "pleaseAddService": "እባክዎን አገልግሎትን ያክሉ",
 
     "companyProfile": "ስለ ኩባንያው",
     "seeMore": "ተጨማሪ ይመልከቱ",

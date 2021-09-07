@@ -14,7 +14,7 @@ class RangeField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         decoration: InputDecoration(
-          errorStyle: CustomTextStyles.bigErrorText,
+          errorStyle: CustomTextStyles.errorText,
         ),
         keyboardType: keyboardType,
         validator: RequiredValidator(

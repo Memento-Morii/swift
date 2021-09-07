@@ -32,6 +32,7 @@
     "optional": "optional",
     "notTwoMb": "2 MB Max",
     "addDocument": "Add a document",
+    "continue": "Continue",
 
     "updateService": "Update My Services",
     "address": "Address",
@@ -56,7 +57,7 @@
     "houseInfo": "House Information",
     "providerInfo": "Service Provider Information",
     "houseNo": "House Number",
-    "blockNumber": "House Number",
+    "blockNumber": "Block Number",
     "siteName": "Site Name",
 
     "create": "Create",
@@ -68,10 +69,14 @@
     "house": "House",
     "info": "Information",
     "required": "Required",
+    "isSelected": "is selected!",
 
     "createOrder": "Create Order",
     "verifyPhone": "Verify your phone",
     "messageSent": "A text message has been sent to",
+    "quit": "Quit?",
+    "no": "No",
+    "yes": "Yes",
 
     "failed": "Failed",
     "orderEmpty": "Order is Empty",
@@ -92,6 +97,8 @@
     "goToPayment": "Go To Payment",
     "addPayment": "Add Payment",
     "cancel": "Cancel",
+    "and": "&",
+    "pleaseAddService": "Please Add Service",
 
     "companyProfile": "Company Profile",
     "seeMore": "SEE MORE",

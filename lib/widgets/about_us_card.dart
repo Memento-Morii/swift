@@ -37,7 +37,7 @@ class AboutUsCard extends StatelessWidget {
               child: TextButton(
                 style: ButtonStyle(
                   padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-                  backgroundColor: MaterialStateProperty.all(Colors.greenAccent[400]),
+                  backgroundColor: MaterialStateProperty.all(Color(0xff09DE04)),
                   side: MaterialStateProperty.all(BorderSide(width: 1.5, color: Colors.white)),
                 ),
                 onPressed: onPressed,

@@ -30,7 +30,6 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
           _prefs.setString("firstName", event.editedUser.firstName);
           _prefs.setString("lastName", event.editedUser.lastName);
           print(response.data);
-          // _prefs.setString("userImage", event.editedUser.userImage);
           yield EditProfileSuccess();
         } else {
           var decoded = jsonDecode(response.data);

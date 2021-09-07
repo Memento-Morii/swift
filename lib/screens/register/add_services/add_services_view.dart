@@ -1,8 +1,6 @@
-import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
@@ -14,7 +12,6 @@ import 'package:swift/screens/home/home_view.dart';
 import 'package:swift/screens/my_services/my_services_view.dart';
 import 'package:swift/screens/register/add_services/bloc/add_service_bloc.dart';
 import 'package:swift/screens/register/add_services/bloc/create_service_provider_bloc.dart';
-import 'package:swift/services/repositories.dart';
 import 'package:swift/widgets/category_card.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/range_field.dart';
@@ -35,6 +32,7 @@ class _AddServiceState extends State<AddService> {
   int serviceId;
   int serviceCategoryId;
   LocationModel selectedLocation;
+  int selectedIndex;
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   @override
   void initState() {
@@ -59,7 +57,7 @@ class _AddServiceState extends State<AddService> {
         element.serviceCategories.forEach((element) {
           categories.add(element);
         });
-        _requestModel.serviceId = element.id;
+        serviceId = element.id;
       }
     });
     return categories;
@@ -128,35 +126,17 @@ class _AddServiceState extends State<AddService> {
                   } else if (state is AddServiceLoaded) {
                     List<String> names = getServiceName(state.service);
                     return Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
                       child: SingleChildScrollView(
                         child: Form(
                           key: _formkey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              TypeAheadField<LocationModel>(
-                                textFieldConfiguration: TextFieldConfiguration(
-                                  controller: addressController,
-                                  style: CustomTextStyles.textField,
-                                  decoration: InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 32, vertical: 20),
-                                    border: InputBorder.none,
-                                    hintText: AppLocalizations.of(context).searchForLocation,
-                                    hintStyle: CustomTextStyles.textField,
-                                  ),
-                                ),
-                                suggestionsCallback: (pattern) async {
-                                  return await Repositories().searchLocation(pattern);
-                                },
-                                itemBuilder: (context, itemData) {
-                                  return ListTile(
-                                      title: Text(
-                                    itemData.name,
-                                    style: CustomTextStyles.boldMediumText,
-                                  ));
-                                },
+                              Utils.siteNameWidget(
+                                siteController: addressController,
+                                color: Colors.black,
+                                hintext: AppLocalizations.of(context).searchForLocation,
                                 onSuggestionSelected: (suggestion) {
                                   setState(() {
                                     addressController.text = suggestion.name;
@@ -165,30 +145,43 @@ class _AddServiceState extends State<AddService> {
                                 },
                               ),
                               SizedBox(height: 20),
-                              CustomRadioButton(
-                                buttonTextStyle: ButtonTextStyle(
-                                  selectedColor: Colors.white,
-                                  unSelectedColor: CustomColors.primaryColor,
-                                  textStyle: CustomTextStyles.textField,
+                              GridView.builder(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.only(bottom: 10),
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 4,
+                                  childAspectRatio: 1.2,
+                                  crossAxisSpacing: 20,
+                                  mainAxisSpacing: 20,
                                 ),
-                                unSelectedColor: Colors.white,
-                                buttonLables: names,
-                                buttonValues: names,
-                                spacing: 0,
-                                radioButtonValue: (value) {
-                                  setState(() {
-                                    getCategories(
-                                      services: state.service,
-                                      name: value,
-                                    );
-                                  });
+                                itemCount: names.length,
+                                itemBuilder: (context, index) {
+                                  return Material(
+                                    elevation: 5,
+                                    child: Container(
+                                      color:
+                                          selectedIndex == index ? CustomColors.primaryColor : null,
+                                      child: TextButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            selectedIndex = index;
+                                            getCategories(
+                                              services: state.service,
+                                              name: names[index],
+                                            );
+                                          });
+                                        },
+                                        child: Text(
+                                          names[index],
+                                          style: selectedIndex == index
+                                              ? CustomTextStyles.boldWhiteText
+                                              : CustomTextStyles.boldText,
+                                        ),
+                                      ),
+                                    ),
+                                  );
                                 },
-                                horizontal: false,
-                                enableButtonWrap: false,
-                                width: 150,
-                                absoluteZeroSpacing: false,
-                                selectedColor: CustomColors.primaryColor,
-                                padding: 10,
                               ),
                               SizedBox(height: 30),
                               categories.length == 0
@@ -198,7 +191,7 @@ class _AddServiceState extends State<AddService> {
                                       physics: const NeverScrollableScrollPhysics(),
                                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 3,
-                                        childAspectRatio: 0.75,
+                                        childAspectRatio: 1,
                                         crossAxisSpacing: 20,
                                         mainAxisSpacing: 20,
                                       ),
@@ -206,12 +199,12 @@ class _AddServiceState extends State<AddService> {
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                           onTap: () {
+                                            _requestModel.serviceId = serviceId;
                                             _requestModel.serviceCategoryId = categories[index].id;
-                                            print(categories[index].id);
                                             Utils.showToast(
                                               context,
                                               false,
-                                              "${categories[index].name} is Selected!",
+                                              "${categories[index].name} ${AppLocalizations.of(context).isSelected}",
                                               2,
                                             );
                                           },
@@ -269,7 +262,6 @@ class _AddServiceState extends State<AddService> {
                                 style: CustomTextStyles.textField,
                                 controller: descriptionController,
                                 decoration: InputDecoration(
-                                  // hintText: "Describe yourself",
                                   hintStyle: CustomTextStyles.textField,
                                   errorStyle: CustomTextStyles.bigErrorText,
                                 ),
@@ -282,7 +274,7 @@ class _AddServiceState extends State<AddService> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    '${AppLocalizations.of(context).document} (${AppLocalizations.of(context).optional} & ${AppLocalizations.of(context).notTwoMb})',
+                                    '${AppLocalizations.of(context).document} (${AppLocalizations.of(context).optional} ${AppLocalizations.of(context).and} ${AppLocalizations.of(context).notTwoMb})',
                                     style: CustomTextStyles.mediumText,
                                   ),
                                   IconButton(
@@ -308,18 +300,25 @@ class _AddServiceState extends State<AddService> {
                                 onPressed: () async {
                                   if (_formkey.currentState.validate()) {
                                     if (selectedLocation != null) {
-                                      _requestModel.address = addressController.text.trim();
-                                      _requestModel.description = descriptionController.text.trim();
-                                      _requestModel.priceRangeFrom =
-                                          double.parse((priceFromController.text.trim()));
-                                      _requestModel.priceRangeTo =
-                                          double.parse((priceToController.text?.trim()));
-                                      _requestModel.timeRangeFrom = timeFromController.text.trim();
-                                      _requestModel.timeRangeTo = timeToController.text.trim();
-                                      _requestModel.lat = selectedLocation.lat;
-                                      _requestModel.lng = selectedLocation.lng;
-                                      _serviceProviderBloc
-                                          .add(CreateServiceProvider(request: _requestModel));
+                                      if (_requestModel.serviceCategoryId != null) {
+                                        _requestModel.address = selectedLocation.name;
+                                        _requestModel.description =
+                                            descriptionController.text.trim();
+                                        _requestModel.priceRangeFrom =
+                                            double.parse((priceFromController.text.trim()));
+                                        _requestModel.priceRangeTo =
+                                            double.parse((priceToController.text?.trim()));
+                                        _requestModel.timeRangeFrom =
+                                            timeFromController.text.trim();
+                                        _requestModel.timeRangeTo = timeToController.text.trim();
+                                        _requestModel.lat = selectedLocation.lat;
+                                        _requestModel.lng = selectedLocation.lng;
+                                        _serviceProviderBloc
+                                            .add(CreateServiceProvider(request: _requestModel));
+                                      } else {
+                                        Utils.showToast(context, true,
+                                            AppLocalizations.of(context).pleaseAddService, 2);
+                                      }
                                     } else {
                                       Utils.showToast(context, true,
                                           AppLocalizations.of(context).selectLocation, 2);
@@ -347,7 +346,7 @@ class _AddServiceState extends State<AddService> {
                                       );
                                     } else {
                                       return Text(
-                                        AppLocalizations.of(context).add,
+                                        AppLocalizations.of(context).go,
                                         style: CustomTextStyles.mediumWhiteText,
                                       );
                                     }
@@ -360,63 +359,18 @@ class _AddServiceState extends State<AddService> {
                       ),
                     );
                   } else {
-                    return Center(child: Text('Failed'));
+                    return Center(
+                      child: Text(
+                        AppLocalizations.of(context).failed,
+                        style: CustomTextStyles.bigErrorText,
+                      ),
+                    );
                   }
                 },
               ),
             ),
           ),
         ),
-        // floatingActionButton: Container(
-        //   height: 60,
-        //   child: CustomButton(
-        //     // width: 180,
-        //     color: CustomColors.primaryColor,
-        //     onPressed: () async {
-        //       if (_formkey.currentState.validate()) {
-        //         if (selectedLocation != null) {
-        //           _requestModel.address = addressController.text.trim();
-        //           _requestModel.description = descriptionController.text.trim();
-        //           _requestModel.priceRangeFrom = double.parse((priceFromController.text.trim()));
-        //           _requestModel.priceRangeTo = double.parse((priceToController.text?.trim()));
-        //           _requestModel.timeRangeFrom = timeFromController.text.trim();
-        //           _requestModel.timeRangeTo = timeToController.text.trim();
-        //           _requestModel.lat = selectedLocation.lat;
-        //           _requestModel.lng = selectedLocation.lng;
-        //           _serviceProviderBloc.add(CreateServiceProvider(request: _requestModel));
-        //         } else {
-        //           Utils.showToast(context, true, AppLocalizations.of(context).selectLocation, 2);
-        //         }
-        //       }
-        //     },
-        //     child: BlocBuilder<CreateServiceProviderBloc, CreateServiceProviderState>(
-        //       bloc: _serviceProviderBloc,
-        //       builder: (context, state) {
-        //         if (state is CreateServiceProviderFailed) {
-        //           return Text(
-        //             AppLocalizations.of(context).failed,
-        //             style: CustomTextStyles.mediumWhiteText,
-        //           );
-        //         } else if (state is CreateServiceProviderLoading) {
-        //           return SizedBox(
-        //             height: 30,
-        //             width: 30,
-        //             child: Center(
-        //               child: CircularProgressIndicator(
-        //                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        //               ),
-        //             ),
-        //           );
-        //         } else {
-        //           return Text(
-        //             AppLocalizations.of(context).add,
-        //             style: CustomTextStyles.mediumWhiteText,
-        //           );
-        //         }
-        //       },
-        //     ),
-        //   ),
-        // ),
       ),
     );
   }

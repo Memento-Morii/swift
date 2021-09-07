@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:swift/models/location_model.dart';
 import 'package:swift/models/service_model.dart';
 import 'package:swift/services/repositories.dart';
 part 'add_service_event.dart';

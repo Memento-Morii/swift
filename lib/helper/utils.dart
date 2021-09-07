@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:swift/models/location_model.dart';
+import 'package:swift/screens/register/signIn_view.dart';
+import 'package:swift/services/repositories.dart';
 import 'package:swift/widgets/social_network.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'colors.dart';
 
 class Utils {
-  static showToast(
-      BuildContext context, bool isError, String message, int duration) {
+  static showToast(BuildContext context, bool isError, String message, int duration) {
     return showToastWidget(
       Material(
         elevation: 10,
@@ -39,8 +46,7 @@ class Utils {
     );
   }
 
-  static Future openLink(
-          {@required String url, @required URL_TYPE urlType}) async =>
+  static Future openLink({@required String url, @required URL_TYPE urlType}) async =>
       await _launchUrl(url, urlType);
 
   static Future _launchUrl(String url, URL_TYPE urlType) async {
@@ -62,5 +68,117 @@ class Utils {
     } else {
       print("error");
     }
+  }
+
+  static Widget siteNameWidget({
+    TextEditingController siteController,
+    Function onSuggestionSelected,
+    Color color,
+    String hintext,
+  }) {
+    return TypeAheadField<LocationModel>(
+      textFieldConfiguration: TextFieldConfiguration(
+        controller: siteController,
+        style: CustomTextStyles.textField,
+        decoration: InputDecoration(
+          hintText: hintext,
+          hintStyle: CustomTextStyles.boldText,
+          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20.0),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              width: 3,
+              color: color,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              width: 2,
+              color: color,
+            ),
+          ),
+        ),
+      ),
+      suggestionsCallback: (pattern) async {
+        return await Repositories().searchLocation(pattern);
+      },
+      itemBuilder: (context, itemData) {
+        return ListTile(
+            title: Text(
+          itemData.name,
+          style: CustomTextStyles.boldMediumText,
+        ));
+      },
+      onSuggestionSelected: onSuggestionSelected,
+    );
+  }
+
+  static Widget exitDialog({BuildContext context, Widget child}) {
+    return WillPopScope(
+      child: child,
+      onWillPop: () async => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(
+            AppLocalizations.of(context).quit,
+            style: CustomTextStyles.boldTitleText,
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                AppLocalizations.of(context).no,
+                style: CustomTextStyles.coloredBold,
+              ),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+            TextButton(
+              child: Text(
+                AppLocalizations.of(context).yes,
+                style: CustomTextStyles.bigErrorText,
+              ),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Future logoutDialog({BuildContext context, int selectedIndex}) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          "${AppLocalizations.of(context).logout}?",
+          style: CustomTextStyles.boldTitleText,
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text(
+              AppLocalizations.of(context).no,
+              style: CustomTextStyles.coloredBold,
+            ),
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+          TextButton(
+            child: Text(
+              AppLocalizations.of(context).yes,
+              style: CustomTextStyles.bigErrorText,
+            ),
+            onPressed: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.clear();
+              selectedIndex = 0;
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SignInView(),
+                ),
+                (Route<dynamic> route) => false,
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

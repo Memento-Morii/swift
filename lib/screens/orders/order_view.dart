@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:swift/helper/utils.dart';
 import 'package:swift/screens/orders/order_history/order_history_view.dart';
 // import 'package:swift/screens/orders/order_tab.dart';
 // import 'package:swift/screens/orders/service_provider_order/service_provider_order_view.dart';
@@ -31,9 +32,12 @@ class _OrderState extends State<Order> {
           style: CustomTextStyles.bigWhiteText,
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
-        child: OrderHistoryView(),
+      body: Utils.exitDialog(
+        context: context,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
+          child: OrderHistoryView(),
+        ),
       ),
     );
   }

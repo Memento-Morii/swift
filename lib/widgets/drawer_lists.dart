@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/helper/text_styles.dart';
+import 'package:swift/helper/utils.dart';
 import 'package:swift/screens/about_us_view.dart';
 import 'package:swift/screens/help/help_view.dart';
 import 'package:swift/screens/home/home_view.dart';
@@ -127,15 +128,9 @@ class _DrawerListsState extends State<DrawerLists> {
     return InkWell(
       onTap: onTap != null
           ? () async {
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.clear();
-              selectedIndex = 0;
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SignInView(),
-                ),
-                (Route<dynamic> route) => false,
+              Utils.logoutDialog(
+                context: context,
+                selectedIndex: selectedIndex,
               );
             }
           : selectedIndex == index

@@ -7,11 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/helper/utils.dart';
+import 'package:swift/models/location_model.dart';
 import 'package:swift/models/user_model.dart';
 import 'package:swift/screens/profile/profile_view.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/profile_textfield.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:swift/widgets/site_textfield.dart';
 
 import 'bloc/edit_profile_bloc.dart';
 
@@ -29,8 +31,13 @@ class _EditProfileState extends State<EditProfile> {
   @override
   void initState() {
     _editProfileBloc = EditProfileBloc();
+    siteInital = widget.user.siteName;
     super.initState();
   }
+
+  TextEditingController _siteController = TextEditingController();
+  LocationModel _selectedLocation;
+  String siteInital;
 
   @override
   Widget build(BuildContext context) {
@@ -133,11 +140,16 @@ class _EditProfileState extends State<EditProfile> {
                           AppLocalizations.of(context).siteName,
                           style: CustomTextStyles.boldText,
                         ),
-                        ProfileTextField(
-                          initalName: widget.user.siteName,
-                          onChanged: (value) {
-                            widget.user.siteName = value;
+                        SiteTextField(
+                          initalName: siteInital,
+                          onSuggestionSelected: (suggestion) {
+                            setState(() {
+                              siteInital = suggestion.name;
+                              _siteController.text = suggestion.name;
+                              _selectedLocation = suggestion;
+                            });
                           },
+                          siteController: _siteController,
                         ),
                         Text(
                           AppLocalizations.of(context).blockNumber,

@@ -28,7 +28,7 @@ class _AllServiceState extends State<AllService> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context).allServices,
+          AppLocalizations.of(context).allServices.toUpperCase(),
           style: CustomTextStyles.bigWhiteText,
         ),
       ),
