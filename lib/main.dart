@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -12,14 +13,19 @@ import 'helper/colors.dart';
 // import 'screens/home/home_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+Future<void> backgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print(message);
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  //BACKGROUND NOTIFICATION HANDLER
+  // FirebaseMessaging.onBackgroundMessage((message) async => backgroundHandler(message));
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.get("token");
   int serviceProvider = prefs.get('serviceProvider');
-  // bool isAmharic = prefs.getBool('locale');
-  // prefs.clear();
   runApp(
     ChangeNotifierProvider(
       create: (context) => LocalProvider(),
