@@ -19,7 +19,7 @@ class CompanyProfile extends StatelessWidget {
               SizedBox(height: 20),
               Text(
                 AppLocalizations.of(context).aboutUsDescription,
-                style: CustomTextStyles.boldText,
+                style: CustomTextStyles.boldMediumText2,
               ),
             ],
           ),

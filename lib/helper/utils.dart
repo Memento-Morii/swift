@@ -10,8 +10,6 @@ import 'package:swift/widgets/social_network.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'colors.dart';
-
 class Utils {
   static showToast(BuildContext context, bool isError, String message, int duration) {
     return showToastWidget(

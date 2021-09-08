@@ -17,27 +17,28 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class DrawerLists extends StatefulWidget {
   DrawerLists({
     this.userRole,
-    // this.email,
     this.firstName,
     this.lastName,
     this.phone,
-    // this.userImage,
   });
   final int userRole;
   final String firstName;
   final String lastName;
   final String phone;
-  // final String email;
-  // final String userImage;
   @override
   _DrawerListsState createState() => _DrawerListsState();
 }
 
 class _DrawerListsState extends State<DrawerLists> {
+  bool isUser;
+  @override
+  void initState() {
+    widget.userRole == 0 ? isUser = true : isUser = false;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // print(widget.userImage);
-    // print(widget.firstName);
     return ListView(
       children: [
         SizedBox(height: 20),
@@ -65,12 +66,19 @@ class _DrawerListsState extends State<DrawerLists> {
           ],
         ),
         SizedBox(height: 30),
-        drawerListWidget(
-          index: 0,
-          iconUrl: "assets/home.png",
-          name: AppLocalizations.of(context).home,
-          page: Home(),
-        ),
+        isUser
+            ? drawerListWidget(
+                index: 0,
+                iconUrl: "assets/home.png",
+                name: AppLocalizations.of(context).home,
+                page: Home(),
+              )
+            : drawerListWidget(
+                index: 0,
+                iconUrl: "assets/orders.png",
+                name: AppLocalizations.of(context).orders,
+                page: isUser ? Order() : OrderTab(),
+              ),
         widget.userRole == 0
             ? SizedBox()
             : drawerListWidget(
@@ -85,12 +93,19 @@ class _DrawerListsState extends State<DrawerLists> {
           name: AppLocalizations.of(context).profile,
           page: Profile(),
         ),
-        drawerListWidget(
-          index: 3,
-          iconUrl: "assets/orders.png",
-          name: AppLocalizations.of(context).orders,
-          page: widget.userRole == 0 ? Order() : OrderTab(),
-        ),
+        isUser
+            ? drawerListWidget(
+                index: 3,
+                iconUrl: "assets/orders.png",
+                name: AppLocalizations.of(context).orders,
+                page: isUser ? Order() : OrderTab(),
+              )
+            : drawerListWidget(
+                index: 3,
+                iconUrl: "assets/home.png",
+                name: AppLocalizations.of(context).home,
+                page: Home(),
+              ),
         Divider(
           color: Colors.grey[700],
           height: 30,

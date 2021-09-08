@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/helper/utils.dart';
@@ -8,7 +7,6 @@ import 'package:swift/models/location_model.dart';
 import 'package:swift/models/order_request_model.dart';
 import 'package:swift/models/service_category_model.dart';
 import 'package:swift/screens/create_order/bloc/create_order_bloc.dart';
-import 'package:swift/services/repositories.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/custom_network_image.dart';
 import 'package:swift/widgets/myTextField.dart';

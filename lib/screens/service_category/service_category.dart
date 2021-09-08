@@ -47,10 +47,13 @@ class _ServiceCategoryState extends State<ServiceCategory> {
               } else if (state is ServiceCategoriesLoaded) {
                 List<ServiceCategoryModel> categories = state.categories;
                 return ListView.separated(
+                  shrinkWrap: true,
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
                     ServiceCategoryModel _category = categories[index];
                     return Container(
+                      height: 75,
+                      width: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -62,38 +65,50 @@ class _ServiceCategoryState extends State<ServiceCategory> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Row(
-                            children: [
-                              CustomNetworkImage(
-                                imgUrl: _category.image,
-                              ),
-                              SizedBox(width: 10),
-                              Container(
-                                height: 50,
-                                width: 2,
-                                color: CustomColors.primaryColor,
-                              ),
-                              SizedBox(width: 20),
-                              Text(
-                                _category.name,
-                                style: CustomTextStyles.mediumText,
-                              ),
-                            ],
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CreateOrderView(
-                                    serviceCategory: _category,
+                          Flexible(
+                            flex: 3,
+                            child: Row(
+                              children: [
+                                Flexible(
+                                  flex: 1,
+                                  child: CustomNetworkImage(
+                                    imgUrl: _category.image,
                                   ),
                                 ),
-                              );
-                            },
-                            child: Text(
-                              AppLocalizations.of(context).order,
-                              style: CustomTextStyles.coloredBold,
+                                SizedBox(width: 10),
+                                Container(
+                                  height: 50,
+                                  width: 2,
+                                  color: CustomColors.primaryColor,
+                                ),
+                                SizedBox(width: 20),
+                                Flexible(
+                                  flex: 3,
+                                  child: Text(
+                                    _category.name,
+                                    style: CustomTextStyles.mediumText,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Flexible(
+                            flex: 1,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CreateOrderView(
+                                      serviceCategory: _category,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                AppLocalizations.of(context).order,
+                                style: CustomTextStyles.coloredBold,
+                              ),
                             ),
                           ),
                         ],

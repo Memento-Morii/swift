@@ -29,7 +29,6 @@
     "optional": "እንደ አማራጭ",
     "notTwoMb": "ከ 2 ሜባ አይበልጥም",
     "addDocument": "ሰነድ ያክሉ",
-    "continue": "ይቀጥሉ",
     
     "updateService": "አገልግሎቶቼን አዘምን",
     "address": "አድራሻ",
@@ -46,7 +45,7 @@
     "followUs": "ይከተሉን",
     "searchForServices": "አገልግሎቶችን ይፈልጉ",
     
-    "add": "ይጨምሩ",
+    "add": "ይቀጥሉ",
     "update": "አዘምን",
     "priceRangeFrom": "የዋጋ ክልል ከ",
     "to": "እስከ",
@@ -78,7 +77,7 @@
     "failed": "አልተሳካም",
     "orderEmpty": "ትዕዛዝ ባዶ ነው",
     "emptyServices": "ባዶ አገልግሎቶች",
-    "success": "ስኬት",
+    "success": "ተሳክቷል",
     "selectLocation": "አድራሻዎን ይምረጡ",
     "addNewService": "አዲስ አገልግሎት ታክሏል",
 

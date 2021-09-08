@@ -37,17 +37,13 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
           var decoded = jsonDecode(response.data);
           var firstName = decoded['results']['first_name'];
           var lastName = decoded['results']['last_name'];
-          // var email = decoded['results']['email'];
           var phone = decoded['results']['phone_number'];
-          // var userImage = decoded['results']['user_image'];
           var token = decoded['token'];
           var serviceProvider = decoded['results']['is_service_provider'];
           sharedPreferences.setString("token", token);
           sharedPreferences.setString("firstName", firstName);
           sharedPreferences.setString("lastName", lastName);
-          // sharedPreferences.setString("email", email);
           sharedPreferences.setString("phone", phone);
-          // sharedPreferences.setString("userImage", userImage);
           sharedPreferences.setInt("serviceProvider", serviceProvider);
           yield OtpLoaded(serviceProvider == 2 ? false : true);
         } else {
