@@ -51,9 +51,11 @@ class _OrderHistoryViewState extends State<OrderHistoryView> {
               itemCount: orders.length,
             );
           } else {
-            return Text(
-              AppLocalizations.of(context).failed,
-              style: CustomTextStyles.bigErrorText,
+            return Center(
+              child: Text(
+                AppLocalizations.of(context).failed,
+                style: CustomTextStyles.bigErrorText,
+              ),
             );
           }
         },

@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
-import 'package:swift/screens/home/home_view.dart';
-import 'package:swift/screens/otp/bloc/otp_bloc.dart';
-import 'package:swift/screens/register/signup_view.dart';
-// import 'package:swift/screens/register/register_bloc/register_bloc.dart';
+import 'package:swift/screens/register/register_bloc/register_bloc.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/widgets/custom_textfield.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,12 +13,10 @@ class SignInView extends StatefulWidget {
 }
 
 class _SignInViewState extends State<SignInView> {
-  // RegisterBloc _registerBloc;
-  OtpBloc _otpBloc;
+  RegisterBloc _registerBloc;
   @override
   void initState() {
-    // _registerBloc = RegisterBloc();
-    _otpBloc = OtpBloc();
+    _registerBloc = RegisterBloc();
     super.initState();
   }
 
@@ -32,7 +27,7 @@ class _SignInViewState extends State<SignInView> {
     return Scaffold(
       body: Center(
         child: BlocProvider(
-          create: (context) => OtpBloc(),
+          create: (context) => RegisterBloc(),
           child: SingleChildScrollView(
             child: SafeArea(
               child: Padding(
@@ -67,70 +62,49 @@ class _SignInViewState extends State<SignInView> {
                         color: CustomColors.primaryColor,
                         onPressed: () async {
                           if (_formkey.currentState.validate()) {
-                            _otpBloc.add(CheckOtp(
-                              // context: context,
+                            _registerBloc.add(Login(
+                              context: context,
                               phone: phoneController.text,
                             ));
                           }
                         },
-                        child: BlocListener<OtpBloc, OtpState>(
-                          bloc: _otpBloc,
-                          listener: (context, state) {
-                            if (state is OtpLoaded) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Home(),
+                        child: BlocBuilder<RegisterBloc, RegisterState>(
+                          bloc: _registerBloc,
+                          builder: (context, state) {
+                            if (state is RegisterLoading) {
+                              return SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                  ),
                                 ),
                               );
-                            }
-                            if (state is GoToRegister) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SignUpView(state.phone),
-                                ),
+                            } else {
+                              return Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context).go,
+                                    style: CustomTextStyles.mediumWhiteText,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Icon(
+                                    Icons.arrow_forward_ios_rounded,
+                                    color: Colors.white,
+                                  ),
+                                ],
                               );
                             }
                           },
-                          child: BlocBuilder<OtpBloc, OtpState>(
-                            bloc: _otpBloc,
-                            builder: (context, state) {
-                              if (state is OtpLoading) {
-                                return SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: Center(
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                return Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      AppLocalizations.of(context).go,
-                                      style: CustomTextStyles.mediumWhiteText,
-                                    ),
-                                    SizedBox(width: 10),
-                                    Icon(
-                                      Icons.arrow_forward_ios_rounded,
-                                      color: Colors.white,
-                                    ),
-                                  ],
-                                );
-                              }
-                            },
-                          ),
                         ),
                       ),
                       SizedBox(height: 20),
-                      BlocBuilder<OtpBloc, OtpState>(
-                        bloc: _otpBloc,
+                      BlocBuilder<RegisterBloc, RegisterState>(
+                        bloc: _registerBloc,
                         builder: (context, state) {
-                          if (state is OtpFailed) {
+                          if (state is RegisterFailed) {
                             return Center(
                               child: Text(
                                 AppLocalizations.of(context).failed,

@@ -36,16 +36,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           );
           var firstName = decoded['results']['first_name'];
           var lastName = decoded['results']['last_name'];
-          // var email = decoded['results']['email'];
           var phone = decoded['results']['phone_number'];
-          // var userImage = decoded['results']['user_image'];
           sharedPreferences.setString("token", token);
           sharedPreferences.setString("firstName", firstName);
           sharedPreferences.setString("lastName", lastName);
-          // sharedPreferences.setString("email", email);
           sharedPreferences.setString("phone", phone);
           sharedPreferences.setString("token", token);
-          // sharedPreferences.setString("userImage", userImage);
           yield RegisterSuccess(event.role);
         } else {
           var some = jsonDecode(response.data);
@@ -65,7 +61,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           verificationFailed: (verificationFailed) async {
             print(verificationFailed.message);
           },
-          codeSent: (verifcationId, resendingToken) {
+          codeSent: (verifcationId, resendingToken) async {
             Navigator.push(
               event.context,
               MaterialPageRoute(

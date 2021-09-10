@@ -95,8 +95,8 @@ class _OTPViewState extends State<OTPView> {
                 onPressed: () async {
                   _otpBloc.add(
                     CheckOtp(
-                      // smsCode: smsCode,
-                      // verificationId: widget.verificationId,
+                      smsCode: smsCode,
+                      verificationId: widget.verificationId,
                       phone: widget.phone,
                     ),
                   );

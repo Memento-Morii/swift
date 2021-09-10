@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:swift/helper/utils.dart';
@@ -20,7 +18,6 @@ class _WrapperState extends State<Wrapper> {
   @override
   void initState() {
     super.initState();
-    FirebaseMessaging.instance.getToken().then((value) => print(value));
     //TERMINATED
     FirebaseMessaging.instance.getInitialMessage().then((message) {
       if (message != null) {
@@ -35,16 +32,14 @@ class _WrapperState extends State<Wrapper> {
     //FOREGROUND
     FirebaseMessaging.onMessage.listen((message) {
       if (message != null) {
-        inspect(message);
-        // print("body");
-        // print(message.notification.body);
+        print("body");
+        print(message.notification.body);
       }
     });
 
     //BACKGROUND
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       if (message != null) {
-        print(message);
         Navigator.push(
           context,
           MaterialPageRoute(

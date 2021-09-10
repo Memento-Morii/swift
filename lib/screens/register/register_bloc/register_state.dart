@@ -12,6 +12,12 @@ class RegisterSuccess extends RegisterState {
   final String role;
 }
 
+class LoginSuccess extends RegisterState {
+  LoginSuccess({this.verifcationId, this.phone});
+  final String verifcationId;
+  final String phone;
+}
+
 class RegisterFailed extends RegisterState {
   RegisterFailed({this.message});
   final String message;
