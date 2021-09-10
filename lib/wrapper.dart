@@ -4,6 +4,7 @@ import 'package:swift/helper/utils.dart';
 import 'package:swift/screens/home/home_view.dart';
 import 'package:swift/screens/orders/order_tab.dart';
 import 'package:swift/screens/register/add_services/add_services_view.dart';
+import 'package:swift/services/local_notification.dart';
 
 class Wrapper extends StatefulWidget {
   Wrapper(this.serviceProvider);
@@ -34,6 +35,8 @@ class _WrapperState extends State<Wrapper> {
       if (message != null) {
         print("body");
         print(message.notification.body);
+        // inspect(message);
+        LocalNotificationService.display(message);
       }
     });
 

@@ -8,6 +8,7 @@ import 'package:swift/helper/text_styles.dart';
 import 'package:swift/l10n/l10n.dart';
 import 'package:swift/provider/local_provider.dart';
 import 'package:swift/screens/register/signIn_view.dart';
+import 'package:swift/services/local_notification.dart';
 import 'package:swift/wrapper.dart';
 import 'helper/colors.dart';
 // import 'screens/home/home_view.dart';
@@ -15,14 +16,15 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print(message);
+  LocalNotificationService.display(message);
 }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  LocalNotificationService.initialize();
   //BACKGROUND NOTIFICATION HANDLER
-  // FirebaseMessaging.onBackgroundMessage((message) async => backgroundHandler(message));
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.get("token");
   int serviceProvider = prefs.get('serviceProvider');
