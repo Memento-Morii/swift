@@ -105,6 +105,8 @@ class Repositories {
       "site_name": user.siteName,
       "house_number": user.houseNumber,
       "block_number": user.blockNumber,
+      "lng": user.lng,
+      "lat": user.lat,
       "user_image": photo == null
           ? null
           : await MultipartFile.fromFile(
@@ -139,9 +141,8 @@ class Repositories {
 
   Future<Response> getFrequentServices() async {
     try {
-      var response = await _dio.get(
-          "$baseUrl/service-categories/frequent-services",
-          options: options);
+      var response =
+          await _dio.get("$baseUrl/service-categories/frequent-services", options: options);
       return response;
     } catch (_) {
       print(_);
@@ -151,8 +152,7 @@ class Repositories {
 
   Future<Response> getServicesCategories(int serviceId) async {
     try {
-      var response = await _dio.get("$baseUrl/service-categories/$serviceId",
-          options: options);
+      var response = await _dio.get("$baseUrl/service-categories/$serviceId", options: options);
       return response;
     } catch (_) {
       print(_);
@@ -173,8 +173,7 @@ class Repositories {
     }
   }
 
-  Future<Response> createServiceProvider(
-      {ServiceProviderRequest request}) async {
+  Future<Response> createServiceProvider({ServiceProviderRequest request}) async {
     var data = FormData.fromMap({
       "document": request.document == null
           ? null
@@ -222,8 +221,7 @@ class Repositories {
     }
   }
 
-  Future<Response> updateMyService(
-      {String token, MyServicesModel myService}) async {
+  Future<Response> updateMyService({String token, MyServicesModel myService}) async {
     Map data = {
       'uuid': myService.uuid,
       'document': 'test',
@@ -278,8 +276,7 @@ class Repositories {
     }
   }
 
-  Future<Response> createOrder(
-      OrderRequest orderRequest, bool isAddress) async {
+  Future<Response> createOrder(OrderRequest orderRequest, bool isAddress) async {
     try {
       Map dataWithAddress = {
         "service_id": orderRequest.serviceId,
@@ -398,10 +395,33 @@ class Repositories {
       );
       if (response.statusCode == 200) {
         var locationDecoded = jsonDecode(response.data);
-        locations =
-            locationModelFromJson(jsonEncode(locationDecoded['results']));
+        locations = locationModelFromJson(jsonEncode(locationDecoded['results']));
       }
       return locations;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  ///TOKEN
+  Future sumbitToken({int userId, String token}) async {
+    Map data = {
+      "user_id": userId,
+      "token": token,
+    };
+    try {
+      var response = await _dio.post(
+        "$baseUrl/firebase-token/submit",
+        data: data,
+        options: options,
+      );
+      if (response.statusCode == 200) {
+        print("success");
+      } else {
+        print(response.data);
+      }
     } catch (e) {
       print(e);
       return null;

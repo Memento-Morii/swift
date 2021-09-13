@@ -79,7 +79,7 @@ class _HouseInfoState extends State<HouseInfo> {
                         style: CustomTextStyles.textField,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(horizontal: 32, vertical: 20),
-                          border: InputBorder.none,
+                          // border: InputBorder.none,
                           hintText: AppLocalizations.of(context).siteName,
                           hintStyle: CustomTextStyles.textField,
                           prefixIcon: Padding(
@@ -137,8 +137,6 @@ class _HouseInfoState extends State<HouseInfo> {
                             widget.signupRequest.houseNumber = houseController.text.trim();
                             widget.signupRequest.siteNumber = siteController.text;
                             widget.signupRequest.email = emailController.text.trim();
-                            inspect(widget.signupRequest);
-                            print(widget.role);
                             _registerBloc.add(
                               Signup(
                                 signupRequest: widget.signupRequest,

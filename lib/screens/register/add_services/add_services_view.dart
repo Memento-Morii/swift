@@ -75,24 +75,26 @@ class _AddServiceState extends State<AddService> {
     return BlocProvider(
       create: (context) => CreateServiceProviderBloc(),
       child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MyServices(),
+        appBar: widget.isAnother
+            ? AppBar(
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyServices(),
+                      ),
+                      (Route<dynamic> route) => false,
+                    );
+                  },
                 ),
-                (Route<dynamic> route) => false,
-              );
-            },
-          ),
-          title: Text(
-            AppLocalizations.of(context).addService.toUpperCase(),
-            style: CustomTextStyles.bigWhiteText,
-          ),
-        ),
+                title: Text(
+                  AppLocalizations.of(context).addService.toUpperCase(),
+                  style: CustomTextStyles.bigWhiteText,
+                ),
+              )
+            : null,
         body: BlocProvider(
           create: (context) => AddServiceBloc(),
           child: SafeArea(

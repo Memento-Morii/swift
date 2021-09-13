@@ -4,6 +4,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/location_model.dart';
+import 'package:swift/screens/orders/order_tab.dart';
 import 'package:swift/screens/register/signIn_view.dart';
 import 'package:swift/services/repositories.dart';
 import 'package:swift/widgets/social_network.dart';
@@ -173,6 +174,38 @@ class Utils {
                 ),
                 (Route<dynamic> route) => false,
               );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Future newOrder({BuildContext context}) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          AppLocalizations.of(context).orderArrived,
+          style: CustomTextStyles.boldTitleText,
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text(
+              AppLocalizations.of(context).go,
+              style: CustomTextStyles.coloredBold,
+            ),
+            onPressed: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              if (prefs.getString("token") != null) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OrderTab(),
+                  ),
+                  (Route<dynamic> route) => false,
+                );
+              }
             },
           ),
         ],

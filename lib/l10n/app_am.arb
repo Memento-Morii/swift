@@ -74,7 +74,7 @@
     "no": "አይ",
     "yes": "አዎ",
 
-    "failed": "አልተሳካም",
+    "failed": "ግንኙነት ተቋርጧል",
     "orderEmpty": "ትዕዛዝ ባዶ ነው",
     "emptyServices": "ባዶ አገልግሎቶች",
     "success": "ተሳክቷል",
@@ -88,6 +88,7 @@
     "viewOrder": "የትዕዛዝ ዝርዝሮችን ይመልከቱ",
     "myProviderOrders": "የእኔ ሥራዎች",
     "order": "ይዘዙ",
+    "orderArrived": "አዲስ ትዕዛዝ ደርሷል",
     "validEmail":"የሚሰራ የኢሜይል አድራሻ ያስገቡ",
 
     "goToPayment": "ወደ ክፍያ ይሂዱ",

@@ -1,5 +1,6 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/helper/utils.dart';
 import 'package:swift/screens/about_us_view.dart';
@@ -9,7 +10,6 @@ import 'package:swift/screens/my_services/my_services_view.dart';
 import 'package:swift/screens/orders/order_tab.dart';
 import 'package:swift/screens/orders/order_view.dart';
 import 'package:swift/screens/profile/profile_view.dart';
-import 'package:swift/screens/register/signIn_view.dart';
 import 'package:swift/screens/settings/settings_view.dart';
 import 'package:swift/widgets/navigator_drawers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -20,11 +20,13 @@ class DrawerLists extends StatefulWidget {
     this.firstName,
     this.lastName,
     this.phone,
+    this.userImage,
   });
   final int userRole;
   final String firstName;
   final String lastName;
   final String phone;
+  final String userImage;
   @override
   _DrawerListsState createState() => _DrawerListsState();
 }
@@ -46,7 +48,11 @@ class _DrawerListsState extends State<DrawerLists> {
           children: <Widget>[
             CircleAvatar(
               backgroundColor: Colors.white,
-              backgroundImage: AssetImage("assets/profile-user.png"),
+              backgroundImage: widget.userImage == null
+                  ? AssetImage("assets/profile-user.png")
+                  : MemoryImage(
+                      Base64Decoder().convert(widget.userImage),
+                    ),
               radius: 30,
             ),
             SizedBox(width: 20),

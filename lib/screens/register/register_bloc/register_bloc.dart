@@ -23,6 +23,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     if (event is Signup) {
       yield RegisterLoading();
       try {
+        event.role == "User"
+            ? event.signupRequest.isServiceProvider = null
+            : event.signupRequest.isServiceProvider = 2;
         var response = await _repo.signUp(
           signupRequest: event.signupRequest,
         );
@@ -37,10 +40,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           var firstName = decoded['results']['first_name'];
           var lastName = decoded['results']['last_name'];
           var phone = decoded['results']['phone_number'];
+          var id = decoded['results']['id'];
           sharedPreferences.setString("token", token);
           sharedPreferences.setString("firstName", firstName);
           sharedPreferences.setString("lastName", lastName);
           sharedPreferences.setString("phone", phone);
+          sharedPreferences.setInt("id", id);
           sharedPreferences.setString("token", token);
           yield RegisterSuccess(event.role);
         } else {

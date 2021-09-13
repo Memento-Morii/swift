@@ -77,7 +77,7 @@
     "no": "No",
     "yes": "Yes",
 
-    "failed": "Failed",
+    "failed": "Connection Failed",
     "orderEmpty": "Order is Empty",
     "emptyServices": "Empty Services",
     "success": "Success",
@@ -91,6 +91,7 @@
     "viewOrder": "View Order Details",
     "myProviderOrders": "My Works",
     "order": "Order",
+    "orderArrived": "New Order Has Arrived!",
     "validEmail":"Enter valid email address",
 
     "goToPayment": "Go To Payment",

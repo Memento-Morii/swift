@@ -32,22 +32,26 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
             phone: event.phone,
           );
           if (response.statusCode == 200) {
-            print(response.data);
             SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
             var decoded = jsonDecode(response.data);
             var firstName = decoded['results']['first_name'];
             var lastName = decoded['results']['last_name'];
             var phone = decoded['results']['phone_number'];
+            var userImage = decoded['results']['user_image'];
+            var id = decoded['results']['id'];
             var token = decoded['token'];
             var serviceProvider = decoded['results']['is_service_provider'];
             sharedPreferences.setString("token", token);
             sharedPreferences.setString("firstName", firstName);
             sharedPreferences.setString("lastName", lastName);
             sharedPreferences.setString("phone", phone);
+            sharedPreferences.setInt("id", id);
+            if (userImage != null) {
+              sharedPreferences.setString("userImage", userImage);
+            }
             sharedPreferences.setInt("serviceProvider", serviceProvider);
             yield OtpLoaded(serviceProvider == 2 ? false : true);
           } else {
-            print(response.data);
             yield GoToRegister(event.phone);
           }
         } else {

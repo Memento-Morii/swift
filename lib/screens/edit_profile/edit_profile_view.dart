@@ -32,6 +32,8 @@ class _EditProfileState extends State<EditProfile> {
   void initState() {
     _editProfileBloc = EditProfileBloc();
     siteInital = widget.user.siteName;
+    widget.user.lat = widget.user.latLng.coordinates[0];
+    widget.user.lng = widget.user.latLng.coordinates[1];
     super.initState();
   }
 
@@ -165,6 +167,11 @@ class _EditProfileState extends State<EditProfile> {
                         CustomButton(
                           color: CustomColors.primaryColor,
                           onPressed: () {
+                            if (_selectedLocation != null) {
+                              widget.user.lat = _selectedLocation.lat;
+                              widget.user.lng = _selectedLocation.lng;
+                              widget.user.siteName = _selectedLocation.name;
+                            }
                             _editProfileBloc.add(EditUserProfile(
                               editedUser: widget.user,
                               context: context,

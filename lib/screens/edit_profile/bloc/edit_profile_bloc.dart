@@ -26,10 +26,14 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       try {
         var response = await _repo.updateUser(user: event.editedUser, photo: event.photo);
         if (response.statusCode == 200) {
+          var decoded = jsonDecode(response.data);
+          var userImage = decoded['results']['user_image'];
           SharedPreferences _prefs = await SharedPreferences.getInstance();
-          _prefs.setString("firstName", event.editedUser.firstName);
-          _prefs.setString("lastName", event.editedUser.lastName);
-          print(response.data);
+          _prefs.setString("firstName", decoded['results']['first_name']);
+          _prefs.setString("lastName", decoded['results']['last_name']);
+          if (userImage != null) {
+            _prefs.setString("userImage", userImage);
+          }
           yield EditProfileSuccess();
         } else {
           var decoded = jsonDecode(response.data);

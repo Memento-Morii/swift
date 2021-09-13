@@ -14,9 +14,8 @@ class _NavigatorDrawerState extends State<NavigatorDrawer> {
   int userRole;
   String firstName;
   String lastName;
-  // String email;
   String phone;
-  // String userImage;
+  String userImage;
   Future getRole() async {
     userRole = null;
     SharedPreferences _prefs = await SharedPreferences.getInstance();
@@ -25,7 +24,7 @@ class _NavigatorDrawerState extends State<NavigatorDrawer> {
     lastName = _prefs.getString("lastName");
     // email = _prefs.getString("email");
     phone = _prefs.getString("phone");
-    // userImage = _prefs.getString("userImage");
+    userImage = _prefs.getString("userImage");
   }
 
   @override
@@ -42,8 +41,8 @@ class _NavigatorDrawerState extends State<NavigatorDrawer> {
                 userRole: userRole,
                 firstName: firstName,
                 lastName: lastName,
-                // email: email,
                 phone: phone,
+                userImage: userImage,
               );
             } else {
               return SizedBox();
