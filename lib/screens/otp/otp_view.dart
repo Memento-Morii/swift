@@ -8,6 +8,7 @@ import 'package:swift/screens/home/home_view.dart';
 import 'package:swift/screens/register/add_services/add_services_view.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/screens/register/signup_view.dart';
+import 'package:swift/wrapper.dart';
 import 'bloc/otp_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -109,7 +110,7 @@ class _OTPViewState extends State<OTPView> {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => state.isFinished ? Home() : AddService(false),
+                          builder: (context) => Wrapper(state.serivceProvider),
                         ),
                         (Route<dynamic> route) => false,
                       );

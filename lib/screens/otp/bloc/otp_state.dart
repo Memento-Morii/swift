@@ -8,8 +8,8 @@ class OtpInitial extends OtpState {}
 class OtpLoading extends OtpState {}
 
 class OtpLoaded extends OtpState {
-  OtpLoaded(this.isFinished);
-  final bool isFinished;
+  OtpLoaded(this.serivceProvider);
+  final int serivceProvider;
 }
 
 class GoToRegister extends OtpState {

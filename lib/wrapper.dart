@@ -1,7 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:swift/helper/utils.dart';
 import 'package:swift/screens/home/home_view.dart';
 import 'package:swift/screens/orders/order_tab.dart';
 import 'package:swift/screens/register/add_services/add_services_view.dart';
@@ -50,12 +49,12 @@ class _WrapperState extends State<Wrapper> {
     //BACKGROUND
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       if (message != null) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Home(),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => Home(),
+        //   ),
+        // );
       }
     });
   }

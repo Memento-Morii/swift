@@ -8,8 +8,8 @@ import 'package:swift/helper/utils.dart';
 import 'package:swift/models/location_model.dart';
 import 'package:swift/models/service_model.dart';
 import 'package:swift/models/service_provider_request_model.dart';
-import 'package:swift/screens/home/home_view.dart';
 import 'package:swift/screens/my_services/my_services_view.dart';
+import 'package:swift/screens/orders/order_tab.dart';
 import 'package:swift/screens/register/add_services/bloc/add_service_bloc.dart';
 import 'package:swift/screens/register/add_services/bloc/create_service_provider_bloc.dart';
 import 'package:swift/widgets/category_card.dart';
@@ -112,7 +112,7 @@ class _AddServiceState extends State<AddService> {
                       : Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Home(),
+                            builder: (context) => OrderTab(),
                           ),
                         );
                 }

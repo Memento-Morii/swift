@@ -50,7 +50,7 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
               sharedPreferences.setString("userImage", userImage);
             }
             sharedPreferences.setInt("serviceProvider", serviceProvider);
-            yield OtpLoaded(serviceProvider == 2 ? false : true);
+            yield OtpLoaded(serviceProvider);
           } else {
             yield GoToRegister(event.phone);
           }
