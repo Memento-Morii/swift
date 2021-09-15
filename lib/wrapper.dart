@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,18 +32,13 @@ class _WrapperState extends State<Wrapper> {
     //TERMINATED
     FirebaseMessaging.instance.getInitialMessage().then((message) {
       if (message != null) {
-        // print(message.data.toString());
-        // Utils.newOrder(
-        //   context: context,
-        // );
+        LocalNotificationService.display(message);
       }
     });
 
     //FOREGROUND
     FirebaseMessaging.onMessage.listen((message) {
       if (message != null) {
-        print(message.notification.body);
-        // inspect(message);
         LocalNotificationService.display(message);
       }
     });
