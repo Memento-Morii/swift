@@ -18,74 +18,80 @@ class OrderHistoryWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomNetworkImage(
-                imgUrl: order.serviceCategory.image,
-                height: 80,
-                width: 80,
-              ),
-              SizedBox(width: 5),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    order.serviceCategory.name,
-                    style: CustomTextStyles.boldText,
-                  ),
-                  Text(
-                    order.service.name,
-                    style: CustomTextStyles.normalText,
-                  ),
-                  Text(
-                    dateFormat.format(order.serviceReceiveTime.toLocal()),
-                    style: CustomTextStyles.textField,
-                  ),
-                  SizedBox(height: 10),
-                  order.orderHistory.status == 2
-                      ? TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => OrderDetailView(order.orderId),
-                              ),
-                            );
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(CustomColors.primaryColor),
-                          ),
-                          child: Text(
-                            AppLocalizations.of(context).viewOrderDetails,
-                            style: CustomTextStyles.normalText2,
-                          ),
-                        )
-                      : SizedBox(),
-                ],
-              ),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              order.orderHistory.status == 2
-                  ? CircleAvatar(
-                      radius: 5,
-                      backgroundColor: Colors.green,
-                    )
-                  : CircleAvatar(
-                      radius: 5,
-                      backgroundColor: Colors.orange,
+          Flexible(
+            flex: 3,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomNetworkImage(
+                  imgUrl: order.serviceCategory.image,
+                  height: 80,
+                  width: 80,
+                ),
+                SizedBox(width: 5),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      order.serviceCategory.name,
+                      style: CustomTextStyles.boldText,
                     ),
-              SizedBox(width: 5),
-              Text(
+                    Text(
+                      order.service.name,
+                      style: CustomTextStyles.normalText,
+                    ),
+                    Text(
+                      dateFormat.format(order.serviceReceiveTime.toLocal()),
+                      style: CustomTextStyles.textField,
+                    ),
+                    SizedBox(height: 10),
+                    order.orderHistory.status == 2
+                        ? TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => OrderDetailView(order.orderId),
+                                ),
+                              );
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(CustomColors.primaryColor),
+                            ),
+                            child: Text(
+                              AppLocalizations.of(context).viewOrderDetails,
+                              style: CustomTextStyles.normalText2,
+                            ),
+                          )
+                        : SizedBox(),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
                 order.orderHistory.status == 2
-                    ? AppLocalizations.of(context).accepted
-                    : AppLocalizations.of(context).pending,
-                style: CustomTextStyles.normalText,
-              )
-            ],
+                    ? CircleAvatar(
+                        radius: 5,
+                        backgroundColor: Colors.green,
+                      )
+                    : CircleAvatar(
+                        radius: 5,
+                        backgroundColor: Colors.orange,
+                      ),
+                SizedBox(width: 5),
+                Text(
+                  order.orderHistory.status == 2
+                      ? AppLocalizations.of(context).accepted
+                      : AppLocalizations.of(context).pending,
+                  style: CustomTextStyles.normalText,
+                )
+              ],
+            ),
           )
         ],
       ),

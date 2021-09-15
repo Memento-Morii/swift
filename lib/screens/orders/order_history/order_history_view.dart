@@ -39,7 +39,7 @@ class _OrderHistoryViewState extends State<OrderHistoryView> {
           } else if (state is OrderLoaded) {
             List<OrderHistoryModel> orders = state.orderHistories.reversed.toList();
             return ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
+              // physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 OrderHistoryModel order = orders[index];

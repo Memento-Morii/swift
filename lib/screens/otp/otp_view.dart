@@ -4,8 +4,6 @@ import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
-import 'package:swift/screens/home/home_view.dart';
-import 'package:swift/screens/register/add_services/add_services_view.dart';
 import 'package:swift/widgets/custom_button.dart';
 import 'package:swift/screens/register/signup_view.dart';
 import 'package:swift/wrapper.dart';

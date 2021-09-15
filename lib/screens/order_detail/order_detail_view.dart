@@ -55,12 +55,10 @@ class _OrderDetailViewState extends State<OrderDetailView> {
           bloc: _paymentBloc,
           listener: (context, state) {
             if (state is PaymentSuccess) {
-              Utils.showToast(
-                  context, false, AppLocalizations.of(context).success, 2);
+              Utils.showToast(context, false, AppLocalizations.of(context).success, 2);
             }
             if (state is PaymentFailed) {
-              Utils.showToast(
-                  context, true, AppLocalizations.of(context).failed, 2);
+              Utils.showToast(context, true, AppLocalizations.of(context).failed, 2);
             }
           },
           child: BlocBuilder<OrderDetailBloc, OrderDetailState>(
@@ -68,13 +66,14 @@ class _OrderDetailViewState extends State<OrderDetailView> {
             builder: (context, state) {
               if (state is DetailLoaded) {
                 details = state.orderDetails;
+                print(details.serviceProvider.user.uuid);
                 return Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       CircleAvatar(
-                        radius: 50,
-                        backgroundImage: details.serviceProvider.user.userImage
+                        radius: 60,
+                        backgroundImage: details.serviceProvider.user.userImage == null
                             ? AssetImage("assets/profile-user.png")
                             : MemoryImage(
                                 Base64Decoder().convert(
@@ -82,6 +81,7 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                                 ),
                               ),
                       ),
+                      SizedBox(height: 30),
                       Text(
                         AppLocalizations.of(context).providerInfo,
                         style: CustomTextStyles.boldTitleText,
@@ -113,15 +113,15 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                         details.serviceProvider.user.phoneNumber,
                         style: CustomTextStyles.coloredBold,
                       ),
-                      SizedBox(height: 10),
-                      Text(
-                        AppLocalizations.of(context).email,
-                        style: CustomTextStyles.mediumText,
-                      ),
-                      Text(
-                        details.serviceProvider.user.email,
-                        style: CustomTextStyles.coloredBold,
-                      ),
+                      // SizedBox(height: 10),
+                      // Text(
+                      //   AppLocalizations.of(context).email,
+                      //   style: CustomTextStyles.mediumText,
+                      // ),
+                      // Text(
+                      //   details.serviceProvider.user.email,
+                      //   style: CustomTextStyles.coloredBold,
+                      // ),
                     ],
                   ),
                 );
@@ -183,15 +183,14 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                             Navigator.pop(context);
                             _paymentBloc.add(MakePayment(
                               orderId: details.id,
-                              payment:
-                                  double.parse(paymentController.text.trim()),
+                              payment: double.parse(paymentController.text.trim()),
                               serviceProviderId: details.serviceProviderId,
                               userId: details.userId,
                             ));
                           }
                         },
                         child: Text(
-                          'OK',
+                          AppLocalizations.of(context).go,
                           style: CustomTextStyles.textField,
                         ),
                       ),

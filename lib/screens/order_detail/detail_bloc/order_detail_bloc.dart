@@ -19,14 +19,12 @@ class OrderDetailBloc extends Bloc<OrderDetailEvent, OrderDetailState> {
     if (event is FetchDetails) {
       try {
         var response = await _repo.getOrderDetails(event.orderId);
-        print(response);
         if (response.statusCode == 200) {
           var decoded = jsonDecode(response.data);
           OrderDetailsModel orderDetails =
               orderDetailsModelFromJson(jsonEncode(decoded['results']));
           yield DetailLoaded(orderDetails);
         } else {
-          print(response);
           yield DetailFailed();
         }
       } catch (_) {
