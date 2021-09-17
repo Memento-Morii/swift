@@ -36,7 +36,7 @@ class _ServiceProviderOrderViewState extends State<ServiceProviderOrderView> {
               style: CustomTextStyles.bigErrorText,
             ));
           } else if (state is ProviderOrderLoaded) {
-            List<ProviderOrderModel> orders = state.orders;
+            List<ProviderOrderModel> orders = state.orders.reversed.toList();
             return ListView.separated(
               shrinkWrap: true,
               itemBuilder: (context, index) {
@@ -50,8 +50,11 @@ class _ServiceProviderOrderViewState extends State<ServiceProviderOrderView> {
             );
           } else {
             return Center(
-                child: Text(AppLocalizations.of(context).failed,
-                    style: CustomTextStyles.bigErrorText));
+              child: Text(
+                AppLocalizations.of(context).failed,
+                style: CustomTextStyles.bigErrorText,
+              ),
+            );
           }
         },
       ),

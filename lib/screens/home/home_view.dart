@@ -103,7 +103,7 @@ class _HomeState extends State<Home> {
                                           ),
                                           shrinkWrap: true,
                                           physics: const NeverScrollableScrollPhysics(),
-                                          itemCount: 12,
+                                          itemCount: 16,
                                           itemBuilder: (context, index) {
                                             ServiceModel _result = state.allServices[index];
                                             return InkWell(
