@@ -20,22 +20,28 @@ class MyServicesCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  myServices.serviceCategory.name,
-                  style: CustomTextStyles.boldTitleText,
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UpdateServiceView(myServices),
-                      ),
-                    );
-                  },
+                Flexible(
+                  flex: 3,
                   child: Text(
-                    AppLocalizations.of(context).update,
-                    style: CustomTextStyles.coloredBold,
+                    myServices.serviceCategory.name,
+                    style: CustomTextStyles.boldTitleText,
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdateServiceView(myServices),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      AppLocalizations.of(context).update,
+                      style: CustomTextStyles.coloredBold,
+                    ),
                   ),
                 )
               ],

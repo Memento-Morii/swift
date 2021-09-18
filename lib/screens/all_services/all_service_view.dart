@@ -97,12 +97,18 @@ class _AllServiceState extends State<AllService> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      Text(
-                                        _categories.name,
-                                        style: CustomTextStyles.boldMediumText,
+                                      Flexible(
+                                        flex: 3,
+                                        child: Text(
+                                          _categories.name,
+                                          style: CustomTextStyles.boldMediumText,
+                                        ),
                                       ),
-                                      CustomNetworkImage(
-                                        imgUrl: _categories.image,
+                                      Flexible(
+                                        flex: 1,
+                                        child: CustomNetworkImage(
+                                          imgUrl: _categories.image,
+                                        ),
                                       )
                                     ],
                                   ),

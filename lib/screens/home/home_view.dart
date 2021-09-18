@@ -148,6 +148,46 @@ class _HomeState extends State<Home> {
                                           ),
                                         ),
                                         SizedBox(height: 20),
+                                        Center(
+                                          child: Container(
+                                            width: MediaQuery.of(context).size.width * .85,
+                                            padding:
+                                                EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: CustomColors.primaryColor,
+                                                width: 3,
+                                              ),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  AppLocalizations.of(context).orderUsing,
+                                                  style: CustomTextStyles.coloredBold,
+                                                ),
+                                                SizedBox(width: 10),
+                                                Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: <Widget>[
+                                                    SocialNetwork(
+                                                      icon: "assets/phone_green.png",
+                                                      url: "+251113854444",
+                                                      urlType: URL_TYPE.Telephone,
+                                                    ),
+                                                    SizedBox(width: 20),
+                                                    SocialNetwork(
+                                                      icon: "assets/telegram.png",
+                                                      url: "https://t.me/SwiftOlioBot",
+                                                      urlType: URL_TYPE.Link,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 20),
                                         Text(
                                           AppLocalizations.of(context).frequentServices,
                                           style: CustomTextStyles.mediumText,
@@ -180,32 +220,6 @@ class _HomeState extends State<Home> {
                                             separatorBuilder: (context, index) {
                                               return SizedBox(width: 20);
                                             },
-                                          ),
-                                        ),
-                                        SizedBox(height: 20),
-                                        Center(
-                                          child: Text(
-                                            AppLocalizations.of(context).orderUsing,
-                                            style: CustomTextStyles.coloredBold,
-                                          ),
-                                        ),
-                                        SizedBox(height: 10),
-                                        Center(
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: <Widget>[
-                                              SocialNetwork(
-                                                icon: "assets/phone_green.png",
-                                                url: "+251113854444",
-                                                urlType: URL_TYPE.Telephone,
-                                              ),
-                                              SizedBox(width: 20),
-                                              SocialNetwork(
-                                                icon: "assets/telegram.png",
-                                                url: "https://t.me/SwiftOlioBot",
-                                                urlType: URL_TYPE.Link,
-                                              ),
-                                            ],
                                           ),
                                         ),
                                         SizedBox(height: 20),

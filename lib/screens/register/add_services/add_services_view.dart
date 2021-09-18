@@ -194,7 +194,7 @@ class _AddServiceState extends State<AddService> {
                                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 3,
                                         childAspectRatio: 1,
-                                        crossAxisSpacing: 20,
+                                        crossAxisSpacing: 5,
                                         mainAxisSpacing: 20,
                                       ),
                                       itemCount: categories.length,

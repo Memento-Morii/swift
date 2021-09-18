@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:new_version/new_version.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/screens/home/home_view.dart';
 import 'package:swift/screens/orders/order_tab.dart';
@@ -54,6 +53,15 @@ class _WrapperState extends State<Wrapper> {
         // );
       }
     });
+    // CHECK VERSION
+    _checkVersion();
+  }
+
+  void _checkVersion() {
+    final newVersion = NewVersion(
+      androidId: "com.example.swift",
+    );
+    newVersion.showAlertIfNecessary(context: context);
   }
 
   @override
