@@ -21,14 +21,14 @@ class MyServicesCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                  flex: 3,
+                  flex: 5,
                   child: Text(
                     myServices.serviceCategory.name,
                     style: CustomTextStyles.boldTitleText,
                   ),
                 ),
                 Flexible(
-                  flex: 1,
+                  flex: 2,
                   child: TextButton(
                     onPressed: () {
                       Navigator.push(

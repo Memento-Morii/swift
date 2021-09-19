@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/screens/home/home_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:swift/screens/orders/order_view.dart';
 
 import 'orders/order_tab.dart';
 
@@ -53,11 +55,13 @@ class SuccessPage extends StatelessWidget {
               ),
               SizedBox(height: 60),
               InkWell(
-                onTap: () {
+                onTap: () async {
+                  SharedPreferences _prefs = await SharedPreferences.getInstance();
+                  int serviceProvider = _prefs.get('serviceProvider');
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => OrderTab(),
+                      builder: (context) => serviceProvider == 0 ? Order() : OrderTab(),
                     ),
                     (Route<dynamic> route) => false,
                   );
