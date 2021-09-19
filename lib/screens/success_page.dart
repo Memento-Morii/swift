@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
-import 'package:swift/helper/utils.dart';
 import 'package:swift/screens/home/home_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'orders/order_tab.dart';
 
 class SuccessPage extends StatelessWidget {
   @override
@@ -53,7 +54,13 @@ class SuccessPage extends StatelessWidget {
               SizedBox(height: 60),
               InkWell(
                 onTap: () {
-                  Utils.showToast(context, null, "Loading...", 2);
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OrderTab(),
+                    ),
+                    (Route<dynamic> route) => false,
+                  );
                 },
                 child: Container(
                   height: 60,

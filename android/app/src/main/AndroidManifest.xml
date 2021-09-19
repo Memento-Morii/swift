@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.swift">
+    package="com.swift.olio">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
 
-        android:label="Swift"
+        android:label="SwiftOlio"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity

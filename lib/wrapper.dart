@@ -59,7 +59,7 @@ class _WrapperState extends State<Wrapper> {
 
   void _checkVersion() {
     final newVersion = NewVersion(
-      androidId: "com.example.swift",
+      androidId: "com.swift.olio",
     );
     newVersion.showAlertIfNecessary(context: context);
   }

@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "50887593327",
-    "project_id": "swift-68dd2",
-    "storage_bucket": "swift-68dd2.appspot.com"
+    "project_number": "1012534231270",
+    "project_id": "swift-app-a57bd",
+    "storage_bucket": "swift-app-a57bd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:50887593327:android:fac2caccf95bedb5fd2c9a",
+        "mobilesdk_app_id": "1:1012534231270:android:054b7051608c4868323b27",
         "android_client_info": {
-          "package_name": "com.example.swift"
+          "package_name": "com.swift.olio"
         }
       },
       "oauth_client": [
         {
-          "client_id": "50887593327-l4l278lvr2ppbtl40qsps79rpvq1ut83.apps.googleusercontent.com",
+          "client_id": "1012534231270-8lkpsppq1luencevn9mhn2asiur9274o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swift.olio",
+            "certificate_hash": "26c5d2d16e9f9e8a776ca5a47570215b6ee12a30"
+          }
+        },
+        {
+          "client_id": "1012534231270-cka29bbgjavhsotuuoh7fac8rd3tklng.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBMYb5NodNhcJxM0kBjlpv0LV02aaa4xnY"
+          "current_key": "AIzaSyCWTi6H5yaZua5Chz0QmvHGH6STkmGwcJc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "50887593327-l4l278lvr2ppbtl40qsps79rpvq1ut83.apps.googleusercontent.com",
+              "client_id": "1012534231270-cka29bbgjavhsotuuoh7fac8rd3tklng.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

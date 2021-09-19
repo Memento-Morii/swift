@@ -1,4 +1,4 @@
-package com.example.swift
+package com.swift.olio
 
 import io.flutter.embedding.android.FlutterActivity
 
