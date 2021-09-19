@@ -7,8 +7,7 @@ import 'dart:convert';
 OrderDetailsModel orderDetailsModelFromJson(String str) =>
     OrderDetailsModel.fromJson(json.decode(str));
 
-String orderDetailsModelToJson(OrderDetailsModel data) =>
-    json.encode(data.toJson());
+String orderDetailsModelToJson(OrderDetailsModel data) => json.encode(data.toJson());
 
 class OrderDetailsModel {
   OrderDetailsModel({
@@ -29,8 +28,7 @@ class OrderDetailsModel {
   ServiceProvider serviceProvider;
   OrderDetail orderDetail;
 
-  factory OrderDetailsModel.fromJson(Map<String, dynamic> json) =>
-      OrderDetailsModel(
+  factory OrderDetailsModel.fromJson(Map<String, dynamic> json) => OrderDetailsModel(
         id: json["id"],
         userId: json["user_id"],
         serviceProviderId: json["service_provider_id"],
@@ -138,9 +136,8 @@ class ServiceProvider {
   int status;
   User user;
 
-  factory ServiceProvider.fromJson(Map<String, dynamic> json) =>
-      ServiceProvider(
-        id: json["id"],
+  factory ServiceProvider.fromJson(Map<String, dynamic> json) => ServiceProvider(
+        id: json != null ? json["id"] : null,
         userId: json["user_id"],
         description: json["description"],
         document: Document.fromJson(json["document"]),

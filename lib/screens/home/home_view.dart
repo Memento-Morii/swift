@@ -280,9 +280,20 @@ class _HomeState extends State<Home> {
                                 );
                               } else {
                                 return Center(
-                                  child: Text(
-                                    AppLocalizations.of(context).failed,
-                                    style: CustomTextStyles.bigErrorText,
+                                  child: Container(
+                                    height: 50,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(context).failed,
+                                          style: CustomTextStyles.bigErrorText,
+                                        ),
+                                        Text(
+                                          AppLocalizations.of(context).goToAnother,
+                                          style: CustomTextStyles.bigErrorText,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               }

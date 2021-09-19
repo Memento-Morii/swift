@@ -83,6 +83,7 @@
     "success": "Success",
     "selectLocation": "Select your Location",
     "addNewService": "Added New Service",
+    "goToAnother": "Go To Another Page to Refresh",
 
     "myUserOrders": "My User Orders",
     "orderReceived": "Order Received",
