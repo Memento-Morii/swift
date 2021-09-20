@@ -110,6 +110,7 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                         AppLocalizations.of(context).phone,
                         style: CustomTextStyles.mediumText,
                       ),
+                      SizedBox(height: 10),
                       InkWell(
                         onTap: () async {
                           Utils.openLink(
@@ -117,9 +118,28 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                             urlType: URL_TYPE.Telephone,
                           );
                         },
-                        child: Text(
-                          details.serviceProvider.user.phoneNumber,
-                          style: CustomTextStyles.coloredBold,
+                        child: Material(
+                          color: Color(0xff09DE04),
+                          elevation: 8,
+                          borderRadius: BorderRadius.circular(20),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
+                                  "assets/phone.png",
+                                  width: 20,
+                                  height: 20,
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  details.serviceProvider.user.phoneNumber,
+                                  style: CustomTextStyles.boldWhiteMediumText,
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                       // SizedBox(height: 10),

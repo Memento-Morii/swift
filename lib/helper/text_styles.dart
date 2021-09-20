@@ -99,6 +99,11 @@ class CustomTextStyles {
     fontSize: 17,
     color: Colors.black,
   );
+  static TextStyle boldWhiteMediumText = GoogleFonts.poppins(
+    fontWeight: FontWeight.bold,
+    fontSize: 17,
+    color: Colors.white,
+  );
   static TextStyle boldTitleText = GoogleFonts.poppins(
     fontWeight: FontWeight.bold,
     fontSize: 17,
