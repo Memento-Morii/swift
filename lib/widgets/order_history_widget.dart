@@ -51,7 +51,10 @@ class OrderHistoryWidget extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => OrderDetailView(order.orderId),
+                                  builder: (context) => OrderDetailView(
+                                    orderId: order.orderId,
+                                    isUser: true,
+                                  ),
                                 ),
                               );
                             },

@@ -9,12 +9,14 @@ import 'package:swift/helper/utils.dart';
 import 'package:swift/models/order_details_model.dart';
 import 'package:swift/screens/order_detail/payment_bloc/payment_bloc.dart';
 import 'package:swift/widgets/custom_button.dart';
+import 'package:swift/widgets/social_network.dart';
 import 'detail_bloc/order_detail_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderDetailView extends StatefulWidget {
-  OrderDetailView(this.orderId);
+  OrderDetailView({this.orderId, this.isUser});
   final String orderId;
+  final bool isUser;
   @override
   _OrderDetailViewState createState() => _OrderDetailViewState();
 }
@@ -66,7 +68,6 @@ class _OrderDetailViewState extends State<OrderDetailView> {
             builder: (context, state) {
               if (state is DetailLoaded) {
                 details = state.orderDetails;
-                print(details.serviceProvider.user.uuid);
                 return Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -109,9 +110,17 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                         AppLocalizations.of(context).phone,
                         style: CustomTextStyles.mediumText,
                       ),
-                      Text(
-                        details.serviceProvider.user.phoneNumber,
-                        style: CustomTextStyles.coloredBold,
+                      InkWell(
+                        onTap: () async {
+                          Utils.openLink(
+                            url: details.serviceProvider.user.phoneNumber,
+                            urlType: URL_TYPE.Telephone,
+                          );
+                        },
+                        child: Text(
+                          details.serviceProvider.user.phoneNumber,
+                          style: CustomTextStyles.coloredBold,
+                        ),
                       ),
                       // SizedBox(height: 10),
                       // Text(
@@ -139,69 +148,71 @@ class _OrderDetailViewState extends State<OrderDetailView> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        height: 50,
-        margin: EdgeInsets.only(bottom: 10),
-        child: CustomButton(
-          // width: 140,
-          color: CustomColors.primaryColor,
-          child: Text(
-            AppLocalizations.of(context).goToPayment,
-            style: CustomTextStyles.mediumWhiteText,
-          ),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return Form(
-                  key: _formkey,
-                  child: AlertDialog(
-                    title: Text(
-                      AppLocalizations.of(context).addPayment,
-                      style: CustomTextStyles.boldTitleText,
-                    ),
-                    content: TextFormField(
-                      style: CustomTextStyles.textField,
-                      controller: paymentController,
-                      keyboardType: TextInputType.number,
-                      validator:
-                          RequiredValidator(errorText: AppLocalizations.of(context).required),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          AppLocalizations.of(context).cancel,
-                          style: CustomTextStyles.textField,
+      bottomNavigationBar: widget.isUser
+          ? Container(
+              height: 50,
+              margin: EdgeInsets.only(bottom: 10),
+              child: CustomButton(
+                // width: 140,
+                color: CustomColors.primaryColor,
+                child: Text(
+                  AppLocalizations.of(context).goToPayment,
+                  style: CustomTextStyles.mediumWhiteText,
+                ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Form(
+                        key: _formkey,
+                        child: AlertDialog(
+                          title: Text(
+                            AppLocalizations.of(context).addPayment,
+                            style: CustomTextStyles.boldTitleText,
+                          ),
+                          content: TextFormField(
+                            style: CustomTextStyles.textField,
+                            controller: paymentController,
+                            keyboardType: TextInputType.number,
+                            validator:
+                                RequiredValidator(errorText: AppLocalizations.of(context).required),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                AppLocalizations.of(context).cancel,
+                                style: CustomTextStyles.textField,
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                if (_formkey.currentState.validate()) {
+                                  Navigator.pop(context);
+                                  _paymentBloc.add(MakePayment(
+                                    orderId: details.id,
+                                    payment: double.parse(paymentController.text.trim()),
+                                    serviceProviderId: details.serviceProviderId,
+                                    userId: details.userId,
+                                  ));
+                                }
+                              },
+                              child: Text(
+                                AppLocalizations.of(context).go,
+                                style: CustomTextStyles.textField,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          if (_formkey.currentState.validate()) {
-                            Navigator.pop(context);
-                            _paymentBloc.add(MakePayment(
-                              orderId: details.id,
-                              payment: double.parse(paymentController.text.trim()),
-                              serviceProviderId: details.serviceProviderId,
-                              userId: details.userId,
-                            ));
-                          }
-                        },
-                        child: Text(
-                          AppLocalizations.of(context).go,
-                          style: CustomTextStyles.textField,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
-          },
-        ),
-      ),
+                      );
+                    },
+                  );
+                },
+              ),
+            )
+          : null,
     );
   }
 }

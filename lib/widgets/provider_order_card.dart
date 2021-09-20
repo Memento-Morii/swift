@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:swift/helper/colors.dart';
 import 'package:swift/helper/text_styles.dart';
 import 'package:swift/models/provider_order_model.dart';
+import 'package:swift/screens/order_detail/order_detail_view.dart';
 import 'package:swift/screens/orders/service_provider_order/bloc/provider_order_bloc.dart';
 import 'package:swift/widgets/custom_network_image.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -50,9 +52,34 @@ class _ProviderOrderCardState extends State<ProviderOrderCard> {
                     style: CustomTextStyles.normalText,
                   ),
                   widget.order.orderHistory.status == 2
-                      ? Text(
-                          AppLocalizations.of(context).accepted,
-                          style: CustomTextStyles.coloredBold,
+                      ? Column(
+                          children: [
+                            Text(
+                              AppLocalizations.of(context).accepted,
+                              style: CustomTextStyles.coloredBold,
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => OrderDetailView(
+                                      orderId: widget.order.orderId,
+                                      isUser: false,
+                                    ),
+                                  ),
+                                );
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(CustomColors.primaryColor),
+                              ),
+                              child: Text(
+                                AppLocalizations.of(context).viewOrderDetails,
+                                style: CustomTextStyles.normalText2,
+                              ),
+                            )
+                          ],
                         )
                       : BlocBuilder<ProviderOrderBloc, ProviderOrderState>(
                           bloc: _providerOrderBloc,
