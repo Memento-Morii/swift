@@ -23,51 +23,58 @@ class OrderHistoryWidget extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomNetworkImage(
-                  imgUrl: order.serviceCategory.image,
-                  height: 80,
-                  width: 80,
+                Flexible(
+                  flex: 2,
+                  child: CustomNetworkImage(
+                    imgUrl: order.serviceCategory.image,
+                    height: 80,
+                    width: 80,
+                  ),
                 ),
                 SizedBox(width: 5),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      order.serviceCategory.name,
-                      style: CustomTextStyles.boldText,
-                    ),
-                    Text(
-                      order.service.name,
-                      style: CustomTextStyles.normalText,
-                    ),
-                    Text(
-                      dateFormat.format(order.serviceReceiveTime.toLocal()),
-                      style: CustomTextStyles.textField,
-                    ),
-                    SizedBox(height: 10),
-                    order.orderHistory.status == 2
-                        ? TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => OrderDetailView(
-                                    orderId: order.orderId,
-                                    isUser: true,
+                Flexible(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        order.serviceCategory.name,
+                        style: CustomTextStyles.boldText,
+                      ),
+                      Text(
+                        order.service.name,
+                        style: CustomTextStyles.normalText,
+                      ),
+                      Text(
+                        dateFormat.format(order.serviceReceiveTime.toLocal()),
+                        style: CustomTextStyles.textField,
+                      ),
+                      SizedBox(height: 10),
+                      order.orderHistory.status == 2
+                          ? TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => OrderDetailView(
+                                      orderId: order.orderId,
+                                      isUser: true,
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(CustomColors.primaryColor),
-                            ),
-                            child: Text(
-                              AppLocalizations.of(context).viewOrderDetails,
-                              style: CustomTextStyles.normalText2,
-                            ),
-                          )
-                        : SizedBox(),
-                  ],
+                                );
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(CustomColors.primaryColor),
+                              ),
+                              child: Text(
+                                AppLocalizations.of(context).viewOrderDetails,
+                                style: CustomTextStyles.normalText2,
+                              ),
+                            )
+                          : SizedBox(),
+                    ],
+                  ),
                 ),
               ],
             ),
